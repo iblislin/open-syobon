@@ -16,7 +16,6 @@ int main(int argc, char *argv[])
     //SetFontThickness(4) ;
 
     //ループ
-    //for (maint=0;maint<=2;maint++){
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
         UpdateKeys();
         maint = 0;
@@ -1137,10 +1136,9 @@ void Mainprogram()
     stime = long (GetNowCount());
 
     if (ending == 1)
-	mainZ = 2;
+        mainZ = 2;
 
-//キー
-
+    //キー
     if (mainZ == 1 && tmsgtype == 0) {
 
 	if (zxon == 0) {
@@ -1164,80 +1162,75 @@ void Mainprogram()
 	    fzx = 0;
 	    stageonoff = 0;
 
-//チーターマン　入れ
+        //チーターマン　入れ
 	    bgmchange(otom[1]);
 
 	    stagecls();
 
 	    stage();
 
-//ランダムにさせる
+        //ランダムにさせる
 	    if (over == 1) {
-		for (t = 0; t < tmax; t++) {
-		    if (rand(3) <= 1) {
-			ta[t] = (rand(500) - 1) * 29 * 100;
-			tb[t] = rand(14) * 100 * 29 - 1200;
-			ttype[t] = rand(142);
-			if (ttype[t] >= 9 && ttype[t] <= 99) {
-			    ttype[t] = rand(8);
-			}
-			txtype[t] = rand(4);
-		    }
-		}
-		for (t = 0; t < bmax; t++) {
-		    if (rand(2) <= 1) {
-			ba[t] = (rand(500) - 1) * 29 * 100;
-			bb[t] = rand(15) * 100 * 29 - 1200 - 3000;
-			if (rand(6) == 0) {
-			    btype[t] = rand(9);
-			}
-		    }
-		}
+            for (t = 0; t < tmax; t++) {
+                if (rand(3) <= 1) {
+                    ta[t] = (rand(500) - 1) * 29 * 100;
+                    tb[t] = rand(14) * 100 * 29 - 1200;
+                    ttype[t] = rand(142);
+                    if (ttype[t] >= 9 && ttype[t] <= 99) {
+                        ttype[t] = rand(8);
+                    }
+                    txtype[t] = rand(4);
+                }
+            }
+            for (t = 0; t < bmax; t++) {
+                if (rand(2) <= 1) {
+                    ba[t] = (rand(500) - 1) * 29 * 100;
+                    bb[t] = rand(15) * 100 * 29 - 1200 - 3000;
+                    if (rand(6) == 0) {
+                        btype[t] = rand(9);
+                    }
+                }
+            }
 
-		srco = 0;
-		t = srco;
-		sra[t] = ma + fx;
-		srb[t] = (13 * 29 - 12) * 100;
-		src[t] = 30 * 100;
-		srtype[t] = 0;
-		sracttype[t] = 0;
-		sre[t] = 0;
-		srsp[t] = 0;
-		srco++;
+            srco = 0;
+            t = srco;
+            sra[t] = ma + fx;
+            srb[t] = (13 * 29 - 12) * 100;
+            src[t] = 30 * 100;
+            srtype[t] = 0;
+            sracttype[t] = 0;
+            sre[t] = 0;
+            srsp[t] = 0;
+            srco++;
 
-		if (rand(4) == 0)
-		    stagecolor = rand(5);
+            if (rand(4) == 0)
+                stagecolor = rand(5);
 	    }
+	}  // zxon == 0
 
-	}			//zxon
-
-//プレイヤーの移動
+    // プレイヤーの移動
+    // player movement
 	xx[0] = 0;
 	actaon[2] = 0;
 	actaon[3] = 0;
 	if (mkeytm <= 0) {
-	    if (CheckHitKey(KEY_INPUT_LEFT)
-		&& keytm <= 0) {
-		actaon[0] = -1;
-		mmuki = 0;
-		actaon[4] = -1;
+	    if (CheckHitKey(KEY_INPUT_LEFT) && keytm <= 0) {
+            actaon[0] = -1;
+            mmuki = 0;
+            actaon[4] = -1;
 	    }
-	    if (CheckHitKey(KEY_INPUT_RIGHT)
-		&& keytm <= 0) {
-		actaon[0] = 1;
-		mmuki = 1;
-		actaon[4] = 1;
+	    if (CheckHitKey(KEY_INPUT_RIGHT) && keytm <= 0) {
+            actaon[0] = 1;
+            mmuki = 1;
+            actaon[4] = 1;
 	    }
-	    if (CheckHitKey(KEY_INPUT_DOWN)
-		) {
-		actaon[3] = 1;
+	    if (CheckHitKey(KEY_INPUT_DOWN)) {
+            actaon[3] = 1;
 	    }
 	}
-//if (CheckHitKey(KEY_INPUT_F1)==1){end();}
 	if (CheckHitKey(KEY_INPUT_F1) == 1) {
 	    mainZ = 100;
 	}
-//if (CheckHitKey(KEY_INPUT_Q)==1){mkeytm=0;}
 	if (CheckHitKey(KEY_INPUT_O) == 1) {
 	    if (mhp >= 1)
 		mhp = 0;
