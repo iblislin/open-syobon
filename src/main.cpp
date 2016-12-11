@@ -55,9 +55,53 @@ test(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 }
 
 
+void _hit_key(SDLKey k){
+    SDL_Event sdlevent;
+    sdlevent.type = SDL_KEYDOWN;
+    sdlevent.key.keysym.sym = k;
+
+    SDL_PushEvent(&sdlevent);
+
+    usleep(200000);
+
+    sdlevent.type = SDL_KEYUP;
+    sdlevent.key.keysym.sym = k;
+
+    SDL_PushEvent(&sdlevent);
+}
+
+
+static ERL_NIF_TERM
+erl_key(ErlNifEnv* env, int args, const ERL_NIF_TERM argv[])
+{
+    int i;
+    if (!enif_get_int(env, argv[0], &i)) {
+        return enif_make_badarg(env);
+    }
+
+    switch(i) {
+        case 1:
+            _hit_key(KEY_INPUT_LEFT);
+            break;
+        case 2:
+            _hit_key(KEY_INPUT_RIGHT);
+            break;
+        case 3:
+            _hit_key(KEY_INPUT_DOWN);
+            break;
+        case 4:
+            _hit_key(KEY_INPUT_UP);
+            break;
+    }
+
+    return enif_make_atom(env, "ok");
+}
+
+
 static ErlNifFunc nif_funcs[] = {
     {"syobon_main", 0, syobon_main},
     {"test", 0, test},
+    {"key", 1, erl_key},
 };
 
 

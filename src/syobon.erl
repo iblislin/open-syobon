@@ -15,4 +15,8 @@ syobon_main() ->
 
 
 test() ->
-  err.
+  error.
+
+
+key(_K) ->
+  error.
