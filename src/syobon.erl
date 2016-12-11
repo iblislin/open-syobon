@@ -20,3 +20,12 @@ test() ->
 
 key(_K) ->
   error.
+
+
+send_key(K) ->
+  case K of
+    left -> key(1);
+    right -> key(2);
+    down -> key(3);
+    up -> key(4)
+  end.
