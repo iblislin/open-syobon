@@ -1,7 +1,70 @@
 #include "main.h"
+#include "erl_nif.h"
+#include <unistd.h>
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
+
+#ifdef PP
+void* worker(void* args) {
+    // main window
+    DxLib_Init();
+    loadg();
+    SetFontSize(16);
+    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+    {
+        UpdateKeys();
+        maint = 0;
+        Mainprogram();
+        if (maint == 3)
+            break;
+    }
+    end();
+    // end of main window
+    // return NULL;
+}
+
+static ERL_NIF_TERM
+syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    ErlNifTid thread_id;
+    enif_thread_create("my_function_thread", &thread_id, worker, (void*)argv, NULL);
+    return enif_make_int(env, 0);
+}
+
+
+static ERL_NIF_TERM
+test(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    // while (1) {
+        // sleep(1);
+        SDL_Event sdlevent;
+        sdlevent.type = SDL_KEYDOWN;
+        sdlevent.key.keysym.sym = KEY_INPUT_RIGHT;
+
+        SDL_PushEvent(&sdlevent);
+
+        usleep(200000);
+
+        sdlevent.type = SDL_KEYUP;
+        sdlevent.key.keysym.sym = KEY_INPUT_RIGHT;
+
+        SDL_PushEvent(&sdlevent);
+    // }
+    return enif_make_string(env, "Hello world!", ERL_NIF_LATIN1);
+}
+
+
+static ErlNifFunc nif_funcs[] = {
+    {"syobon_main", 0, syobon_main},
+    {"test", 0, test},
+};
+
+
+ERL_NIF_INIT(syobon, nif_funcs, NULL, NULL, NULL, NULL);
+#endif  // PP
+
+
 int main(int argc, char *argv[])
 {
     parseArgs(argc, argv);
