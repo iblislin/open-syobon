@@ -8,6 +8,9 @@ int main(int argc, char *argv[])
     if (DxLib_Init() == -1)
         return 1;
 
+    // start api service
+    // std::thread* t = APIThread();
+
     //全ロード
     loadg();
 

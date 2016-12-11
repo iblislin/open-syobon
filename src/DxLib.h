@@ -15,6 +15,9 @@
 
 #include "joyconfig.h"
 
+#ifndef DXLIB_HEADER
+#define DXLIB_HEADER
+
 #define TRUE 1
 #define FALSE 0
 #define byte unsigned char
@@ -99,3 +102,5 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
 
 //Noticably different than the original
 SDL_Surface *LoadGraph(const char *filename);
+
+#endif

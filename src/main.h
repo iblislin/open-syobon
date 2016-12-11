@@ -1,4 +1,5 @@
 #include "DxLib.h"
+// #include "API.h"
 using namespace std;
 
 #define SHORT
