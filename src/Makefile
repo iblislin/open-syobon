@@ -1,3 +1,7 @@
+.SUFFIXES: .erl .beam
+
+all: syobon_nif.so lnalg.beam player.beam neuron.beam neuron_net.beam
+
 SyobonAction:main.o loadg.o DxLib.o
 	clang++ main.o loadg.o DxLib.o -o SyobonAction `sdl-config --libs` \
 	    -lm -lpthread -lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf -lzmq
@@ -20,3 +24,6 @@ syobon_nif.so: main.cpp loadg.cpp DxLib.cpp
 	    -I /usr/lib/erlang/erts-8.1.1/include/ \
 	    -lm -lpthread -lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
 	    `sdl-config --libs`
+
+.erl.beam:
+	erlc $<
