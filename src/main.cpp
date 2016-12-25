@@ -5090,8 +5090,6 @@ void stagecls()
 //ステージロード
 void stage()
 {
-
-//fzx=6000*100;
     scrollx = 3600 * 100;
 
 //byte stagedate[16][801];
@@ -5102,126 +5100,126 @@ void stage()
     stagep();
 
     for (tt = 0; tt <= 1000; tt++) {
-	for (t = 0; t <= 16; t++) {
-	    xx[10] = 0;
-	    if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
-		xx[10] = (int) stagedate[t][tt];
-	    xx[21] = tt * 29;
-	    xx[22] = t * 29 - 12;
-	    xx[23] = xx[10];
-	    if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9) {
-		tyobi(tt * 29, t * 29 - 12, xx[10]);
-	    }
-	    if (xx[10] >= 20 && xx[10] <= 29) {
-		sra[srco] = xx[21] * 100;
-		srb[srco] = xx[22] * 100;
-		src[srco] = 3000;
-		srtype[srco] = 0;
-		srco++;
-		if (srco >= srmax)
-		    srco = 0;
-	    }
-	    if (xx[10] == 30) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 3000;
-		sd[sco] = 6000;
-		stype[sco] = 500;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 40) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 6000;
-		sd[sco] = 3000;
-		stype[sco] = 1;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 41) {
-		sa[sco] = xx[21] * 100 + 500;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 5000;
-		sd[sco] = 3000;
-		stype[sco] = 2;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
+        for (t = 0; t <= 16; t++) {
+            xx[10] = 0;
+            if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
+                xx[10] = (int) stagedate[t][tt];
+            xx[21] = tt * 29;
+            xx[22] = t * 29 - 12;
+            xx[23] = xx[10];
+            if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9) {
+                tyobi(tt * 29, t * 29 - 12, xx[10]);
+            }
+            if (xx[10] >= 20 && xx[10] <= 29) {
+                sra[srco] = xx[21] * 100;
+                srb[srco] = xx[22] * 100;
+                src[srco] = 3000;
+                srtype[srco] = 0;
+                srco++;
+                if (srco >= srmax)
+                    srco = 0;
+            }
+            if (xx[10] == 30) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 3000;
+                sd[sco] = 6000;
+                stype[sco] = 500;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 40) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 6000;
+                sd[sco] = 3000;
+                stype[sco] = 1;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 41) {
+                sa[sco] = xx[21] * 100 + 500;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 5000;
+                sd[sco] = 3000;
+                stype[sco] = 2;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
 
-	    if (xx[10] == 43) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100 + 500;
-		sc[sco] = 2900;
-		sd[sco] = 5300;
-		stype[sco] = 1;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 44) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100 + 700;
-		sc[sco] = 3900;
-		sd[sco] = 5000;
-		stype[sco] = 5;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-//これなぜかバグの原因ｗ
-	    if (xx[10] >= 50 && xx[10] <= 79) {
-		ba[bco] = xx[21] * 100;
-		bb[bco] = xx[22] * 100;
-		btype[bco] = xx[23] - 50;
-		bco++;
-		if (bco >= bmax)
-		    bco = 0;
-	    }
+            if (xx[10] == 43) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100 + 500;
+                sc[sco] = 2900;
+                sd[sco] = 5300;
+                stype[sco] = 1;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 44) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100 + 700;
+                sc[sco] = 3900;
+                sd[sco] = 5000;
+                stype[sco] = 5;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+    //これなぜかバグの原因ｗ
+            if (xx[10] >= 50 && xx[10] <= 79) {
+                ba[bco] = xx[21] * 100;
+                bb[bco] = xx[22] * 100;
+                btype[bco] = xx[23] - 50;
+                bco++;
+                if (bco >= bmax)
+                    bco = 0;
+            }
 
-	    if (xx[10] >= 80 && xx[10] <= 89) {
-		na[nco] = xx[21] * 100;
-		nb[nco] = xx[22] * 100;
-		ntype[nco] = xx[23] - 80;
-		nco++;
-		if (nco >= nmax)
-		    nco = 0;
-	    }
-//コイン
-	    if (xx[10] == 9) {
-		tyobi(tt * 29, t * 29 - 12, 800);
-	    }
-	    if (xx[10] == 99) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 3000;
-		sd[sco] = (12 - t) * 3000;
-		stype[sco] = 300;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	}
+            if (xx[10] >= 80 && xx[10] <= 89) {
+                na[nco] = xx[21] * 100;
+                nb[nco] = xx[22] * 100;
+                ntype[nco] = xx[23] - 80;
+                nco++;
+                if (nco >= nmax)
+                    nco = 0;
+            }
+    //コイン
+            if (xx[10] == 9) {
+                tyobi(tt * 29, t * 29 - 12, 800);
+            }
+            if (xx[10] == 99) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 3000;
+                sd[sco] = (12 - t) * 3000;
+                stype[sco] = 300;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+        }
     }
 
     if (tyuukan >= 1) {
-	xx[17] = 0;
-	for (t = 0; t < smax; t++) {
-	    if (stype[t] == 500 && tyuukan >= 1) {
-		fx = sa[t] - fxmax / 2;
-		fzx = fx;
-		ma = sa[t] - fx;
-		mb = sb[t] - fy;
-		tyuukan--;
-		xx[17]++;
+        xx[17] = 0;
+        for (t = 0; t < smax; t++) {
+            if (stype[t] == 500 && tyuukan >= 1) {
+                fx = sa[t] - fxmax / 2;
+                fzx = fx;
+                ma = sa[t] - fx;
+                mb = sb[t] - fy;
+                tyuukan--;
+                xx[17]++;
 
-		sa[t] = -80000000;
-	    }
-	}
-	tyuukan += xx[17];
+                sa[t] = -80000000;
+            }
+        }
+        tyuukan += xx[17];
     }
 //tyobi(1,2,3);
 
