@@ -6,8 +6,7 @@
 
 
 init() ->
-  erlang:load_nif("./syobon_nif", 0),
-  shell_default:cd("..").
+  erlang:load_nif("./syobon_nif", 0).
 
 
 syobon_main() ->
@@ -27,5 +26,18 @@ send_key(K) ->
     left -> key(1);
     right -> key(2);
     down -> key(3);
-    up -> key(4)
+    up -> key(4);
+    _ -> drop
   end.
+
+
+get_map() ->
+  error.
+
+
+get_fitness() ->
+  error.
+
+
+get_hp() ->
+  error.

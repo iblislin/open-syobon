@@ -1,11 +1,12 @@
 #include "main.h"
-#include "erl_nif.h"
 #include <unistd.h>
+#include <iostream>
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
 
 #ifdef PP
+#include "erl_nif.h"
 void* worker(void* args) {
     // main window
     DxLib_Init();
@@ -19,16 +20,21 @@ void* worker(void* args) {
         if (maint == 3)
             break;
     }
-    end();
-    // end of main window
-    // return NULL;
+    zxon = 0;  // make game reinit
+    deinit();  // end of main window
+    return NULL;
 }
 
 static ERL_NIF_TERM
 syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
     ErlNifTid thread_id;
-    enif_thread_create("my_function_thread", &thread_id, worker, (void*)argv, NULL);
+    enif_thread_create(
+        "syobon_main_thread",
+        &thread_id,
+        worker,
+        (void*)argv,
+        NULL);
     return enif_make_int(env, 0);
 }
 
@@ -97,11 +103,41 @@ erl_key(ErlNifEnv* env, int args, const ERL_NIF_TERM argv[])
     return enif_make_atom(env, "ok");
 }
 
+#define MAPSIZE 480 * 420
+ERL_NIF_TERM map_buffer[MAPSIZE];
+
+static ERL_NIF_TERM
+get_map(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
+{
+    SDL_LockSurface(screen);
+    for (int i = 0; i < 480 * 420; i++) {
+        map_buffer[i] = enif_make_uint(env, *((Uint32*)screen->pixels));
+    }
+    SDL_UnlockSurface(screen);
+    return enif_make_list_from_array(env, map_buffer, 480*420);
+}
+
+static ERL_NIF_TERM
+get_fitness(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
+{
+    return enif_make_int(env, fx);
+}
+
+
+static ERL_NIF_TERM
+get_hp(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
+{
+    return enif_make_int(env, mhp);
+}
+
 
 static ErlNifFunc nif_funcs[] = {
     {"syobon_main", 0, syobon_main},
     {"test", 0, test},
     {"key", 1, erl_key},
+    {"get_map", 0, get_map},
+    {"get_fitness", 0, get_fitness},
+    {"get_hp", 0, get_hp},
 };
 
 
@@ -1199,18 +1235,18 @@ void rpaint()
 
 	str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
     }
-//Showing lives
+    //Showing lives
     if (mainZ == 10) {
 
-	setc0();
-	FillScreen();
+        setc0();
+        FillScreen();
 
-	SetFontSize(16);
-	SetFontThickness(4);
+        SetFontSize(16);
+        SetFontThickness(4);
 
-	drawimage(grap[0][0], 190, 190);
-	DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
-			 nokori);
+        drawimage(grap[0][0], 190, 190);
+        DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
+                nokori);
 
     }
     //タイトル
@@ -1251,7 +1287,7 @@ void Mainprogram()
     //キー
     if (mainZ == 1 && tmsgtype == 0) {
 
-	if (zxon == 0) {
+	if (zxon == 0) { // init ?
 	    zxon = 1;
 	    mainmsgtype = 0;
 
@@ -1514,6 +1550,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    Mix_HaltMusic();
 	    ot(oto[12]);
 	    StopSoundMem(oto[16]);
+        maint = 3;  // end game
 	}			//mhp
 //if (mhp<=-10){
 	if (mtype == 200) {
@@ -4370,24 +4407,6 @@ break;
 			    mmsgtype = 3;
 			}
 
-/*
-if (atype[t]==101){mmutekitm=120;mmutekion=1;}
-if (atype[t]==102){mhp-=1;mmutekitm=20;}
-if (atype[t]==103){
-//xx[24]=2400;
-eyobi(aa[t]-500,ab[t],0,-600,0,80,2500,1600,2,32);
-}
-if (atype[t]==104){mztm=120;mztype=1;}
-if (atype[t]==105){mztm=160;mztype=2;}
-
-if (atype[t]==120){mtype=3;mnobia=3800;mnobib=2300;}
-
-if (atype[t]==130){msoubi=1;}
-if (atype[t]==131){msoubi=2;}
-if (atype[t]==132){msoubi=3;}
-if (atype[t]==133){msoubi=4;}
-
-*/
 			aa[t] = -90000000;
 		    }
 
@@ -4420,72 +4439,72 @@ if (atype[t]==133){msoubi=4;}
 //if (xx[3]==1){if (tyuukan==1)tyuukan=1;}
 	}			//kscroll
 
+        // mainZ = 100;
     }				//if (mainZ==1){
 
 //スタッフロール
     if (mainZ == 2) {
-	maintm++;
+        maintm++;
 
-	xx[7] = 46;
-	if (CheckHitKey(KEY_INPUT_1) == 1) {
-	    end();
-	}
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] -= 300;
-	    }
-	}
+        xx[7] = 46;
+        if (CheckHitKey(KEY_INPUT_1) == 1) {
+            end();
+        }
+        if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
+            for (t = 0; t <= xx[7]; t += 1) {
+                xx[12 + t] -= 300;
+            }
+        }
 
-	if (maintm <= 1) {
-	    maintm = 2;
-	    bgmchange(otom[5]);
-	    xx[10] = 0;
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] = 980000;
-	    }
-//for (t=0;t<=xx[7];t+=2){xx[12+t]=46000;}
-	    xx[12] = 460;
-	    xx[13] = 540;
-	    xx[14] = 590;
-	    xx[15] = 650;
-	    xx[16] = 700;
-	    xx[17] = 760;
-	    xx[18] = 810;
-	    xx[19] = 870;
-	    xx[20] = 920;
+        if (maintm <= 1) {
+            maintm = 2;
+            bgmchange(otom[5]);
+            xx[10] = 0;
+            for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] = 980000;
+            }
+            xx[12] = 460;
+            xx[13] = 540;
+            xx[14] = 590;
+            xx[15] = 650;
+            xx[16] = 700;
+            xx[17] = 760;
+            xx[18] = 810;
+            xx[19] = 870;
+            xx[20] = 920;
 
-	    xx[21] = 1000;
-	    xx[22] = 1050;
-	    xx[23] = 1100;
-	    xx[24] = 1180;
-	    xx[25] = 1230;
+            xx[21] = 1000;
+            xx[22] = 1050;
+            xx[23] = 1100;
+            xx[24] = 1180;
+            xx[25] = 1230;
 
-	    xx[26] = 1360;
-	    xx[27] = 1410;
-	    xx[28] = 1540;
-	    xx[29] = 1590;
+            xx[26] = 1360;
+            xx[27] = 1410;
+            xx[28] = 1540;
+            xx[29] = 1590;
 
-	    xx[30] = 1800;
+            xx[30] = 1800;
 
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] *= 100;
-	    }
-	}
+            for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] *= 100;
+            }
+        }
 
-	xx[10] += 1;
-	for (t = 0; t <= xx[7]; t += 1) {
-	    xx[12 + t] -= 100;
-	}			//t
+        xx[10] += 1;
+        for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] -= 100;
+        }			//t
 
-	if (xx[30] == -200) {
-	    bgmchange(otom[5]);
-	}
-	if (xx[30] <= -400) {
-	    mainZ = 100;
-	    nokori = 2;
-	    maintm = 0;
-	    ending = 0;
-	}
+        if (xx[30] == -200) {
+            bgmchange(otom[5]);
+        }
+        if (xx[30] <= -400) {
+            mainZ = 100;
+            nokori = 2;
+            maintm = 0;
+            ending = 0;
+        }
 
     }				//mainZ==2
 
@@ -4504,7 +4523,7 @@ if (atype[t]==133){msoubi=4;}
 //タイトル
     if (mainZ == 100) {
 	maintm++;
-	xx[0] = 0;
+	xx[0] = 1;  // skip the title
 	if (maintm <= 10) {
 	    maintm = 11;
 	    sta = 1;
@@ -5098,6 +5117,14 @@ void stage()
 //1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
     stagep();
+
+    // for (int i = 0; i < 17; i++) {
+    //     for (int j = 0; j < 2001; j++) {
+    //         std::cout << stagedate[i][j] + '0' << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
+
 
     for (tt = 0; tt <= 1000; tt++) {
         for (t = 0; t <= 16; t++) {

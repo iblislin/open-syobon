@@ -132,8 +132,11 @@ int sgtype[smax];
 
 //プレイヤー
 int mainmsgtype;
-int ma, mb, mnobia, mnobib, mhp;
-int mc, md, macttype, atkon, atktm, mactsok, msstar, nokori =
+int ma, mb; // player location on the screen (ma, mb) is (x, y)
+int mnobia, mnobib;
+int mhp; // player hp, mhp > 0 denote alive
+int mc, md; // the acceleration of player (a_x, a_y)
+int macttype, atkon, atktm, mactsok, msstar, nokori =
     3, mactp, mact;
 
 int mtype, mxtype, mtm, mzz;
@@ -247,3 +250,6 @@ string xs[31];
 //: Do with this what we did with fma
 long stimeZ;
 #define stime stimeZ
+
+// function prototypes
+void deinit();
