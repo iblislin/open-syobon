@@ -1213,26 +1213,26 @@ void rpaint()
 			 nokori);
 
     }
-//タイトル
+    //タイトル
     if (mainZ == 100) {
 
-	setcolor(160, 180, 250);
-	fillrect(0, 0, fxmax, fymax);
+        setcolor(160, 180, 250);
+        fillrect(0, 0, fxmax, fymax);
 
-	drawimage(mgrap[30], 240 - 380 / 2, 60);
+        drawimage(mgrap[30], 240 - 380 / 2, 60);
 
-	drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
-	drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
+        drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
+        drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
 
-//プレイヤー
-	drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
-	for (t = 0; t <= 16; t++) {
-	    drawimage(grap[5][1], 29 * t, 13 * 29 - 12);
-	    drawimage(grap[6][1], 29 * t, 14 * 29 - 12);
-	}
+        //プレイヤー
+        drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
+        for (t = 0; t <= 16; t++) {
+            drawimage(grap[5][1], 29 * t, 13 * 29 - 12);
+            drawimage(grap[6][1], 29 * t, 14 * 29 - 12);
+        }
 
-	setcolor(0, 0, 0);
-	str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
+        setcolor(0, 0, 0);
+        str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
 
     }
     ScreenFlip();
