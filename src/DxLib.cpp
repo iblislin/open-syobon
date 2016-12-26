@@ -113,7 +113,7 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
     vsprintf(newstr, str, args);
     va_end(args);
     DrawString(a, b, newstr, color);
-    delete newstr;
+    delete[] newstr;
 }
 
 //void DrawFormatString(int a, int b, int c
