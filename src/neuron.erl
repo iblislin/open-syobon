@@ -2,42 +2,37 @@
 
 -compile(export_all).
 
+-include("records.hrl").
+
 -import(error_logger, [info_msg/2]).
 
 
-%% new -> Pid.
+%% new -> {Pid, #neuron}. create new process
 %% VL -> VectorLength
-new(VL, {out, O}, {layer_order, LO}) ->
+%% Type can be `neuron`, `sensor`
+new(Cortex, VecLen, LayOrd) ->
   R = fun() -> rand:uniform() - 0.5 end,
-  W = [R() || _ <- lists:seq(1, VL)],
-  spawn(?MODULE, loop, [W, O, LO]).
+  W = [R() || _ <- lists:seq(1, VecLen)],
+  Neuron = #neuron{weights=W, vec_len=VecLen, layer_order=LayOrd,
+                   cortex=Cortex},
+  {spawn(?MODULE, loop, [Neuron]), Neuron}.
 
 
 %% W -> Weights
 %% C -> Computing function
 %% A -> Activation function
-loop(W, O, LO) ->
-  C = fun lnalg:dot/2,
-  A = fun math:tanh/1,
+loop(N=#neuron{weights=W,
+               activate=A,
+               compute=C,
+               cortex=Cortex,
+               layer_order=LO}) ->
+  Input =
+    receive
+      {Cortex, terminate} -> exit(ok);
+      {Cortex, X} -> X
+    end,
 
-  InputSize = length(W),
-  Input = collect(array:new(InputSize), InputSize),
-
-  info_msg('Neuro Weights ~p~n', [W]),
   Result = A(C(Input, W)),
+  Cortex ! {LO, Result},
 
-  case O of
-    [] -> info_msg("Output Node[~p]: ~p~n", [LO, Result]);
-    _ -> [Next ! {input, LO, Result} || Next <- O]
-  end,
-
-  loop(W, O, LO).
-
-%% collecting the input
-collect(Arr, 0) -> array:to_list(Arr);
-collect(Arr, Count) ->
-  receive
-    {input, Num, Val} ->
-      collect(array:set(Num - 1, Val, Arr), Count - 1);
-    _ -> error_logger:info_msg("Weird input")
-  end.
+  loop(N).

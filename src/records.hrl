@@ -4,14 +4,15 @@
           vec_len,  %% vector length
           compute=fun lnalg:dot/2,  %% computation function
           activate=fun math:tanh/1,  %% activation function
-          output_list=[]
+          cortex
         }).
 
 -record(sensor, {cortex}).
+-record(actuator, {key, cortex}).
 
 
 -record(cortex, {
           sensor,  %% sensor pid
           net=[],  %% the neuron network table
-          actuator
+          actuators
         }).

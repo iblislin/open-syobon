@@ -2,21 +2,53 @@
 
 -compile(export_all).
 
+-include("records.hrl").
+
 
 %% Layers list: e.g [1, 3, 1]
 %% Acc -> [
 %%  {Pid, In_ids, Out_ids}
 %% ]
-new(Layers) -> new(lists:reverse(Layers), [], []).
+new(Layers) ->
+  Cortex = cortex:new(),
 
-new([], _, Acc) -> Acc;
+  Actuators = [actuator:new(Cortex, Key) || Key <- lists:seq(1, 4)],
+  Cortex ! {self(), set, actuators, Actuators},
+  sync(),
 
-new([L|T], OutPids, Acc) ->
-  VL =
-  case T of  %% vector length
-    [] -> 1;  %% map size
-    _ -> hd(T)
-  end,
-  Pids = [neuron:new(VL, {out, OutPids}, {layer_order, I}) || I <- lists:seq(1, L)],
-  Layer = [{neuron, P, {out, OutPids}} || P <- Pids],
-  new(T, Pids, [Layer|Acc]).
+  %% [4] is for the actuators,
+  %% [1] is for the input layer.
+  Net = new_net(Cortex, [1|Layers] ++ [4]),
+  Cortex ! {self(), set, net, Net},
+  sync(),
+
+  Sensor = sensor:new(Cortex),
+  Cortex ! {self(), set, sensor, Sensor},
+  sync(),
+
+  Cortex.
+
+
+sync() ->
+  receive
+    ok -> ok
+  end.
+
+
+new_net(Cortex, Layers) -> new_net(Cortex, Layers, 480*420, []).
+
+new_net(_, [], _, Acc) -> lists:reverse(Acc);
+
+new_net(Cortex, _Layers=[H|T], VecLen, Acc) ->
+  Layer = new_net_layer(Cortex, VecLen, H),
+  new_net(Cortex, T, H, [Layer|Acc]).
+
+
+%% create a single network layer
+new_net_layer(Cortex, VecLen, Count) -> new_net_layer(Cortex, VecLen, Count, []).
+
+new_net_layer(_, _, 0, Acc) -> lists:reverse(Acc);
+
+new_net_layer(Cortex, VecLen, Count, Acc) ->
+  Neuron = neuron:new(Cortex, VecLen, Count),
+  new_net_layer(Cortex, VecLen, Count- 1, [Neuron|Acc]).

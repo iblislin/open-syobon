@@ -12,11 +12,11 @@ new(Cortex) ->
 loop(S=#sensor{cortex=Cortex}) ->
   ok = check_hp(),
   Cortex ! {self(), syobon:get_map()},
-  receive
-    {Cortex, ok} -> ok
-  end,
 
-  loop(S).
+  receive
+    {Cortex, ok} -> loop(S);
+    {Cortex, terminate} -> ok
+  end.
 
 
 check_hp() ->

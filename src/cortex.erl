@@ -14,10 +14,16 @@ new() ->
   spawn(?MODULE, loop, [#cortex{}]).
 
 
-loop(C=#cortex{sensor=Sensor}) ->
+loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
   receive
-    terminate -> ok;
-    {From, set, nn, Val} ->
+    {From, terminate} ->
+      Msg = {self(), terminate},
+      Sensor ! Msg,
+      [Actuator ! Msg || Actuator <- Actuators],
+      [[ N ! Msg || {N, _} <- Layer] || Layer <- Net],
+      From ! ok;
+
+    {From, set, net, Val} ->
       NewC = C#cortex{net=Val},
       From ! ok,
       loop(NewC);
@@ -27,8 +33,8 @@ loop(C=#cortex{sensor=Sensor}) ->
       From ! ok,
       loop(NewC);
 
-    {From, set, actuator, Val} ->
-      NewC = C#cortex{actuator=Val},
+    {From, set, actuators, Val} ->
+      NewC = C#cortex{actuators=Val},
       From ! ok,
       loop(NewC);
 
@@ -37,11 +43,32 @@ loop(C=#cortex{sensor=Sensor}) ->
       loop(C);
 
     {Sensor, Input} ->
-      %% NeuronLayer = hd(C#cortex.net),
-      %% [ N ! Input || N <- NeuronLayer ],
+      Actions = feed_forward(Input, Net),
+
+      [ Actuator ! {self(), Act} ||
+        {Act, Actuator} <- lists:zip(Actions, Actuators)],
+
       Sensor ! {self(), ok},
+
       loop(C)
   end.
 
 
+feed_forward(Input, []) -> Input;
 
+feed_forward(Input, Layers) ->
+      NeuronLayer = hd(Layers),
+      [Pid ! {self(), Input} || {Pid, _} <- NeuronLayer],
+      feed_forward(collect(length(NeuronLayer)), tl(Layers)).
+
+
+collect(L) -> collect(array:new(L), L).
+
+collect(Arr, 0) -> array:to_list(Arr);
+
+collect(Arr, Count) ->
+  receive
+    {Order, Val} ->
+      collect(array:set(Order - 1, Val, Arr), Count - 1);
+    _ -> skip
+  end.
