@@ -12,7 +12,9 @@ new(Cortex, Key) ->
 loop(A=#actuator{key=Key, cortex=Cortex}) ->
   Input =
     receive
-      {Cortex, terminate} -> exit(ok);
+      {Cortex, terminate} ->
+        error_logger:info_msg("actuator stop signal"),
+        exit(ok);
       {Cortex, X} -> X
     end,
 

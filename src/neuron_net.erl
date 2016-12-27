@@ -65,7 +65,7 @@ copy_net(Cortex, Net) -> copy_net(Cortex, Net, []).
 copy_net(_, [], Acc) -> lists:reverse(Acc);
 
 copy_net(Cortex, [Layer|T], Acc) ->
-  copy_net(T, [copy_net_layer(Cortex, Layer)|Acc]).
+  copy_net(Cortex, T, [copy_net_layer(Cortex, Layer)|Acc]).
 
 
 copy_net_layer(Cortex, Layer) -> copy_net_layer(Cortex, Layer, []).
@@ -73,7 +73,7 @@ copy_net_layer(Cortex, Layer) -> copy_net_layer(Cortex, Layer, []).
 copy_net_layer(_, [], Acc) -> lists:reverse(Acc);
 
 copy_net_layer(Cortex, [{_, N}|T], Acc) ->
-  copy_net_layer(T, [neuron:new(N#neuron{cortex=Cortex})|Acc]).
+  copy_net_layer(Cortex, T, [neuron:new(N#neuron{cortex=Cortex})|Acc]).
 
 
 new_net(Cortex, Layers) -> new_net(Cortex, Layers, 480*420, []).

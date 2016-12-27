@@ -38,6 +38,12 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
       res_ok(From, Ref),
       loop(C);
 
+    {From, Ref, stop_actuator} ->
+      Msg = {self(), terminate},
+      [Actuator ! Msg || Actuator <- Actuators],
+      res_ok(From, Ref),
+      loop(C);
+
     {From, Ref, set, net, Val} ->
       NewC = C#cortex{net=Val},
       res_ok(From, Ref),

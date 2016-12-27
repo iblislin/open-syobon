@@ -8,7 +8,7 @@
         }).
 
 -record(sensor, {cortex, enabled=false}).
--record(actuator, {key, cortex}).
+-record(actuator, {key, cortex, enabled=true}).
 
 
 -record(cortex, {

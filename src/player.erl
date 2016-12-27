@@ -45,6 +45,9 @@ play(Cortex) ->
   Cortex ! {self(), Ref, stop_sensor},
   error_logger:info_msg("wait for sensor stop"),
   cortex:sync(Cortex, Ref),
+  Cortex ! {self(), Ref, stop_actuator},
+  error_logger:info_msg("wait for actuators stop"),
+  cortex:sync(Cortex, Ref),
   error_logger:info_msg("sensor stop"),
 
   syobon:get_fitness().
