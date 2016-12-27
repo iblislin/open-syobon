@@ -7,11 +7,30 @@
 
 #ifdef PP
 #include "erl_nif.h"
-void* worker(void* args) {
-    // main window
+
+
+static ERL_NIF_TERM
+syobon_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
     DxLib_Init();
     loadg();
     SetFontSize(16);
+    return enif_make_int(env, 0);
+}
+
+
+static ERL_NIF_TERM
+syobon_deinit(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    deinit();
+    return enif_make_int(env, 0);
+}
+
+
+static ERL_NIF_TERM
+syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
+{
+    zxon = 0;  // make game reinit
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
     {
         UpdateKeys();
@@ -20,21 +39,6 @@ void* worker(void* args) {
         if (maint == 3)
             break;
     }
-    zxon = 0;  // make game reinit
-    deinit();  // end of main window
-    return NULL;
-}
-
-static ERL_NIF_TERM
-syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
-{
-    ErlNifTid thread_id;
-    enif_thread_create(
-        "syobon_main_thread",
-        &thread_id,
-        worker,
-        (void*)argv,
-        NULL);
     return enif_make_int(env, 0);
 }
 
@@ -132,6 +136,8 @@ get_hp(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
 
 
 static ErlNifFunc nif_funcs[] = {
+    {"syobon_init", 0, syobon_init},
+    {"syobon_deinit", 0, syobon_deinit},
     {"syobon_main", 0, syobon_main},
     {"test", 0, test},
     {"key", 1, erl_key},
@@ -144,6 +150,50 @@ static ErlNifFunc nif_funcs[] = {
 ERL_NIF_INIT(syobon, nif_funcs, NULL, NULL, NULL, NULL);
 #endif  // PP
 
+void print_screen() {
+    SDL_PixelFormat *fmt;
+    SDL_Surface *surface = screen;
+    Uint32 temp, pixel;
+    Uint8 red, green, blue, alpha;
+
+    fmt = surface->format;
+    SDL_LockSurface(surface);
+    pixel = *((Uint32*)surface->pixels);
+    SDL_UnlockSurface(surface);
+
+    // #<{(| Get Red component |)}>#
+    // temp = pixel & fmt->Rmask;  #<{(| Isolate red component |)}>#
+    // temp = temp >> fmt->Rshift; #<{(| Shift it down to 8-bit |)}>#
+    // temp = temp << fmt->Rloss;  #<{(| Expand to a full 8-bit number |)}>#
+    // red = (Uint8)temp;
+    //
+    // #<{(| Get Green component |)}>#
+    // temp = pixel & fmt->Gmask;  #<{(| Isolate green component |)}>#
+    // temp = temp >> fmt->Gshift; #<{(| Shift it down to 8-bit |)}>#
+    // temp = temp << fmt->Gloss;  #<{(| Expand to a full 8-bit number |)}>#
+    // green = (Uint8)temp;
+    //
+    // #<{(| Get Blue component |)}>#
+    // temp = pixel & fmt->Bmask;  #<{(| Isolate blue component |)}>#
+    // temp = temp >> fmt->Bshift; #<{(| Shift it down to 8-bit |)}>#
+    // temp = temp << fmt->Bloss;  #<{(| Expand to a full 8-bit number |)}>#
+    // blue = (Uint8)temp;
+    //
+    // #<{(| Get Alpha component |)}>#
+    // temp = pixel & fmt->Amask;  #<{(| Isolate alpha component |)}>#
+    // temp = temp >> fmt->Ashift; #<{(| Shift it down to 8-bit |)}>#
+    // temp = temp << fmt->Aloss;  #<{(| Expand to a full 8-bit number |)}>#
+    // alpha = (Uint8)temp;
+}
+
+void debug_print() {
+    std::cout << "fx: " << fx << std::endl;
+    std::cout << "fy: " << fy << std::endl;
+    std::cout << "mhp:" << mhp << std::endl;
+    std::cout << "scrollx: " << scrollx << std::endl;
+    std::cout << "scrolly: " << scrolly << std::endl;
+    std::cout << "stime:" << stime << std::endl;
+}
 
 int main(int argc, char *argv[])
 {
@@ -166,6 +216,8 @@ int main(int argc, char *argv[])
         UpdateKeys();
         maint = 0;
         Mainprogram();
+        // print_screen();
+        debug_print();
         if (maint == 3)
             break;
     }

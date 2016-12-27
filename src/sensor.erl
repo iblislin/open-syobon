@@ -26,4 +26,3 @@ check_hp() ->
       timer:sleep(300),
       check_hp()
   end.
-

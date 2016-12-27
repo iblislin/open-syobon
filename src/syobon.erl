@@ -13,6 +13,14 @@ syobon_main() ->
   "NIF not load".
 
 
+syobon_init() ->
+  error.
+
+
+syobon_deinit() ->
+  error.
+
+
 test() ->
   error.
 
