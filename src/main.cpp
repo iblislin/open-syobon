@@ -9,10 +9,16 @@
 #include "erl_nif.h"
 
 int run_state = 0;
+Uint32 last_time = 0;
+
+struct worker_args {
+    ErlNifPid* caller;
+};
 
 void* worker(void* args) {
-    run_state = 1; // start the game
+    ErlNifEnv* msg_env = enif_alloc_env();
 
+    run_state = 1; // start the game
     zxon = 0;  // make game reinit
     // main window
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
@@ -20,11 +26,38 @@ void* worker(void* args) {
         UpdateKeys();
         maint = 0;
         Mainprogram();
+
+        if(run_state) {
+            ERL_NIF_TERM msg = enif_make_atom(msg_env, "game_start");
+            enif_send(NULL, ((worker_args *)args)->caller, msg_env, msg);
+            run_state = 0;
+        }
+
+        // timeout rules
+        Uint32 time_delta = stime - last_time;
+        if (fx <= 34301 && time_delta >= 20000)
+        {
+            last_time = stime;
+            break;
+        }
+        else if (fx <= 163400 && time_delta >= 40000)
+        {
+            last_time = stime;
+            break;
+        }
+        else if (time_delta >= 70000) // global timeout
+        {
+            last_time = stime;
+            break;
+        }
+
         if (maint == 3)
             break;
     }
-
     run_state = 0;
+
+    ERL_NIF_TERM msg = enif_make_atom(msg_env, "game_end");
+    enif_send(NULL, ((worker_args *)args)->caller, msg_env, msg);
     return NULL;
 }
 
@@ -50,12 +83,18 @@ syobon_deinit(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
+    run_state = -1;
     ErlNifTid thread_id;
+    worker_args *wargs = new worker_args;
+    ErlNifPid *self_pid = new ErlNifPid;
+
+    wargs->caller = enif_self(env, self_pid);
+
     enif_thread_create(
         "syobon_main_thread",
         &thread_id,
         worker,
-        (void*)argv,
+        (void *)wargs,
         NULL);
     return enif_make_int(env, 0);
 }
@@ -64,21 +103,6 @@ syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 test(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    // while (1) {
-        // sleep(1);
-        SDL_Event sdlevent;
-        sdlevent.type = SDL_KEYDOWN;
-        sdlevent.key.keysym.sym = KEY_INPUT_RIGHT;
-
-        SDL_PushEvent(&sdlevent);
-
-        usleep(200000);
-
-        sdlevent.type = SDL_KEYUP;
-        sdlevent.key.keysym.sym = KEY_INPUT_RIGHT;
-
-        SDL_PushEvent(&sdlevent);
-    // }
     return enif_make_string(env, "Hello world!", ERL_NIF_LATIN1);
 }
 
@@ -90,7 +114,7 @@ void _hit_key(SDLKey k){
 
     SDL_PushEvent(&sdlevent);
 
-    usleep(200000);
+    usleep(10000);
 
     sdlevent.type = SDL_KEYUP;
     sdlevent.key.keysym.sym = k;
@@ -145,14 +169,6 @@ get_fitness(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
     return enif_make_int(env, fx);
 }
 
-
-static ERL_NIF_TERM
-get_run_state(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
-{
-    return enif_make_int(env, run_state);
-}
-
-
 static ErlNifFunc nif_funcs[] = {
     {"syobon_init", 0, syobon_init},
     {"syobon_deinit", 0, syobon_deinit},
@@ -161,7 +177,6 @@ static ErlNifFunc nif_funcs[] = {
     {"key", 1, erl_key},
     {"get_map", 0, get_map},
     {"get_fitness", 0, get_fitness},
-    {"get_run_state", 0, get_run_state},
 };
 
 
@@ -2985,10 +3000,10 @@ if (mtm==250)end();
 			    ot(oto[11]);
 			}
 //中間ゲート
-			if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
-			    tyuukan += 1;
-			    sa[t] = -80000000;
-			}
+			// if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
+			//     tyuukan += 1;
+			//     sa[t] = -80000000;
+			// }
 
 		    }
 
