@@ -3,10 +3,9 @@
 -compile(export_all).
 
 
-start() ->
+start(Count) ->
   syobon:syobon_init(),
-  Population = new_population(2),
-  Score = play(Population),
+  Score = new_population(Count),
   syobon:syobon_deinit(),
   Score.
 
@@ -20,8 +19,14 @@ new_population(Count, Acc) ->
 
   error_logger:info_msg("new net: ~p~n", [Layers]),
 
+  syobon:syobon_main(),  %% play!
   Cortex = neuron_net:new(Layers),
-  new_population(Count - 1, [Cortex|Acc]).
+  ok = syobon:wait_game_end(),
+
+  Cortex ! {self(), terminate},
+  neuron_net:sync(),
+
+  new_population(Count - 1, [{Cortex, syobon:get_fitness()}|Acc]).
 
 
 play(Population) -> play(Population, []).

@@ -19,9 +19,10 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
     {From, terminate} ->
       Msg = {self(), terminate},
       Sensor ! Msg,
-      [Actuator ! Msg || Actuator <- Actuators],
-      [[ N ! Msg || {N, _} <- Layer] || Layer <- Net],
-      From ! ok;
+      %% [Actuator ! Msg || Actuator <- Actuators],
+      %% [[ N ! Msg || {N, _} <- Layer] || Layer <- Net],
+      From ! ok,
+      loop(C);
 
     {From, set, net, Val} ->
       NewC = C#cortex{net=Val},

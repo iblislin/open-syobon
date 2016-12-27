@@ -8,6 +8,26 @@
 #ifdef PP
 #include "erl_nif.h"
 
+int run_state = 0;
+
+void* worker(void* args) {
+    run_state = 1; // start the game
+
+    zxon = 0;  // make game reinit
+    // main window
+    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+    {
+        UpdateKeys();
+        maint = 0;
+        Mainprogram();
+        if (maint == 3)
+            break;
+    }
+
+    run_state = 0;
+    return NULL;
+}
+
 
 static ERL_NIF_TERM
 syobon_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
@@ -30,15 +50,13 @@ syobon_deinit(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 static ERL_NIF_TERM
 syobon_main(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    zxon = 0;  // make game reinit
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
-    {
-        UpdateKeys();
-        maint = 0;
-        Mainprogram();
-        if (maint == 3)
-            break;
-    }
+    ErlNifTid thread_id;
+    enif_thread_create(
+        "syobon_main_thread",
+        &thread_id,
+        worker,
+        (void*)argv,
+        NULL);
     return enif_make_int(env, 0);
 }
 
@@ -129,9 +147,9 @@ get_fitness(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
 
 
 static ERL_NIF_TERM
-get_hp(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
+get_run_state(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
 {
-    return enif_make_int(env, mhp);
+    return enif_make_int(env, run_state);
 }
 
 
@@ -143,7 +161,7 @@ static ErlNifFunc nif_funcs[] = {
     {"key", 1, erl_key},
     {"get_map", 0, get_map},
     {"get_fitness", 0, get_fitness},
-    {"get_hp", 0, get_hp},
+    {"get_run_state", 0, get_run_state},
 };
 
 
