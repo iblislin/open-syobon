@@ -14,49 +14,67 @@ new() ->
   spawn(?MODULE, loop, [#cortex{}]).
 
 
+res_ok(To, Ref) ->  %% response ok
+  To ! {self(), Ref, ok}.
+
+
 loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
   receive
-    {From, terminate} ->
+    {From, Ref, terminate} ->
       Msg = {self(), terminate},
       Sensor ! Msg,
       %% [Actuator ! Msg || Actuator <- Actuators],
       %% [[ N ! Msg || {N, _} <- Layer] || Layer <- Net],
-      From ! ok,
+      res_ok(From, Ref),
       loop(C);
 
-    {From, set, net, Val} ->
+    {From, Ref, start_sensor} ->
+      Sensor ! {self(), enable},
+      res_ok(From, Ref),
+      loop(C);
+
+    {From, Ref, stop_sensor} ->
+      Sensor ! {self(), disable},
+      res_ok(From, Ref),
+      loop(C);
+
+    {From, Ref, set, net, Val} ->
       NewC = C#cortex{net=Val},
-      From ! ok,
+      res_ok(From, Ref),
       loop(NewC);
 
-    {From, set, neuron_num, Val} ->
+    {From, Ref, set, neuron_num, Val} ->
       NewC = C#cortex{neuron_num=Val},
-      From ! ok,
+      res_ok(From, Ref),
       loop(NewC);
 
-    {From, set, sensor, Val} ->
+    {From, Ref, set, sensor, Val} ->
       NewC = C#cortex{sensor=Val},
-      From ! ok,
+      res_ok(From, Ref),
       loop(NewC);
 
-    {From, set, actuators, Val} ->
+    {From, Ref, set, actuators, Val} ->
       NewC = C#cortex{actuators=Val},
-      From ! ok,
+      res_ok(From, Ref),
       loop(NewC);
 
-    {From, get} ->
-      From ! C,
+    {From, Ref, get, net} ->
+      From ! {self(), Ref, Net, C#cortex.neuron_num},
       loop(C);
 
-    {From, nn_mutate} ->
+    {From, Ref, get} ->
+      From ! {self(), Ref, C},
+      loop(C);
+
+    {From, Ref, nn_mutate} ->
       neuron_net:mutate(Net, rand:uniform(C#cortex.neuron_num)),
-      From ! ok,
+      res_ok(From, Ref),
       loop(C);
 
-    {Sensor, Input} ->
+    {Sensor, sensor, Input} ->
       Actions = feed_forward(Input, Net),
 
-      [ Actuator ! {self(), Act} ||
+      [Actuator ! {self(), Act} ||
         {Act, Actuator} <- lists:zip(Actions, Actuators)],
 
       Sensor ! {self(), ok},
@@ -79,7 +97,12 @@ collect(Arr, 0) -> array:to_list(Arr);
 
 collect(Arr, Count) ->
   receive
-    {Order, Val} ->
-      collect(array:set(Order - 1, Val, Arr), Count - 1);
-    _ -> skip
+    {neuron, Order, Val} ->
+      collect(array:set(Order - 1, Val, Arr), Count - 1)
+  end.
+
+
+sync(Cortex, Ref) ->
+  receive
+    {Cortex, Ref, ok} -> ok
   end.

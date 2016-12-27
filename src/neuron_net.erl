@@ -11,31 +11,69 @@
 %% ]
 new(Layers) ->
   Cortex = cortex:new(),
+  Ref = make_ref(),
 
   Actuators = [actuator:new(Cortex, Key) || Key <- lists:seq(1, 4)],
-  Cortex ! {self(), set, actuators, Actuators},
-  sync(),
+  Cortex ! {self(), Ref, set, actuators, Actuators},
+  cortex:sync(Cortex, Ref),
 
   %% [4] is for the actuators,
   %% [1] is for the input layer.
   Net = new_net(Cortex, [1|Layers] ++ [4]),
-  Cortex ! {self(), set, net, Net},
-  sync(),
+  Cortex ! {self(), Ref, set, net, Net},
+  cortex:sync(Cortex, Ref),
 
-  Cortex ! {self(), set, neuron_num, lists:sum(Layers) + 5},
-  sync(),
+  Cortex ! {self(), Ref, set, neuron_num, lists:sum(Layers) + 5},
+  cortex:sync(Cortex, Ref),
 
   Sensor = sensor:new(Cortex),
-  Cortex ! {self(), set, sensor, Sensor},
-  sync(),
+  Cortex ! {self(), Ref, set, sensor, Sensor},
+  cortex:sync(Cortex, Ref),
 
   Cortex.
 
 
-sync() ->
+copy(OldCortex) ->
+  Cortex = cortex:new(),
+  Ref = make_ref(),
+
+  Actuators = [actuator:new(Cortex, Key) || Key <- lists:seq(1, 4)],
+  Cortex ! {self(), Ref, set, actuators, Actuators},
+  cortex:sync(Cortex, Ref),
+
+  OldCortex ! {self(), Ref, get, net},
   receive
-    ok -> ok
-  end.
+    {OldCortex, Ref, Net, NeuronNum} -> ok
+  end,
+
+  Cortex ! {self(), Ref, set, net, copy_net(Cortex, Net)},
+  cortex:sync(Cortex, Ref),
+
+  Cortex ! {self(), Ref, set, neuron_num, NeuronNum},
+  cortex:sync(Cortex, Ref),
+
+  Sensor = sensor:new(Cortex),
+  Cortex ! {self(), Ref, set, sensor, Sensor},
+  error_logger:info_msg("sensor: ~p~n", [Sensor]),
+  cortex:sync(Cortex, Ref),
+
+  Cortex.
+
+
+copy_net(Cortex, Net) -> copy_net(Cortex, Net, []).
+
+copy_net(_, [], Acc) -> lists:reverse(Acc);
+
+copy_net(Cortex, [Layer|T], Acc) ->
+  copy_net(T, [copy_net_layer(Cortex, Layer)|Acc]).
+
+
+copy_net_layer(Cortex, Layer) -> copy_net_layer(Cortex, Layer, []).
+
+copy_net_layer(_, [], Acc) -> lists:reverse(Acc);
+
+copy_net_layer(Cortex, [{_, N}|T], Acc) ->
+  copy_net_layer(T, [neuron:new(N#neuron{cortex=Cortex})|Acc]).
 
 
 new_net(Cortex, Layers) -> new_net(Cortex, Layers, 480*420, []).
@@ -57,7 +95,7 @@ new_net_layer(Cortex, VecLen, Count, Acc) ->
   new_net_layer(Cortex, VecLen, Count- 1, [Neuron|Acc]).
 
 
-mutate(Net, 0) -> ok;
+mutate(_, 0) -> ok;
 
 mutate(Net, Count) ->
   case mutate_ops() of

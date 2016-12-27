@@ -17,6 +17,10 @@ new(Cortex, VecLen, LayOrd) ->
   {spawn(?MODULE, loop, [Neuron]), Neuron}.
 
 
+new(N=#neuron{}) ->
+  {spawn(?MODULE, loop, [N]), N}.
+
+
 %% W -> Weights
 %% C -> Computing function
 %% A -> Activation function
@@ -35,7 +39,7 @@ loop(N=#neuron{weights=W,
 
     {Cortex, Input} ->
       Result = A(C(Input, W)),
-      Cortex ! {LO, Result},
+      Cortex ! {neuron, LO, Result},
       loop(N)
   end.
 

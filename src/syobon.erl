@@ -47,23 +47,13 @@ get_fitness() ->
   error.
 
 
-get_run_state() ->
-  error.
-
-
-check_run_state() ->
-  case get_run_state() of
-    1 -> ok;
-    0 ->
-      timer:sleep(300),
-      check_run_state()
+wait_game_init() ->
+  receive
+    game_start -> ok
   end.
 
 
 wait_game_end() ->
-  case get_run_state() of
-    1 ->
-      timer:sleep(300),
-      wait_game_end();
-    0 -> ok
+  receive
+    game_end -> ok
   end.
