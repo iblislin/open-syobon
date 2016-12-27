@@ -22,6 +22,9 @@ new(Layers) ->
   Cortex ! {self(), set, net, Net},
   sync(),
 
+  Cortex ! {self(), set, neuron_num, lists:sum(Layers) + 5},
+  sync(),
+
   Sensor = sensor:new(Cortex),
   Cortex ! {self(), set, sensor, Sensor},
   sync(),
@@ -52,3 +55,22 @@ new_net_layer(_, _, 0, Acc) -> lists:reverse(Acc);
 new_net_layer(Cortex, VecLen, Count, Acc) ->
   Neuron = neuron:new(Cortex, VecLen, Count),
   new_net_layer(Cortex, VecLen, Count- 1, [Neuron|Acc]).
+
+
+mutate(Net, 0) -> ok;
+
+mutate(Net, Count) ->
+  case mutate_ops() of
+    weights ->
+      LayerN = rand:uniform(length(Net)),
+      Layer = lists:nth(LayerN, Net),
+      {Pid, _} = lists:nth(rand:uniform(length(Layer)), Layer),
+      Pid ! {self(), ch_weight},
+      receive
+        {Pid, ok} -> ok
+      end
+  end,
+  mutate(Net, Count - 1).
+
+
+mutate_ops() -> element(rand:uniform(1), {weights}).

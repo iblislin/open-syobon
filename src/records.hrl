@@ -14,5 +14,6 @@
 -record(cortex, {
           sensor,  %% sensor pid
           net=[],  %% the neuron network table
-          actuators
+          actuators,
+          neuron_num  %% number of neurons
         }).

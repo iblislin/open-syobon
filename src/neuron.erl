@@ -11,8 +11,7 @@
 %% VL -> VectorLength
 %% Type can be `neuron`, `sensor`
 new(Cortex, VecLen, LayOrd) ->
-  R = fun() -> rand:uniform() - 0.5 end,
-  W = [R() || _ <- lists:seq(1, VecLen)],
+  W = rand_weights(VecLen),
   Neuron = #neuron{weights=W, vec_len=VecLen, layer_order=LayOrd,
                    cortex=Cortex},
   {spawn(?MODULE, loop, [Neuron]), Neuron}.
@@ -26,13 +25,21 @@ loop(N=#neuron{weights=W,
                compute=C,
                cortex=Cortex,
                layer_order=LO}) ->
-  Input =
-    receive
-      {Cortex, terminate} -> exit(ok);
-      {Cortex, X} -> X
-    end,
+  receive
+    {Cortex, terminate} -> exit(ok);
 
-  Result = A(C(Input, W)),
-  Cortex ! {LO, Result},
+    {From, ch_weight} ->
+      NewW = rand_weights(length(W)),
+      From ! {self(), ok},
+      loop(N#neuron{weights=NewW});
 
-  loop(N).
+    {Cortex, Input} ->
+      Result = A(C(Input, W)),
+      Cortex ! {LO, Result},
+      loop(N)
+  end.
+
+
+rand_weights(Len) ->
+  R = fun() -> rand:uniform() - 0.5 end,
+  [R() || _ <- lists:seq(1, Len)].

@@ -28,6 +28,11 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
       From ! ok,
       loop(NewC);
 
+    {From, set, neuron_num, Val} ->
+      NewC = C#cortex{neuron_num=Val},
+      From ! ok,
+      loop(NewC);
+
     {From, set, sensor, Val} ->
       NewC = C#cortex{sensor=Val},
       From ! ok,
@@ -40,6 +45,11 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
 
     {From, get} ->
       From ! C,
+      loop(C);
+
+    {From, nn_mutate} ->
+      neuron_net:mutate(Net, rand:uniform(C#cortex.neuron_num)),
+      From ! ok,
       loop(C);
 
     {Sensor, Input} ->
