@@ -19,7 +19,7 @@ new(Layers) ->
 
   %% [4] is for the actuators,
   %% [1] is for the input layer.
-  Net = new_net(Cortex, [1|Layers] ++ [4]),
+  Net = new_net(Cortex, [1|Layers] ++ [4], 480*420),
   Cortex ! {self(), Ref, set, net, Net},
   cortex:sync(Cortex, Ref),
 
@@ -27,6 +27,30 @@ new(Layers) ->
   cortex:sync(Cortex, Ref),
 
   Sensor = sensor:new(Cortex),
+  Cortex ! {self(), Ref, set, sensor, Sensor},
+  cortex:sync(Cortex, Ref),
+
+  Cortex.
+
+
+new_ffnn(Layers) ->
+  Cortex = cortex:new(),
+  Ref = make_ref(),
+
+  Actuators = [actuator:new_pts(Cortex)],
+  Cortex ! {self(), Ref, set, actuators, Actuators},
+  cortex:sync(Cortex, Ref),
+
+  %% [1] is for the actuators,
+  %% [1] is for the input layer.
+  Net = new_net(Cortex, [1|Layers] ++ [1], 400),
+  Cortex ! {self(), Ref, set, net, Net},
+  cortex:sync(Cortex, Ref),
+
+  Cortex ! {self(), Ref, set, neuron_num, lists:sum(Layers) + 2},
+  cortex:sync(Cortex, Ref),
+
+  Sensor = sensor:new_rng(Cortex, 10000),
   Cortex ! {self(), Ref, set, sensor, Sensor},
   cortex:sync(Cortex, Ref),
 
@@ -76,7 +100,8 @@ copy_net_layer(Cortex, [{_, N}|T], Acc) ->
   copy_net_layer(Cortex, T, [neuron:new(N#neuron{cortex=Cortex})|Acc]).
 
 
-new_net(Cortex, Layers) -> new_net(Cortex, Layers, 480*420, []).
+new_net(Cortex, Layers, InputVecLen) ->
+  new_net(Cortex, Layers, InputVecLen, []).
 
 new_net(_, [], _, Acc) -> lists:reverse(Acc);
 

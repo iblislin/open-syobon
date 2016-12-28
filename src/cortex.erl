@@ -20,6 +20,16 @@ res_ok(To, Ref) ->  %% response ok
 
 loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
   receive
+    {Sensor, sensor, Input} ->
+      Actions = feed_forward(Input, Net),
+
+      [Actuator ! {self(), Act} ||
+        {Act, Actuator} <- lists:zip(Actions, Actuators)],
+
+      Sensor ! {self(), ok},
+
+      loop(C);
+
     {From, Ref, terminate} ->
       Msg = {self(), terminate},
       Sensor ! Msg,
@@ -77,15 +87,16 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
       res_ok(From, Ref),
       loop(C);
 
-    {Sensor, sensor, Input} ->
-      Actions = feed_forward(Input, Net),
+    {Sensor, start_time, Time} ->
+      NewC = C#cortex{start_time=Time},
+      loop(NewC);
 
-      [Actuator ! {self(), Act} ||
-        {Act, Actuator} <- lists:zip(Actions, Actuators)],
-
-      Sensor ! {self(), ok},
-
-      loop(C)
+    {Sensor, stop_time, Time} ->
+      NewC = C#cortex{stop_time=Time},
+      T0 = C#cortex.start_time,
+      error_logger:info_msg("time: ~p s~n",
+                            [timer:now_diff(Time, T0)/1000000]),
+      loop(NewC)
   end.
 
 

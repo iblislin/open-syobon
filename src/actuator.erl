@@ -24,3 +24,17 @@ loop(A=#actuator{key=Key, cortex=Cortex}) ->
   end,
 
   loop(A).
+
+
+new_pts(Cortex) ->
+  spawn(?MODULE, loop_pts, [#actuator{cortex=Cortex}]).
+
+
+loop_pts(A=#actuator{cortex=Cortex}) ->
+  receive
+    {Cortex, terminate} ->
+      ok;
+    {Cortex, Output} ->
+      %% io:format("Ouput val ~p~n", [Output]),
+      loop_pts(A)
+  end.

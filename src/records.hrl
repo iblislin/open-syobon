@@ -7,7 +7,7 @@
           cortex
         }).
 
--record(sensor, {cortex, enabled=false}).
+-record(sensor, {cortex, enabled=false, data_len}).
 -record(actuator, {key, cortex, enabled=true}).
 
 
@@ -15,5 +15,7 @@
           sensor,  %% sensor pid
           net=[],  %% the neuron network table
           actuators,
+          start_time,
+          stop_time,
           neuron_num  %% number of neurons
         }).
