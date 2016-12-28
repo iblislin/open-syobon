@@ -8,7 +8,7 @@
 ffnn_test(Layers) ->
   Ref = make_ref(),
   Cortex = neuron_net:new_ffnn(Layers),
-  Cortex ! {self(), Ref, start_sensor},
+  Cortex ! {self(), Ref, start},
   cortex:sync(Cortex, Ref).
 
 

@@ -5,25 +5,21 @@
 -include("records.hrl").
 
 
-new(Cortex, Key) ->
-  spawn(?MODULE, loop, [#actuator{key=Key, cortex=Cortex}]).
+new(Cortex) ->
+  spawn(?MODULE, loop, [#actuator{cortex=Cortex}]).
 
 
-loop(A=#actuator{key=Key, cortex=Cortex}) ->
-  Input =
-    receive
-      {Cortex, terminate} ->
-        error_logger:info_msg("actuator stop signal"),
-        exit(ok);
-      {Cortex, X} -> X
-    end,
+loop(A=#actuator{cortex=Cortex}) ->
+  receive
+    {input, _Ref, Val} ->
+      Cortex ! {self(), fin, erlang:timestamp()},
+      [syobon:key(Key) || {Key, V} <- lists:zip([1, 2, 3, 4], Val), V >= 0],
+      loop(A);
 
-  case Input >= 0 of
-    true -> syobon:key(Key);
-    false -> release
-  end,
-
-  loop(A).
+    {Cortex, terminate} ->
+      error_logger:info_msg("actuator stop signal"),
+      exit(ok)
+  end.
 
 
 new_pts(Cortex) ->
@@ -32,9 +28,10 @@ new_pts(Cortex) ->
 
 loop_pts(A=#actuator{cortex=Cortex}) ->
   receive
-    {Cortex, terminate} ->
-      ok;
-    {Cortex, Output} ->
-      %% io:format("Ouput val ~p~n", [Output]),
-      loop_pts(A)
+    {input, _Ref, Val} ->
+      Cortex ! {self(), fin, erlang:timestamp()},
+      io:format("Output: ~p~n", [Val]),
+      loop_pts(A);
+
+    {Cortex, terminate} -> ok
   end.

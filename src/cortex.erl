@@ -18,41 +18,70 @@ res_ok(To, Ref) ->  %% response ok
   To ! {self(), Ref, ok}.
 
 
-loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
+loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
+               layer_num=LayerNum, collectors=Collectors,
+               enabled=Enabled}) ->
   receive
-    {Sensor, sensor, Input} ->
-      Actions = feed_forward(Input, Net),
-
-      [Actuator ! {self(), Act} ||
-        {Act, Actuator} <- lists:zip(Actions, Actuators)],
-
-      Sensor ! {self(), ok},
-
+    {Sensor, sensor, Ref, Input} ->
+      Layer1 = hd(Net),
+      [N ! {input, Ref, Input} || {N, _} <- Layer1],
       loop(C);
+
+    {Actuator, fin, Time} ->
+      Ref = make_ref(),
+      case Enabled of
+        true -> ok;
+        false -> loop(C)
+      end,
+      Sensor ! {self(), next, Ref},
+      [Collector ! {self(), push_ref, Ref} || Collector <- Collectors],
+      NewC = C#cortex{stop_time=Time},
+      loop(NewC);
 
     {From, Ref, terminate} ->
-      Msg = {self(), terminate},
-      Sensor ! Msg,
-      %% [Actuator ! Msg || Actuator <- Actuators],
-      %% [[ N ! Msg || {N, _} <- Layer] || Layer <- Net],
+      %% Msg = {self(), terminate},
+      %% Sensor ! Msg,
       res_ok(From, Ref),
-      loop(C);
+      exit(ok);
 
-    {From, Ref, start_sensor} ->
-      Sensor ! {self(), enable},
+    {From, Ref, set, layer_num, Val} ->
+      NewC = C#cortex{layer_num=Val},
       res_ok(From, Ref),
-      loop(C);
+      loop(NewC);
+
+    {From, Ref, set, collectors, Val} ->
+      NewC = C#cortex{collectors=Val},
+      [[Pid ! {self(), set, collector, Collector} ||
+        {Pid, _} <- Layer] ||
+       {Layer, Collector} <- lists:zip(Net, Val)],
+      res_ok(From, Ref),
+      loop(NewC);
+
+    {From, Ref, start} ->
+      NewC = C#cortex{start_time=erlang:timestamp(), enabled=true},
+
+      Refs = [make_ref() || _ <- lists:seq(1, LayerNum)],
+      [Sensor ! {self(), next, R} || R <- Refs],
+      [Collector ! {self(), push_ref, R} || Collector <- Collectors, R <- Refs],
+
+      res_ok(From, Ref),
+      loop(NewC);
+
+    {From, Ref, stop} ->
+      NewC = C#cortex{enabled=false},
+      res_ok(From, Ref),
+      loop(NewC);
 
     {From, Ref, stop_sensor} ->
       Sensor ! {self(), disable},
       res_ok(From, Ref),
       loop(C);
 
-    {From, Ref, stop_actuator} ->
-      Msg = {self(), terminate},
-      [Actuator ! Msg || Actuator <- Actuators],
-      res_ok(From, Ref),
-      loop(C);
+    %% {From, Ref, stop_actuator} ->
+    %%   Msg = {self(), terminate},
+    %%   [Actuator ! Msg || Actuator <- Actuators],
+    %%   res_ok(From, Ref),
+    %%   loop(C);
 
     {From, Ref, set, net, Val} ->
       NewC = C#cortex{net=Val},
@@ -69,8 +98,8 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
       res_ok(From, Ref),
       loop(NewC);
 
-    {From, Ref, set, actuators, Val} ->
-      NewC = C#cortex{actuators=Val},
+    {From, Ref, set, actuator, Val} ->
+      NewC = C#cortex{actuator=Val},
       res_ok(From, Ref),
       loop(NewC);
 
@@ -87,9 +116,10 @@ loop(C=#cortex{sensor=Sensor, actuators=Actuators, net=Net}) ->
       res_ok(From, Ref),
       loop(C);
 
-    {Sensor, start_time, Time} ->
-      NewC = C#cortex{start_time=Time},
-      loop(NewC);
+    {Sensor, get_time} ->
+      error_logger:info_msg("time: ~p s",
+                            [timer:now_diff(C#cortex.stop_time, C#cortex.start_time) / 1000000]),
+      loop(C);
 
     {Sensor, stop_time, Time} ->
       NewC = C#cortex{stop_time=Time},

@@ -28,19 +28,24 @@ loop(N=#neuron{weights=W,
                activate=A,
                compute=C,
                cortex=Cortex,
+               collector=Collector,
                layer_order=LO}) ->
   receive
+    {input, Ref, Input} ->
+      Result = A(C(Input, W)),
+      Collector ! {neuron, Ref, LO, Result},
+      loop(N);
+
     {Cortex, terminate} -> exit(ok);
+
+    {Cortex, set, collector, Val} ->
+      NewN = N#neuron{collector=Val},
+      loop(NewN);
 
     {From, ch_weight} ->
       NewW = rand_weights(length(W)),
       From ! {self(), ok},
-      loop(N#neuron{weights=NewW});
-
-    {Cortex, Input} ->
-      Result = A(C(Input, W)),
-      Cortex ! {neuron, LO, Result},
-      loop(N)
+      loop(N#neuron{weights=NewW})
   end.
 
 

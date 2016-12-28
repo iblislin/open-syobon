@@ -3,10 +3,6 @@
 -compile(export_all).
 
 
-main([Count, Generation]) ->
-  start(Count, Generation).
-  %% erlang:hang(0).
-
 start(Count, Generation) ->
   syobon:syobon_init(),
   {Cortexes, Fits} = new_population(Count),
@@ -39,17 +35,13 @@ play(Cortex) ->
   syobon:syobon_main(),  %% play!
 
   ok = syobon:wait_game_init(),
-  Cortex ! {self(), Ref, start_sensor},
+  Cortex ! {self(), Ref, start},
   cortex:sync(Cortex, Ref),
-  error_logger:info_msg("sensor start"),
 
   ok = syobon:wait_game_end(),
   error_logger:info_msg("gname end"),
-  Cortex ! {self(), Ref, stop_sensor},
+  Cortex ! {self(), Ref, stop},
   error_logger:info_msg("wait for sensor stop"),
-  cortex:sync(Cortex, Ref),
-  Cortex ! {self(), Ref, stop_actuator},
-  error_logger:info_msg("wait for actuators stop"),
   cortex:sync(Cortex, Ref),
   error_logger:info_msg("sensor stop"),
 
