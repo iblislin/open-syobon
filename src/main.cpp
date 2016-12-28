@@ -1,6 +1,8 @@
 #include "main.h"
 #include <unistd.h>
 #include <iostream>
+#include <string>
+#include <cstdlib>
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
@@ -14,6 +16,17 @@ Uint32 last_time = 0;
 struct worker_args {
     ErlNifPid* caller;
 };
+
+void debug_screen() {
+    setcolor(0, 0, 0);
+    char c[100];
+
+    sprintf(c, "time: %ld", stime - last_time);
+    str(c, 10, 10);
+
+    sprintf(c, "fitness: %d", fx);
+    str(c, 10, 10 + 14);
+}
 
 void* worker(void* args) {
     ErlNifEnv* msg_env = enif_alloc_env();
@@ -36,24 +49,16 @@ void* worker(void* args) {
         // timeout rules
         Uint32 time_delta = stime - last_time;
         if (fx <= 34301 && time_delta >= 20000)
-        {
-            last_time = stime;
             break;
-        }
         else if (fx <= 163400 && time_delta >= 40000)
-        {
-            last_time = stime;
             break;
-        }
         else if (time_delta >= 70000) // global timeout
-        {
-            last_time = stime;
             break;
-        }
 
         if (maint == 3)
             break;
     }
+    last_time = stime;
     run_state = 0;
 
     ERL_NIF_TERM msg = enif_make_atom(msg_env, "game_end");
@@ -1356,6 +1361,9 @@ void rpaint()
         str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
 
     }
+#ifdef PP
+    debug_screen();
+#endif
     ScreenFlip();
 
 }				//rpaint()
