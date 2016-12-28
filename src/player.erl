@@ -3,16 +3,19 @@
 -compile(export_all).
 
 
-start(Count) ->
+main([Count, Generation]) ->
+  start(Count, Generation).
+  %% erlang:hang(0).
+
+start(Count, Generation) ->
   syobon:syobon_init(),
   {Cortexes, Fits} = new_population(Count),
-  Parents = selection(lists:zip(Cortexes, Fits)),
-  Childs = new_generation(Parents),
-  error_logger:info_msg("child ~n~p", [Childs]),
+
+  Final = next_gen(lists:zip(Cortexes, Fits), Generation),
 
   syobon:syobon_deinit(),
 
-  {{parents, Parents}, {children, Childs}}.
+  Final.
 
 
 new_population(Count) -> new_population(Count, [], []).
@@ -72,3 +75,15 @@ new_generation([{P, _}|T], Childs, Fits) ->
   error_logger:info_msg("new child ~p from ~p~n", [C, P]),
   Fit = play(C),
   new_generation(T, [C|Childs], [Fit|Fits]).
+
+
+next_gen(Parents, 0) -> Parents;
+
+next_gen(Parents, Counter) ->
+  error_logger:info_msg("parents to selection ~p~n", [Parents]),
+  NewParents = selection(Parents),
+  {Childs, ChildFits} = new_generation(NewParents),
+  error_logger:info_msg("child ~n~p", [Childs]),
+
+  C = lists:zip(Childs, ChildFits),
+  next_gen(NewParents ++ C, Counter - 1).

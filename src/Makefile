@@ -1,7 +1,8 @@
 .SUFFIXES: .erl .beam
 
 all: syobon_nif.so syobon.beam lnalg.beam player.beam neuron.beam \
-     neuron_net.beam cortex.beam sensor.beam actuator.beam
+     neuron_net.beam cortex.beam sensor.beam actuator.beam \
+     benchmark.beam
 
 SyobonAction: main.o loadg.o DxLib.o
 	clang++ main.o loadg.o DxLib.o -o SyobonAction `sdl-config --libs` \
