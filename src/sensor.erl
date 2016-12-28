@@ -13,7 +13,9 @@ loop(S=#sensor{cortex=Cortex}) ->
   receive
     {Cortex, next, Ref} ->
       Cortex ! {self(), sensor, Ref, syobon:get_map()},
-      loop(S)
+      loop(S);
+
+    {Cortex, terminate} -> exit(0)
   end.
 
 
@@ -29,5 +31,7 @@ loop_rng(S=#sensor{cortex=Cortex, data_len=DataCount}) ->
   receive
     {Cortex, next, Ref} ->
       Cortex ! {self(), sensor, Ref, [rand:uniform() || _ <- lists:seq(1, 400)]},
-      loop_rng(S#sensor{data_len=DataCount - 1})
+      loop_rng(S#sensor{data_len=DataCount - 1});
+
+    {Cortex, terminate} -> exit(0)
   end.

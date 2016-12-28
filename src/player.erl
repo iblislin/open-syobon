@@ -51,7 +51,8 @@ play(Cortex) ->
 selection(Score) ->
   L = lists:sort(fun({_, A}, {_, B}) -> A =< B end, Score),
   Size = length(L) div 2,
-  {_, Parents} = lists:split(Size, L),
+  {Kills, Parents} = lists:split(Size, L),
+  [Pid ! {self(), terminate}|| {Pid, _} <- Kills],
   Parents.
 
 

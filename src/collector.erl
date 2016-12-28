@@ -32,7 +32,9 @@ loop(C=#collector{cortex=Cortex, refs_queue=Refs, ref=Ref, arr=Arr,
       case Ref of
         undefined -> loop(C#collector{ref=NewRef});
         _ -> loop(C#collector{refs_queue=Refs ++ [NewRef]})
-      end
+      end;
+
+    {Cortex, terminate} -> exit(ok)
   end.
 
 

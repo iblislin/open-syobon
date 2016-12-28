@@ -38,12 +38,6 @@ loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
       NewC = C#cortex{stop_time=Time},
       loop(NewC);
 
-    {From, Ref, terminate} ->
-      %% Msg = {self(), terminate},
-      %% Sensor ! Msg,
-      res_ok(From, Ref),
-      exit(ok);
-
     {From, Ref, set, layer_num, Val} ->
       NewC = C#cortex{layer_num=Val},
       res_ok(From, Ref),
@@ -69,6 +63,19 @@ loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
 
     {From, Ref, stop} ->
       NewC = C#cortex{enabled=false},
+
+      %% terminate neurons
+      [[ N ! {self(), terminate} || {N, _} <- L] || L <- Net],
+
+      %% terminate collectors
+      [Collector ! {self(), terminate} || Collector <- Collectors],
+
+      %% terminate actuator
+      Actuator ! {self(), terminate},
+
+      %% terminate sensor
+      Sensor ! {self(), terminate},
+
       res_ok(From, Ref),
       loop(NewC);
 
@@ -126,7 +133,10 @@ loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
       T0 = C#cortex.start_time,
       error_logger:info_msg("time: ~p s~n",
                             [timer:now_diff(Time, T0)/1000000]),
-      loop(NewC)
+      loop(NewC);
+
+    {_From, terminate} ->  %% destory and none of data will be held
+      exit(ok)
   end.
 
 
