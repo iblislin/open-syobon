@@ -164,9 +164,10 @@ get_map(ErlNifEnv *env, int args, const ERL_NIF_TERM argv[])
 {
     SDL_LockSurface(screen);
     for (int i = 0; i < 480 * 420; i++) {
-        map_buffer[i] = enif_make_uint(env, *((Uint32*)screen->pixels));
+        map_buffer[i] = enif_make_uint(env, *((Uint32*)screen->pixels + i));
     }
     SDL_UnlockSurface(screen);
+
     return enif_make_list_from_array(env, map_buffer, 480*420);
 }
 
