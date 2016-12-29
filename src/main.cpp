@@ -29,7 +29,7 @@ void debug_screen() {
 }
 
 void* worker(void* args) {
-    ErlNifEnv* msg_env = enif_alloc_env();
+    ErlNifEnv* worker_env = enif_alloc_env();
 
     run_state = 1; // start the game
     zxon = 0;  // make game reinit
@@ -41,8 +41,8 @@ void* worker(void* args) {
         Mainprogram();
 
         if(run_state) {
-            ERL_NIF_TERM msg = enif_make_atom(msg_env, "game_start");
-            enif_send(NULL, ((worker_args *)args)->caller, msg_env, msg);
+            ERL_NIF_TERM msg = enif_make_atom(worker_env, "game_start");
+            enif_send(NULL, ((worker_args *)args)->caller, worker_env, msg);
             run_state = 0;
         }
 
@@ -61,8 +61,10 @@ void* worker(void* args) {
     last_time = stime;
     run_state = 0;
 
-    ERL_NIF_TERM msg = enif_make_atom(msg_env, "game_end");
-    enif_send(NULL, ((worker_args *)args)->caller, msg_env, msg);
+    ERL_NIF_TERM msg = enif_make_atom(worker_env, "game_end");
+    enif_send(NULL, ((worker_args *)args)->caller, worker_env, msg);
+
+    enif_free_env(worker_env);
     return NULL;
 }
 
