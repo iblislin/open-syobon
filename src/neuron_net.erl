@@ -46,7 +46,7 @@ new(Layers) ->
 
 
 new_collectors(Cortex, Net, Actuator) ->
-  [collector:new(Cortex, 1, lists:nth(2, Net)) |
+  [collector:new(Cortex, length(hd(Net)), lists:nth(2, Net)) |
    [collector:new(Cortex, length(L1), L2) ||
     {L1, L2} <- lists:zip(lists:droplast(tl(Net)), tl(tl(Net)))]]
   ++ [collector:new(Cortex, length(lists:last(Net)), [{Actuator, ok}])].
