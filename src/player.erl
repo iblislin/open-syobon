@@ -76,7 +76,9 @@ next_gen(Parents, Counter) ->
   error_logger:info_msg("parents to selection ~p~n", [Parents]),
   NewParents = selection(Parents),
   {Childs, ChildFits} = new_generation(NewParents),
-  error_logger:info_msg("child ~n~p", [Childs]),
+  error_logger:info_msg("new born"),
+  {NewPop, NewPopFits} = new_population(length(NewParents)),
 
   C = lists:zip(Childs, ChildFits),
-  next_gen(NewParents ++ C, Counter - 1).
+  NP = lists:zip(NewPop, NewPopFits),
+  next_gen(NewParents ++ C ++ NP, Counter - 1).
