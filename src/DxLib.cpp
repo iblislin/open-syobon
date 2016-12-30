@@ -249,14 +249,17 @@ SDL_Surface* DerivationGraph(int srcx, int srcy, int width, int height,
     return img;
 }
 
-//Noticably different than the original
-SDL_Surface *LoadGraph(const char *filename)
+// Noticably different than the original
+// NULL will be returned on error
+SDL_Surface* LoadGraph(const char *filename)
 {
     SDL_Surface *image = IMG_Load(filename);
 
-    if (image) return image;
-	fprintf(stderr, "Error: Unable to load %s: %s\n", filename, IMG_GetError());
-	exit(1);
+    if (!image)
+        std::cerr << "Error: Unable to load" << filename
+                  << ": " << IMG_GetError() << std::endl;
+
+    return image;
 }
 
 void PlaySoundMem(Mix_Chunk* s, int l)
