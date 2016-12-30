@@ -114,10 +114,6 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
     delete[] newstr;
 }
 
-//Key Aliases
-#define KEY_INPUT_ESCAPE SDLK_ESCAPE
-
-bool ex = false;
 
 void UpdateKeys()
 {
@@ -154,15 +150,10 @@ void UpdateKeys()
 	    }
 	    break;
 	case SDL_QUIT:
-	    ex = true;
+        exit(0);
 	    break;
 	}
     }
-}
-
-byte ProcessMessage()
-{
-    return ex;
 }
 
 byte CheckHitKey(int key)

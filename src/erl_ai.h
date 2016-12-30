@@ -36,7 +36,7 @@ void* worker(void* args) {
     run_state = 1; // start the game
     zxon = 0;  // make game reinit
     // main window
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
+    while (!CheckHitKey(KEY_INPUT_ESCAPE))
     {
         UpdateKeys();
         maint = 0;

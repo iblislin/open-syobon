@@ -89,7 +89,6 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
 extern SDL_Joystick* joystick;
 
 void UpdateKeys();
-byte ProcessMessage();
 byte CheckHitKey(int key);
 byte WaitKey();
 

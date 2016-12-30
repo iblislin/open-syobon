@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
         return 1;
 
     //ループ
-    while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
+    while (!CheckHitKey(KEY_INPUT_ESCAPE)) {
         UpdateKeys();
         maint = 0;
         Mainprogram();
