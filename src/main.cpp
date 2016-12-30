@@ -1408,7 +1408,9 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    Mix_HaltMusic();
 	    ot(oto[12]);
 	    StopSoundMem(oto[16]);
+#ifdef ERL_AI
         maint = 3;  // end game
+#endif
 	}			//mhp
 //if (mhp<=-10){
 	if (mtype == 200) {
