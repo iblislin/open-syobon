@@ -6,7 +6,8 @@
 int main(int argc, char *argv[])
 {
     parseArgs(argc, argv);
-    if (DxLib_Init() == -1)
+
+    if (DxLib_Init() != 0)
         return 1;
 
     //全ロード

@@ -10,12 +10,8 @@ extern Mix_Chunk *oto[19];
 extern int anx[160], any[160];
 extern int ne[40], nf[40];
 
-void loadg(void)
+void loadg()
 {
-
-    for (t = 0; t < 51; t++) {
-	mgrap[t] = 0;
-    }
     for (int i = 0; i < 161; i++)
 	for (int j = 0; j < 8; j++)
 	    grap[i][j] = NULL;
