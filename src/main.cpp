@@ -1137,7 +1137,7 @@ void rpaint()
 void Mainprogram(GameConfig* gameConf)
 {
 
-    stime = long (GetNowCount());
+    Uint32 stime = SDL_GetTicks();
 
     if (ending == 1)
         mainZ = 2;
@@ -4472,15 +4472,13 @@ break;
     rpaint();
 
 //30-fps
-    xx[0] = 30;
-    if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-	xx[0] = 60;
-    }
-    wait2(stime, long (GetNowCount()), 1000 / xx[0]);
+    gameConf->fps = 30;
+    if (CheckHitKey(KEY_INPUT_SPACE) == 1)
+        gameConf->fps = 60;
 
-//wait(20);
+    wait(stime, SDL_GetTicks(), 1000 / gameConf->fps);
 
-}				//Mainprogram()
+}  // end of Mainprogram()
 
 void tekizimen()
 {
@@ -4675,10 +4673,11 @@ void tekizimen()
 }				//tekizimen
 
 //タイマー測定
-void wait2(long stime, long etime, int FLAME_TIME)
+void wait(Uint32 stime, Uint32 etime, int frame_time)
 {
-    if (etime - stime < FLAME_TIME)
-	wait(FLAME_TIME - (etime - stime));
+    if (etime - stime >= frame_time)
+        return;
+    SDL_Delay(frame_time - (etime - stime));
 }
 
 //乱数作成

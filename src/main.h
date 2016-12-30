@@ -11,9 +11,11 @@ void parseArgs(int argc, char* argv[]);
 class GameConfig {
     public:
         bool endFlag;
+        int fps;  // frame per second
 
-        GameConfig()
-            : endFlag(false)
+        GameConfig() :
+            endFlag(false),
+            fps(30)
         {
         }
 };
@@ -61,8 +63,7 @@ void rpaint();
 
 //サブクラス
 //(ウエイト系
-#define wait(i) SDL_Delay(i)
-void wait2(long stime, long etime, int FLAME_TIME);
+void wait(Uint32 stime, Uint32 etime, int frame_time);
 int rand(int Rand);
 #define end() exit(0)
 
@@ -253,11 +254,6 @@ int xx[91];
 double xd[11];
 string xs[31];
 
-
-//タイマー測定
-//: Do with this what we did with fma
-long stimeZ;
-#define stime stimeZ
 
 // function prototypes
 void deinit();

@@ -27,7 +27,6 @@
 #define byte unsigned char
 
 #define ScreenFlip() SDL_Flip(screen)
-#define GetNowCount() SDL_GetTicks()
 
 //UNIMPLEMENTED - macro substitution
 #define SetFontThickness(f);
