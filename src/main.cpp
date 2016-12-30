@@ -121,7 +121,7 @@ void _hit_key(SDLKey k){
 
     SDL_PushEvent(&sdlevent);
 
-    usleep(10000);
+    usleep(100000);
 
     sdlevent.type = SDL_KEYUP;
     sdlevent.key.keysym.sym = k;

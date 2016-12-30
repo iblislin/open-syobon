@@ -2,7 +2,7 @@
 #include <thread>
 #include <unistd.h>
 
-#include <zmq.hpp>
+// #include <zmq.hpp>
 
 #include "DxLib.h"
 
