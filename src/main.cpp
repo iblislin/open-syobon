@@ -5,6 +5,8 @@
 
 int main(int argc, char *argv[])
 {
+    GameConfig gameConf;
+
     parseArgs(argc, argv);
 
     if (DxLib_Init() != 0)
@@ -17,14 +19,14 @@ int main(int argc, char *argv[])
     //ループ
     while (!CheckHitKey(KEY_INPUT_ESCAPE)) {
         UpdateKeys();
-        maint = 0;
-        Mainprogram();
-        if (maint == 3)
+        Mainprogram(&gameConf);
+
+        if (gameConf.endFlag)
             break;
     }
 
-    //ＤＸライブラリ使用の終了処理
-    end();
+    // this will trigger the atexit function registered by DxLib_Init
+    return 0;
 }
 
 //メイン描画
@@ -1132,7 +1134,7 @@ void rpaint()
 }				//rpaint()
 
 //メインプログラム
-void Mainprogram()
+void Mainprogram(GameConfig* gameConf)
 {
 
     stime = long (GetNowCount());
@@ -1407,7 +1409,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    ot(oto[12]);
 	    StopSoundMem(oto[16]);
 #ifdef ERL_AI
-        maint = 3;  // end game
+        gameConf.endFlag = true;  // end game
 #endif
 	}			//mhp
 //if (mhp<=-10){

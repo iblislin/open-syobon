@@ -8,7 +8,15 @@ using namespace std;
 int loadg();
 void parseArgs(int argc, char* argv[]);
 
-//String 使用
+class GameConfig {
+    public:
+        bool endFlag;
+
+        GameConfig()
+            : endFlag(false)
+        {
+        }
+};
 
 //プログラム中
 //main-10
@@ -47,9 +55,8 @@ int stageonoff = 0;
 
 
 //メインプログラム
-void Mainprogram();
+void Mainprogram(GameConfig*);
 void rpaint();
-int maint;
 
 
 //サブクラス
