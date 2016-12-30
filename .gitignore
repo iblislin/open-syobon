@@ -1,3 +1,6 @@
 SyobonAction
 *.o
 *.core
+cscope.out
+*.so
+*.beam

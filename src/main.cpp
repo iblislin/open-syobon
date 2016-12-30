@@ -2,6 +2,7 @@
 
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
+
 int main(int argc, char *argv[])
 {
     parseArgs(argc, argv);
@@ -1089,42 +1090,45 @@ void rpaint()
 
 	str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
     }
-//Showing lives
+    //Showing lives
     if (mainZ == 10) {
 
-	setc0();
-	FillScreen();
+        setc0();
+        FillScreen();
 
-	SetFontSize(16);
-	SetFontThickness(4);
+        SetFontSize(16);
+        SetFontThickness(4);
 
-	drawimage(grap[0][0], 190, 190);
-	DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
-			 nokori);
+        drawimage(grap[0][0], 190, 190);
+        DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
+                nokori);
 
     }
-//タイトル
+    //タイトル
     if (mainZ == 100) {
 
-	setcolor(160, 180, 250);
-	fillrect(0, 0, fxmax, fymax);
+        setcolor(160, 180, 250);
+        fillrect(0, 0, fxmax, fymax);
 
-	drawimage(mgrap[30], 240 - 380 / 2, 60);
+        drawimage(mgrap[30], 240 - 380 / 2, 60);
 
-	drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
-	drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
+        drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
+        drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
 
-//プレイヤー
-	drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
-	for (t = 0; t <= 16; t++) {
-	    drawimage(grap[5][1], 29 * t, 13 * 29 - 12);
-	    drawimage(grap[6][1], 29 * t, 14 * 29 - 12);
-	}
+        //プレイヤー
+        drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
+        for (t = 0; t <= 16; t++) {
+            drawimage(grap[5][1], 29 * t, 13 * 29 - 12);
+            drawimage(grap[6][1], 29 * t, 14 * 29 - 12);
+        }
 
-	setcolor(0, 0, 0);
-	str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
+        setcolor(0, 0, 0);
+        str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
 
     }
+#ifdef ERL_AI
+    debug_screen();
+#endif
     ScreenFlip();
 
 }				//rpaint()
@@ -1141,7 +1145,7 @@ void Mainprogram()
     //キー
     if (mainZ == 1 && tmsgtype == 0) {
 
-	if (zxon == 0) {
+	if (zxon == 0) { // init ?
 	    zxon = 1;
 	    mainmsgtype = 0;
 
@@ -1404,6 +1408,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    Mix_HaltMusic();
 	    ot(oto[12]);
 	    StopSoundMem(oto[16]);
+        maint = 3;  // end game
 	}			//mhp
 //if (mhp<=-10){
 	if (mtype == 200) {
@@ -2767,11 +2772,13 @@ if (mtm==250)end();
 			    ma = sa[t] - fx - 2000;
 			    ot(oto[11]);
 			}
+#ifdef DISABLE_SAVE_FLAG
 //中間ゲート
 			if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
 			    tyuukan += 1;
 			    sa[t] = -80000000;
 			}
+#endif
 
 		    }
 
@@ -4260,24 +4267,6 @@ break;
 			    mmsgtype = 3;
 			}
 
-/*
-if (atype[t]==101){mmutekitm=120;mmutekion=1;}
-if (atype[t]==102){mhp-=1;mmutekitm=20;}
-if (atype[t]==103){
-//xx[24]=2400;
-eyobi(aa[t]-500,ab[t],0,-600,0,80,2500,1600,2,32);
-}
-if (atype[t]==104){mztm=120;mztype=1;}
-if (atype[t]==105){mztm=160;mztype=2;}
-
-if (atype[t]==120){mtype=3;mnobia=3800;mnobib=2300;}
-
-if (atype[t]==130){msoubi=1;}
-if (atype[t]==131){msoubi=2;}
-if (atype[t]==132){msoubi=3;}
-if (atype[t]==133){msoubi=4;}
-
-*/
 			aa[t] = -90000000;
 		    }
 
@@ -4314,68 +4303,67 @@ if (atype[t]==133){msoubi=4;}
 
 //スタッフロール
     if (mainZ == 2) {
-	maintm++;
+        maintm++;
 
-	xx[7] = 46;
-	if (CheckHitKey(KEY_INPUT_1) == 1) {
-	    end();
-	}
-	if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] -= 300;
-	    }
-	}
+        xx[7] = 46;
+        if (CheckHitKey(KEY_INPUT_1) == 1) {
+            end();
+        }
+        if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
+            for (t = 0; t <= xx[7]; t += 1) {
+                xx[12 + t] -= 300;
+            }
+        }
 
-	if (maintm <= 1) {
-	    maintm = 2;
-	    bgmchange(otom[5]);
-	    xx[10] = 0;
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] = 980000;
-	    }
-//for (t=0;t<=xx[7];t+=2){xx[12+t]=46000;}
-	    xx[12] = 460;
-	    xx[13] = 540;
-	    xx[14] = 590;
-	    xx[15] = 650;
-	    xx[16] = 700;
-	    xx[17] = 760;
-	    xx[18] = 810;
-	    xx[19] = 870;
-	    xx[20] = 920;
+        if (maintm <= 1) {
+            maintm = 2;
+            bgmchange(otom[5]);
+            xx[10] = 0;
+            for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] = 980000;
+            }
+            xx[12] = 460;
+            xx[13] = 540;
+            xx[14] = 590;
+            xx[15] = 650;
+            xx[16] = 700;
+            xx[17] = 760;
+            xx[18] = 810;
+            xx[19] = 870;
+            xx[20] = 920;
 
-	    xx[21] = 1000;
-	    xx[22] = 1050;
-	    xx[23] = 1100;
-	    xx[24] = 1180;
-	    xx[25] = 1230;
+            xx[21] = 1000;
+            xx[22] = 1050;
+            xx[23] = 1100;
+            xx[24] = 1180;
+            xx[25] = 1230;
 
-	    xx[26] = 1360;
-	    xx[27] = 1410;
-	    xx[28] = 1540;
-	    xx[29] = 1590;
+            xx[26] = 1360;
+            xx[27] = 1410;
+            xx[28] = 1540;
+            xx[29] = 1590;
 
-	    xx[30] = 1800;
+            xx[30] = 1800;
 
-	    for (t = 0; t <= xx[7]; t += 1) {
-		xx[12 + t] *= 100;
-	    }
-	}
+            for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] *= 100;
+            }
+        }
 
-	xx[10] += 1;
-	for (t = 0; t <= xx[7]; t += 1) {
-	    xx[12 + t] -= 100;
-	}			//t
+        xx[10] += 1;
+        for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] -= 100;
+        }			//t
 
-	if (xx[30] == -200) {
-	    bgmchange(otom[5]);
-	}
-	if (xx[30] <= -400) {
-	    mainZ = 100;
-	    nokori = 2;
-	    maintm = 0;
-	    ending = 0;
-	}
+        if (xx[30] == -200) {
+            bgmchange(otom[5]);
+        }
+        if (xx[30] <= -400) {
+            mainZ = 100;
+            nokori = 2;
+            maintm = 0;
+            ending = 0;
+        }
 
     }				//mainZ==2
 
@@ -4395,6 +4383,10 @@ if (atype[t]==133){msoubi=4;}
     if (mainZ == 100) {
 	maintm++;
 	xx[0] = 0;
+#ifdef ERL_AI
+    // skip the title
+    xx[0] = 1;
+#endif
 	if (maintm <= 10) {
 	    maintm = 11;
 	    sta = 1;
@@ -4980,8 +4972,6 @@ void stagecls()
 //ステージロード
 void stage()
 {
-
-//fzx=6000*100;
     scrollx = 3600 * 100;
 
 //byte stagedate[16][801];
@@ -4991,127 +4981,135 @@ void stage()
 
     stagep();
 
+    // for (int i = 0; i < 17; i++) {
+    //     for (int j = 0; j < 2001; j++) {
+    //         std::cout << stagedate[i][j] + '0' << " ";
+    //     }
+    //     std::cout << std::endl;
+    // }
+
+
     for (tt = 0; tt <= 1000; tt++) {
-	for (t = 0; t <= 16; t++) {
-	    xx[10] = 0;
-	    if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
-		xx[10] = (int) stagedate[t][tt];
-	    xx[21] = tt * 29;
-	    xx[22] = t * 29 - 12;
-	    xx[23] = xx[10];
-	    if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9) {
-		tyobi(tt * 29, t * 29 - 12, xx[10]);
-	    }
-	    if (xx[10] >= 20 && xx[10] <= 29) {
-		sra[srco] = xx[21] * 100;
-		srb[srco] = xx[22] * 100;
-		src[srco] = 3000;
-		srtype[srco] = 0;
-		srco++;
-		if (srco >= srmax)
-		    srco = 0;
-	    }
-	    if (xx[10] == 30) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 3000;
-		sd[sco] = 6000;
-		stype[sco] = 500;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 40) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 6000;
-		sd[sco] = 3000;
-		stype[sco] = 1;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 41) {
-		sa[sco] = xx[21] * 100 + 500;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 5000;
-		sd[sco] = 3000;
-		stype[sco] = 2;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
+        for (t = 0; t <= 16; t++) {
+            xx[10] = 0;
+            if (stagedate[t][tt] >= 1 && stagedate[t][tt] <= 255)
+                xx[10] = (int) stagedate[t][tt];
+            xx[21] = tt * 29;
+            xx[22] = t * 29 - 12;
+            xx[23] = xx[10];
+            if (xx[10] >= 1 && xx[10] <= 19 && xx[10] != 9) {
+                tyobi(tt * 29, t * 29 - 12, xx[10]);
+            }
+            if (xx[10] >= 20 && xx[10] <= 29) {
+                sra[srco] = xx[21] * 100;
+                srb[srco] = xx[22] * 100;
+                src[srco] = 3000;
+                srtype[srco] = 0;
+                srco++;
+                if (srco >= srmax)
+                    srco = 0;
+            }
+            if (xx[10] == 30) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 3000;
+                sd[sco] = 6000;
+                stype[sco] = 500;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 40) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 6000;
+                sd[sco] = 3000;
+                stype[sco] = 1;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 41) {
+                sa[sco] = xx[21] * 100 + 500;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 5000;
+                sd[sco] = 3000;
+                stype[sco] = 2;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
 
-	    if (xx[10] == 43) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100 + 500;
-		sc[sco] = 2900;
-		sd[sco] = 5300;
-		stype[sco] = 1;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	    if (xx[10] == 44) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100 + 700;
-		sc[sco] = 3900;
-		sd[sco] = 5000;
-		stype[sco] = 5;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-//これなぜかバグの原因ｗ
-	    if (xx[10] >= 50 && xx[10] <= 79) {
-		ba[bco] = xx[21] * 100;
-		bb[bco] = xx[22] * 100;
-		btype[bco] = xx[23] - 50;
-		bco++;
-		if (bco >= bmax)
-		    bco = 0;
-	    }
+            if (xx[10] == 43) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100 + 500;
+                sc[sco] = 2900;
+                sd[sco] = 5300;
+                stype[sco] = 1;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+            if (xx[10] == 44) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100 + 700;
+                sc[sco] = 3900;
+                sd[sco] = 5000;
+                stype[sco] = 5;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+    //これなぜかバグの原因ｗ
+            if (xx[10] >= 50 && xx[10] <= 79) {
+                ba[bco] = xx[21] * 100;
+                bb[bco] = xx[22] * 100;
+                btype[bco] = xx[23] - 50;
+                bco++;
+                if (bco >= bmax)
+                    bco = 0;
+            }
 
-	    if (xx[10] >= 80 && xx[10] <= 89) {
-		na[nco] = xx[21] * 100;
-		nb[nco] = xx[22] * 100;
-		ntype[nco] = xx[23] - 80;
-		nco++;
-		if (nco >= nmax)
-		    nco = 0;
-	    }
-//コイン
-	    if (xx[10] == 9) {
-		tyobi(tt * 29, t * 29 - 12, 800);
-	    }
-	    if (xx[10] == 99) {
-		sa[sco] = xx[21] * 100;
-		sb[sco] = xx[22] * 100;
-		sc[sco] = 3000;
-		sd[sco] = (12 - t) * 3000;
-		stype[sco] = 300;
-		sco++;
-		if (sco >= smax)
-		    sco = 0;
-	    }
-	}
+            if (xx[10] >= 80 && xx[10] <= 89) {
+                na[nco] = xx[21] * 100;
+                nb[nco] = xx[22] * 100;
+                ntype[nco] = xx[23] - 80;
+                nco++;
+                if (nco >= nmax)
+                    nco = 0;
+            }
+    //コイン
+            if (xx[10] == 9) {
+                tyobi(tt * 29, t * 29 - 12, 800);
+            }
+            if (xx[10] == 99) {
+                sa[sco] = xx[21] * 100;
+                sb[sco] = xx[22] * 100;
+                sc[sco] = 3000;
+                sd[sco] = (12 - t) * 3000;
+                stype[sco] = 300;
+                sco++;
+                if (sco >= smax)
+                    sco = 0;
+            }
+        }
     }
 
     if (tyuukan >= 1) {
-	xx[17] = 0;
-	for (t = 0; t < smax; t++) {
-	    if (stype[t] == 500 && tyuukan >= 1) {
-		fx = sa[t] - fxmax / 2;
-		fzx = fx;
-		ma = sa[t] - fx;
-		mb = sb[t] - fy;
-		tyuukan--;
-		xx[17]++;
+        xx[17] = 0;
+        for (t = 0; t < smax; t++) {
+            if (stype[t] == 500 && tyuukan >= 1) {
+                fx = sa[t] - fxmax / 2;
+                fzx = fx;
+                ma = sa[t] - fx;
+                mb = sb[t] - fy;
+                tyuukan--;
+                xx[17]++;
 
-		sa[t] = -80000000;
-	    }
-	}
-	tyuukan += xx[17];
+                sa[t] = -80000000;
+            }
+        }
+        tyuukan += xx[17];
     }
 //tyobi(1,2,3);
 
