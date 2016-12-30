@@ -44,6 +44,7 @@ int DxLib_Init()
         std::cerr << "Unable to init SDL_ttf: " << TTF_GetError() << std::endl;
         return -1;
     }
+    SetFontSize(16);
 
     //Audio Rate, Audio Format, Audio Channels, Audio Buffers
     if (sound && Mix_OpenAudio(22050, AUDIO_S16SYS, AUDIO_CHANNELS, 1024)) {
@@ -63,13 +64,15 @@ int DxLib_Init()
 //Strings
 void SetFontSize(byte size)
 {
-    fontsize = size;
+    ::fontsize = size;
+
     if (font[size] == NULL) {
-	font[size] = TTF_OpenFont("res/sazanami-gothic.ttf", size);
-	if (font[size] == NULL) {
-	    printf("Unable to load font: %s\n", TTF_GetError());
-	    exit(1);
-	}
+        font[size] = TTF_OpenFont("res/sazanami-gothic.ttf", size);
+
+        if (font[size] == NULL) {
+            std::cerr << "Unable to load font: " << TTF_GetError() << std::endl;
+            exit(1);
+        }
     }
 }
 
@@ -110,8 +113,6 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
     DrawString(a, b, newstr, color);
     delete[] newstr;
 }
-
-//void DrawFormatString(int a, int b, int c
 
 //Key Aliases
 #define KEY_INPUT_ESCAPE SDLK_ESCAPE

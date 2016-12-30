@@ -14,10 +14,6 @@ int main(int argc, char *argv[])
     if (loadg() != 0)
         return 1;
 
-    //フォント
-    SetFontSize(16);
-    //SetFontThickness(4) ;
-
     //ループ
     while (ProcessMessage() == 0 && CheckHitKey(KEY_INPUT_ESCAPE) == 0) {
         UpdateKeys();
