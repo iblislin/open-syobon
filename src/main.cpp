@@ -11,7 +11,8 @@ int main(int argc, char *argv[])
         return 1;
 
     //全ロード
-    loadg();
+    if (loadg() != 0)
+        return 1;
 
     //フォント
     SetFontSize(16);
@@ -1111,7 +1112,7 @@ void rpaint()
         setcolor(160, 180, 250);
         fillrect(0, 0, fxmax, fymax);
 
-        drawimage(mgrap[30], 240 - 380 / 2, 60);
+        drawimage(titleGraph, 240 - 380 / 2, 60);
 
         drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
         drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
@@ -4697,8 +4698,7 @@ void deinit()
     SDL_Flip(screen);
 
 //SURFACES
-    for (t = 0; t < 51; t++)
-	SDL_FreeSurface(mgrap[t]);
+	SDL_FreeSurface(titleGraph);
     for (int i = 0; i < 161; i++)
 	for (int j = 0; j < 8; j++)
 	    SDL_FreeSurface(grap[i][j]);

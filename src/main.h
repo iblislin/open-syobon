@@ -5,7 +5,7 @@ using namespace std;
 
 #define SHORT
 
-void loadg();
+int loadg();
 void parseArgs(int argc, char* argv[]);
 
 //String 使用
@@ -73,10 +73,8 @@ void fillrect(int a, int b, int c, int d);
 void drawarc(int a, int b, int c, int d);
 void fillarc(int a, int b, int c, int d);
 void FillScreen();
-SDL_Surface *grap[161][8];
-SDL_Surface *mgrap[51] = {};
-SDL_Surface *loadimage(string b);
-SDL_Surface *loadimage(int a, int x, int y, int r, int z);
+SDL_Surface *grap[161][8] = {};
+SDL_Surface *titleGraph;
 int mirror;
 void drawimage(SDL_Surface * mx, int a, int b);
 void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
@@ -188,7 +186,7 @@ int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
 int ae[amax], af[amax], abrocktm[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
 int atype[amax], axtype[amax], amuki[amax], ahp[amax];
-int anotm[amax], anx[160], any[160];
+int anotm[amax], anx[160] = {} /* enemy x on graph */, any[160] = {};
 int atm[amax], a2tm[amax];
 int amsgtm[amax], amsgtype[amax];
 
@@ -203,7 +201,9 @@ int btype[bmax], bxtype[bmax], bz[bmax];
 #define nmax 41
 int nxxmax, nco;
 int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
-int ne[nmax], nf[nmax], ng[nmax], nx[nmax];
+int ne[nmax] = {},
+    nf[nmax] = {},
+    ng[nmax], nx[nmax];
 
 
 //リフト

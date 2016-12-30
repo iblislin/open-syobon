@@ -13,8 +13,9 @@
 #include <cstdio>
 #include <cstdlib>
 #include <ctime>
-#include <string>
 #include <iostream>
+#include <map>
+#include <string>
 
 #include "joyconfig.h"
 
