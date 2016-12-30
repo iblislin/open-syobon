@@ -1,5 +1,6 @@
 #include "DxLib.h"
-// #include "API.h"
+#include "erl_ai.h"
+
 using namespace std;
 
 #define SHORT
