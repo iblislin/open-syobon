@@ -4786,18 +4786,6 @@ void FillScreen()
     SDL_FillRect(screen, 0, color);
 }
 
-//画像の読み込み
-SDL_Surface *loadimage(string x)
-{
-//mgrap[a]=LoadGraph(b);
-    return LoadGraph(x.c_str());
-}
-
-SDL_Surface *loadimage(SDL_Surface * a, int x, int y, int r, int z)
-{
-    return DerivationGraph(x, y, r, z, a);
-}
-
 //画像表示
 void drawimage(SDL_Surface * mx, int a, int b)
 {
