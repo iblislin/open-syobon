@@ -1,5 +1,6 @@
 .SUFFIXES: .erl .beam
 
+CXXFLAGS+=	-std=c++11
 ERLCFLAGS=	+native
 
 all: SyobonAction
