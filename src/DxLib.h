@@ -2,16 +2,18 @@
 //Syobon Action uses it. Minor functions are just replaced with SDL
 //counterparts.
 #include <SDL/SDL.h>
-#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_ttf.h>
-#include <time.h>
-#include <stdio.h>
-#include <math.h>
+
+#include <clocale>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
 #include <string>
-#include <locale.h>
 
 #include "joyconfig.h"
 
