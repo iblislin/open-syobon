@@ -1,5 +1,7 @@
 .SUFFIXES: .erl .beam
 
+ERLCFLAGS=	+native
+
 all: syobon_nif.so syobon.beam lnalg.beam player.beam neuron.beam \
      neuron_net.beam cortex.beam sensor.beam actuator.beam \
      benchmark.beam collector.beam
@@ -29,4 +31,4 @@ syobon_nif.so: main.cpp loadg.cpp DxLib.cpp
 	    `sdl-config --libs`
 
 .erl.beam:
-	erlc $<
+	erlc ${ERLCFLAGS} $<

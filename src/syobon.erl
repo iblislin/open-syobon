@@ -2,7 +2,7 @@
 
 -on_load(init/0).
 
--compile([export_all]).
+-compile(export_all).
 
 
 init() ->

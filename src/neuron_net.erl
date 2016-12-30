@@ -21,8 +21,10 @@ new(Layers) ->
   cortex:sync(Cortex, Ref),
 
   %% [4] is for the actuators,
-  %% [1] is for the input layer.
-  Net = new_net(Cortex, [1|Layers] ++ [4], ?MAPSIZE),
+  %% [5] is for the input layer.
+  %% TBD: current we have memor leak issue in the NIF,
+  %%      so set the input layer to 5.
+  Net = new_net(Cortex, [5|Layers] ++ [4], ?MAPSIZE),
   Cortex ! {self(), Ref, set, net, Net},
   cortex:sync(Cortex, Ref),
 

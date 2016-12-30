@@ -1,6 +1,6 @@
 -module(lnalg).
 
--compile(native).
+-compile(export_all).
 
 -export([dot/2, outer_product/2, mat_ones/2, mat_add/2, vec_add/2]).
 

@@ -7,7 +7,7 @@ start(Count, Generation) ->
   syobon:syobon_init(),
   {Cortexes, Fits} = new_population(Count),
 
-  Final = next_gen(lists:zip(Cortexes, Fits), Generation),
+  Final = next_gen(Count, lists:zip(Cortexes, Fits), Generation),
 
   syobon:syobon_deinit(),
 
@@ -19,7 +19,7 @@ new_population(Count) -> new_population(Count, [], []).
 new_population(0, Cortexes, Fits) -> {Cortexes, Fits};
 
 new_population(Count, Cortexes, Fits) ->
-  Layers = [rand:uniform(20) || _ <- lists:seq(1, rand:uniform(5))],
+  Layers = [rand:uniform(80) || _ <- lists:seq(1, rand:uniform(30))],
 
   error_logger:info_msg("new net: ~p~n", [Layers]),
 
@@ -48,10 +48,9 @@ play(Cortex) ->
   syobon:get_fitness().
 
 
-selection(Score) ->
-  L = lists:sort(fun({_, A}, {_, B}) -> A =< B end, Score),
-  Size = length(L) div 2,
-  {Kills, Parents} = lists:split(Size, L),
+selection(MaxPop, OldParents) ->
+  L = lists:reverse(lists:sort(fun({_, A}, {_, B}) -> A =< B end, OldParents)),
+  {Parents, Kills} = lists:split(MaxPop, L),
   [Pid ! {self(), terminate}|| {Pid, _} <- Kills],
   Parents.
 
@@ -70,15 +69,15 @@ new_generation([{P, _}|T], Childs, Fits) ->
   new_generation(T, [C|Childs], [Fit|Fits]).
 
 
-next_gen(Parents, 0) -> Parents;
+next_gen(MaxPop, Parents, 0) -> selection(MaxPop, Parents);
 
-next_gen(Parents, Counter) ->
+next_gen(MaxPop, Parents, Counter) ->
   error_logger:info_msg("parents to selection ~p~n", [Parents]),
-  NewParents = selection(Parents),
+  NewParents = selection(MaxPop, Parents),
   {Childs, ChildFits} = new_generation(NewParents),
   error_logger:info_msg("new born"),
   {NewPop, NewPopFits} = new_population(length(NewParents)),
 
   C = lists:zip(Childs, ChildFits),
   NP = lists:zip(NewPop, NewPopFits),
-  next_gen(NewParents ++ C ++ NP, Counter - 1).
+  next_gen(MaxPop, NewParents ++ C ++ NP, Counter - 1).
