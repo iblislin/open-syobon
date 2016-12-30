@@ -118,41 +118,51 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
 void UpdateKeys()
 {
     SDL_Event event;
-    while (SDL_PollEvent(&event)) {
-	switch (event.type) {
-	case SDL_KEYDOWN:
-	    keysHeld[event.key.keysym.sym] = true;
-	    break;
-	case SDL_KEYUP:
-	    keysHeld[event.key.keysym.sym] = false;
-	    break;
-	case SDL_JOYAXISMOTION:
-	    if(event.jaxis.which == 0)
-	    {
-		if(event.jaxis.axis == JOYSTICK_XAXIS)
-		{
-		    if(event.jaxis.value < 0) keysHeld[SDLK_LEFT] = true;
-		    else if(event.jaxis.value > 0) keysHeld[SDLK_RIGHT] = true;
-		    else {
-			keysHeld[SDLK_LEFT] = false;
-			keysHeld[SDLK_RIGHT] = false;
-		    }
-		}
-		else if(event.jaxis.axis == JOYSTICK_YAXIS)
-		{
-		    if(event.jaxis.value < 0) keysHeld[SDLK_UP] = true;
-		    else if(event.jaxis.value > 0) keysHeld[SDLK_DOWN] = true;
-		    else {
-			keysHeld[SDLK_UP] = false;
-			keysHeld[SDLK_DOWN] = false;
-		    }
-		}
-	    }
-	    break;
-	case SDL_QUIT:
-        exit(0);
-	    break;
-	}
+
+    while (SDL_PollEvent(&event))
+    {
+        switch (event.type)
+        {
+            case SDL_KEYDOWN:
+                keysHeld[event.key.keysym.sym] = true;
+                break;
+
+            case SDL_KEYUP:
+                keysHeld[event.key.keysym.sym] = false;
+                break;
+
+            case SDL_JOYAXISMOTION:
+                if(event.jaxis.which == 0)
+                {
+                    if(event.jaxis.axis == JOYSTICK_XAXIS)
+                    {
+                        if(event.jaxis.value < 0)
+                            keysHeld[SDLK_LEFT] = true;
+                        else if(event.jaxis.value > 0)
+                            keysHeld[SDLK_RIGHT] = true;
+                        else {
+                            keysHeld[SDLK_LEFT] = false;
+                            keysHeld[SDLK_RIGHT] = false;
+                        }
+                    }
+                    else if(event.jaxis.axis == JOYSTICK_YAXIS)
+                    {
+                        if(event.jaxis.value < 0)
+                            keysHeld[SDLK_UP] = true;
+                        else if(event.jaxis.value > 0)
+                            keysHeld[SDLK_DOWN] = true;
+                        else {
+                            keysHeld[SDLK_UP] = false;
+                            keysHeld[SDLK_DOWN] = false;
+                        }
+                    }
+                }
+                break;
+
+            case SDL_QUIT:
+                exit(0);
+                break;
+        }
     }
 }
 
