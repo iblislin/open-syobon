@@ -1137,7 +1137,7 @@ void rpaint()
 void Mainprogram(GameConfig* gameConf)
 {
 
-    Uint32 stime = SDL_GetTicks();
+    gameConf->startTime = SDL_GetTicks();
 
     if (ending == 1)
         mainZ = 2;
@@ -4476,7 +4476,7 @@ break;
     if (CheckHitKey(KEY_INPUT_SPACE) == 1)
         gameConf->fps = 60;
 
-    wait(stime, SDL_GetTicks(), 1000 / gameConf->fps);
+    wait(gameConf->startTime, SDL_GetTicks(), 1000 / gameConf->fps);
 
 }  // end of Mainprogram()
 

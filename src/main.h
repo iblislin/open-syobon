@@ -11,7 +11,9 @@ void parseArgs(int argc, char* argv[]);
 class GameConfig {
     public:
         bool endFlag;
+
         int fps;  // frame per second
+        Uint32 startTime; // frame start time
 
         GameConfig() :
             endFlag(false),
