@@ -35,20 +35,20 @@ void rpaint()
 
 //ダブルバッファリング
     setcolor(0, 0, 0);
-//if (stagecolor==1)setcolor(170,170,255);
+    //if (stagecolor==1)setcolor(170,170,255);
     if (stagecolor == 1)
-	setcolor(160, 180, 250);
+        setcolor(160, 180, 250);
     if (stagecolor == 2)
-	setcolor(10, 10, 10);
+        setcolor(10, 10, 10);
     if (stagecolor == 3)
-	setcolor(160, 180, 250);
+        setcolor(160, 180, 250);
     if (stagecolor == 4)
-	setcolor(10, 10, 10);
+        setcolor(10, 10, 10);
     if (stagecolor == 5) {
-	setcolor(160, 180, 250);
-	mrzimen = 1;
+        setcolor(160, 180, 250);
+        mrzimen = 1;
     } else {
-	mrzimen = 0;
+        mrzimen = 0;
     }
 
 //: Clear screen
