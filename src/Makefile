@@ -2,7 +2,9 @@
 
 ERLCFLAGS=	+native
 
-all: syobon_nif.so syobon.beam lnalg.beam player.beam neuron.beam \
+all: SyobonAction
+
+erl_ai: syobon_nif.so syobon.beam lnalg.beam player.beam neuron.beam \
      neuron_net.beam cortex.beam sensor.beam actuator.beam \
      benchmark.beam collector.beam
 
@@ -21,6 +23,9 @@ DxLib.o: DxLib.cpp DxLib.h
 
 clean:
 	rm -fv *.o
+	rm -fv SyobonAction
+	rm -fv syobon_nif.so
+	rm -fv *.beam
 
 syobon_nif.so: main.cpp loadg.cpp DxLib.cpp
 	clang++ ${CXXFLAGS} -g -o syobon_nif.so -fPIC -shared main.cpp \
