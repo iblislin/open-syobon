@@ -1,7 +1,9 @@
 #ifdef ERL_AI  /* enable ai or not */
 
 #ifndef ERL_AI_H
+
 #define ERL_AI_H
+#define DISABLE_SAVE_FLAG
 
 #include <unistd.h>
 #include <iostream>

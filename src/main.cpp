@@ -3,23 +3,11 @@
 // プログラムは WinMain から始まります
 //Changed to ansi c++ main()
 
-void debug_print() {
-    std::cout << "fx: " << fx << std::endl;
-    std::cout << "fy: " << fy << std::endl;
-    std::cout << "mhp:" << mhp << std::endl;
-    std::cout << "scrollx: " << scrollx << std::endl;
-    std::cout << "scrolly: " << scrolly << std::endl;
-    std::cout << "stime:" << stime << std::endl;
-}
-
 int main(int argc, char *argv[])
 {
     parseArgs(argc, argv);
     if (DxLib_Init() == -1)
         return 1;
-
-    // start api service
-    // std::thread* t = APIThread();
 
     //全ロード
     loadg();
@@ -33,7 +21,6 @@ int main(int argc, char *argv[])
         UpdateKeys();
         maint = 0;
         Mainprogram();
-        debug_print();
         if (maint == 3)
             break;
     }
@@ -1139,7 +1126,7 @@ void rpaint()
         str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
 
     }
-#ifdef PP
+#ifdef ERL_AI
     debug_screen();
 #endif
     ScreenFlip();
@@ -2785,11 +2772,13 @@ if (mtm==250)end();
 			    ma = sa[t] - fx - 2000;
 			    ot(oto[11]);
 			}
+#ifdef DISABLE_SAVE_FLAG
 //中間ゲート
-			// if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
-			//     tyuukan += 1;
-			//     sa[t] = -80000000;
-			// }
+			if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
+			    tyuukan += 1;
+			    sa[t] = -80000000;
+			}
+#endif
 
 		    }
 
@@ -4310,7 +4299,6 @@ break;
 //if (xx[3]==1){if (tyuukan==1)tyuukan=1;}
 	}			//kscroll
 
-        // mainZ = 100;
     }				//if (mainZ==1){
 
 //スタッフロール
@@ -4394,7 +4382,11 @@ break;
 //タイトル
     if (mainZ == 100) {
 	maintm++;
-	xx[0] = 1;  // skip the title
+	xx[0] = 0;
+#ifdef ERL_AI
+    // skip the title
+    xx[0] = 1;
+#endif
 	if (maintm <= 10) {
 	    maintm = 11;
 	    sta = 1;
