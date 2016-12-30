@@ -14,6 +14,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <string>
+#include <iostream>
 
 #include "joyconfig.h"
 
@@ -33,17 +34,22 @@
 #define ChangeVolumeSoundMem(s, v);
 
 //Sound
-#define DX_PLAYTYPE_LOOP -1
+#define AUDIO_CHANNELS 4
+#define CheckSoundMem(s) !s
 #define DX_PLAYTYPE_BACK 0
+#define DX_PLAYTYPE_LOOP -1
 void PlaySoundMem(Mix_Chunk* s, int l);
 Mix_Chunk* LoadSoundMem(const char* f);
 Mix_Music* LoadMusicMem(const char* f);
-#define CheckSoundMem(s) !s
 
 int DxLib_Init();
 
 //Main screen
+#define SCREEN_WIDTH  480
+#define SCREEN_HEIGHT 420
 extern SDL_Surface *screen;
+
+// Audio
 
 //Fonts
 #define FONT_MAX 64
@@ -105,4 +111,4 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
 //Noticably different than the original
 SDL_Surface *LoadGraph(const char *filename);
 
-#endif
+#endif  // DXLIB_HEADER

@@ -1,69 +1,64 @@
 #include "DxLib.h"
 
+//Main screen
+SDL_Surface *screen;
+
+//Fonts
+byte fontsize = 0;
+TTF_Font *font[FONT_MAX] = {0};
+
 SDL_Joystick* joystick;
 
-bool keysHeld[SDLK_LAST];
-bool sound = true;
+bool keysHeld[SDLK_LAST] = {0};
 void deinit();
+
+bool sound = true;
+
 int DxLib_Init()
 {
     atexit(deinit);
     setlocale(LC_CTYPE, "ja_JP.UTF-8");
 
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0) {
-	fprintf(stderr, "Unable to init SDL: %s\n", SDL_GetError());
-	return -1;
+        std::cerr <<  "Unable to init SDL: " << SDL_GetError() << std::endl;
+        return -1;
     }
 
-    if (!
-	(screen =
-	 SDL_SetVideoMode(480 /*(int)fmax/100 */ ,
-			  420 /*(int)fymax/100 */ , 32,
-			  SDL_SWSURFACE | SDL_DOUBLEBUF))) {
-	SDL_Quit();
-	return -1;
-    }
+    // init screen
+    screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32,
+                              SDL_SWSURFACE | SDL_DOUBLEBUF);
+    if (!screen)
+        return -1;
 
-    SDL_WM_SetCaption("Syobon Action (しょぼんのアクション)",
-		      NULL);
+    SDL_WM_SetCaption("Syobon Action (しょぼんのアクション)", NULL);
     SDL_ShowCursor(SDL_DISABLE);
 
-    if(IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
+    if (IMG_Init(IMG_INIT_PNG) != IMG_INIT_PNG)
     {
-        fprintf(stderr, "Unable to init SDL_img: %s\n", IMG_GetError());
+        std::cerr << "Unable to init SDL_img: " << IMG_GetError() << std::endl;
         return -1;
     }
 
     //Initialize font
     if (TTF_Init() == -1) {
-	fprintf(stderr, "Unable to init SDL_ttf: %s\n", TTF_GetError());
-	return -1;
+        std::cerr << "Unable to init SDL_ttf: " << TTF_GetError() << std::endl;
+        return -1;
     }
 
     //Audio Rate, Audio Format, Audio Channels, Audio Buffers
-#define AUDIO_CHANNELS 4
     if (sound && Mix_OpenAudio(22050, AUDIO_S16SYS, AUDIO_CHANNELS, 1024)) {
-        fprintf(stderr, "Unable to init SDL_mixer: %s\n", Mix_GetError());
+        std::cerr << "Unable to init SDL_mixer: " << Mix_GetError() << std::endl;
         sound = false;
-        }
+    }
+
     //Try to get a joystick
     joystick = SDL_JoystickOpen(0);
 
-    for (int i = 0; i < SDLK_LAST; i++)
-	keysHeld[i] = false;
-    for (int i = 0; i < FONT_MAX; i++)
-	font[i] = NULL;
     srand(time(NULL));
 
     return 0;
 }
 
-//Main screen
-SDL_Surface *screen;
-
-//Fonts
-byte fontsize = 0;
-TTF_Font *font[FONT_MAX];
 
 //Strings
 void SetFontSize(byte size)
@@ -288,4 +283,3 @@ Mix_Music* LoadMusicMem(const char* f)
     fprintf(stderr, "Error: Unable to load music %s: %s\n", f, Mix_GetError());
     return NULL;
 }
-
