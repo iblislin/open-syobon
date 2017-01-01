@@ -19,7 +19,6 @@ int mainZ = 100, maintm = 0;
 
 //ステージ
 int stagecolor = 1;
-int sta = 1, stb = 4, stc = 0;
 
 //クイック
 int fast = 1;
@@ -89,17 +88,9 @@ void str(string c, int a, int b);
 //)
 
 void stagecls();
-void stage();
-void stagep();
-
-
-
-
-
-//1-ステージ
-//10-ステージ前
-//
-
+void stage(GameConfig* conf);
+void stagep(GameConfig* conf);
+void enterTitle(GameConfig* conf);
 
 
 //ループ

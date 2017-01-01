@@ -1174,14 +1174,14 @@ void initStage(GameConfig* conf)
     fzx = 0;
     stageonoff = 0;
 
-    //チーターマン　入れ
     chBgm(otom[BGM_FIELD]);
 
     stagecls();
 
-    stage();
+    stage(conf);
 
     //ランダムにさせる
+    // create a random generated level
     if (over == 1) {
         for (t = 0; t < tmax; t++) {
             if (rand(3) <= 1) {
@@ -1260,11 +1260,11 @@ void Mainprogram(GameConfig* conf)
 	}
 	if (CheckHitKey(KEY_INPUT_O) == 1) {
 	    if (mhp >= 1)
-		mhp = 0;
-	    if (stc >= 5) {
-		stc = 0;
-		stagepoint = 0;
-	    }
+            mhp = 0;
+        if (conf->stage_info.sub_level >= 5) {
+            conf->stage_info.sub_level = 0;
+            stagepoint = 0;
+        }
 	}
 
 	if (mkeytm <= 0) {
@@ -1467,7 +1467,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    if (mb <= -6000) {
 		blackx = 1;
 		blacktm = 20;
-		stc += 5;
+        conf->stage_info.sub_level += 5;
 		stagerr = 0;
 		Mix_HaltMusic();
 		mtm = 0;
@@ -1579,12 +1579,13 @@ if (mc>=800 || mc<=-800){md=-1800;}
 			mmsgtype = 52;
 		    }
 		    if (mtm == 20) {
-			if (mxtype == 6) {
-			    stc += 10;
-			} else {
-			    stc++;
-			}
-			mb = -80000000;
+
+                if (mxtype == 6)
+                    conf->stage_info.sub_level += 10;
+                else
+                    conf->stage_info.sub_level++;
+
+            mb = -80000000;
 			mxtype = 0;
 			blackx = 1;
 			blacktm = 20;
@@ -1612,12 +1613,12 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    mc = 0;
 		}
 		if (mtm == 250) {
-		    stb++;
-		    stc = 0;
+            conf->stage_info.level++;
+            conf->stage_info.sub_level = 0;
             conf->init_stage = true;
-		    tyuukan = 0;
-		    mainZ = 10;
-		    maintm = 0;
+            tyuukan = 0;
+            mainZ = 10;
+            maintm = 0;
 		}
 	    }			//mtype==300
 
@@ -1680,9 +1681,9 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    if (mtype == 301) {
 			ending = 1;
 		    } else {
-			sta++;
-			stb = 1;
-			stc = 0;
+            conf->stage_info.series++;
+            conf->stage_info.level = 1;
+            conf->stage_info.sub_level = 0;
             conf->init_stage = true;
 			tyuukan = 0;
 			mainZ = 10;
@@ -4083,7 +4084,7 @@ break;
 					= 60;
 				    amsgtype[t]
 					= rand(7)
-					+ 1 + 1000 + (stb - 1)
+					+ 1 + 1000 + (conf->stage_info.level - 1)
 					* 10;
 				}
 
@@ -4115,7 +4116,7 @@ break;
 					= 60;
 				    amsgtype[t]
 					= rand(7)
-					+ 1 + 1000 + (stb - 1)
+					+ 1 + 1000 + (conf->stage_info.level - 1)
 					* 10;
 				}
 
@@ -4404,104 +4405,83 @@ break;
 	}
     }				//if (mainZ==10){
 
-//タイトル
-    if (mainZ == 100) {
-	maintm++;
-	xx[0] = 0;
-#ifdef ERL_AI
-    // skip the title
-    xx[0] = 1;
-#endif
-	if (maintm <= 10) {
-	    maintm = 11;
-	    sta = 1;
-	    stb = 1;
-	    stc = 0;
-	    over = 0;
-	}
+    //タイトル
+    if (mainZ == 100)
+        enterTitle(conf);
 
-	if (CheckHitKey(KEY_INPUT_1) == 1) {
-	    sta = 1;
-	    stb = 1;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_2) == 1) {
-	    sta = 1;
-	    stb = 2;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_3) == 1) {
-	    sta = 1;
-	    stb = 3;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_4) == 1) {
-	    sta = 1;
-	    stb = 4;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_5) == 1) {
-	    sta = 2;
-	    stb = 1;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_6) == 1) {
-	    sta = 2;
-	    stb = 2;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_7) == 1) {
-	    sta = 2;
-	    stb = 3;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_8) == 1) {
-	    sta = 2;
-	    stb = 4;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_9) == 1) {
-	    sta = 3;
-	    stb = 1;
-	    stc = 0;
-	}
-	if (CheckHitKey(KEY_INPUT_0) == 1) {
-	    xx[0] = 1;
-	    over = 1;
-	}
-//if (CheckHitKeyAll() == 0){end();}
-	if (CheckHitKey(KEY_INPUT_RETURN) == 1) {
-	    xx[0] = 1;
-	}
-//if (CheckHitKey(KEY_INPUT_SPACE)==1){xx[0]=1;}
-	if (CheckHitKey(KEY_INPUT_Z) == 1) {
-	    xx[0] = 1;
-	}
-
-	if (xx[0] == 1) {
-	    mainZ = 10;
-        conf->init_stage = true;
-	    maintm = 0;
-	    nokori = 2;
-
-	    fast = 0;
-	    trap = 0;
-	    tyuukan = 0;
-	}
-
-    }				//100
-
-//描画
+    // 描画
+    // render
     rpaint(conf);
 
-//30-fps
+    //30-fps
     conf->fps = 30;
-    if (CheckHitKey(KEY_INPUT_SPACE) == 1)
+    if (CheckHitKey(KEY_INPUT_SPACE))
         conf->fps = 60;
 
     wait(startTime, SDL_GetTicks(), 1000 / conf->fps);
 
 }  // end of Mainprogram()
+
+
+void enterTitle(GameConfig* conf)
+{
+        maintm++;
+        xx[0] = 0;
+
+#ifdef ERL_AI
+        // skip the title and enter level 1
+        xx[0] = 1;
+#endif
+        if (maintm <= 10) {
+            maintm = 11;
+            conf->stage_info.set(1, 1, 0);
+            over = 0;
+        }
+
+        if (CheckHitKey(KEY_INPUT_1))
+            conf->stage_info.set(1, 1, 0);
+        else if (CheckHitKey(KEY_INPUT_2))
+            conf->stage_info.set(1, 2, 0);
+        else if (CheckHitKey(KEY_INPUT_3))
+            conf->stage_info.set(1, 3, 0);
+        else if (CheckHitKey(KEY_INPUT_4))
+            conf->stage_info.set(1, 4, 0);
+
+        else if (CheckHitKey(KEY_INPUT_5))
+            conf->stage_info.set(2, 1, 0);
+        else if (CheckHitKey(KEY_INPUT_6))
+            conf->stage_info.set(2, 2, 0);
+        else if (CheckHitKey(KEY_INPUT_7))
+            conf->stage_info.set(2, 3, 0);
+        else if (CheckHitKey(KEY_INPUT_8))
+            conf->stage_info.set(2, 4, 0);
+        else if (CheckHitKey(KEY_INPUT_9))
+            conf->stage_info.set(3, 1, 0);
+
+        else if (CheckHitKey(KEY_INPUT_0)) {
+            conf->stage_info.set(0, 0, 0);
+            xx[0] = 1;
+            over = 1;
+        }
+
+        if (CheckHitKey(KEY_INPUT_RETURN))
+            xx[0] = 1;
+
+        if (CheckHitKey(KEY_INPUT_Z))
+            xx[0] = 1;
+
+        if (xx[0]) {
+            mainZ = 10;
+            conf->init_stage = true;
+            maintm = 0;
+            nokori = 2;
+
+            fast = 0;
+            trap = 0;
+            tyuukan = 0;
+        }
+}
+
 
 void tekizimen(GameConfig* conf)
 {
@@ -4984,7 +4964,7 @@ void stagecls()
 }				//stagecls()
 
 //ステージロード
-void stage()
+void stage(GameConfig* conf)
 {
     scrollx = 3600 * 100;
 
@@ -4993,7 +4973,7 @@ void stage()
 
 //1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
-    stagep();
+    stagep(conf);
 
     // for (int i = 0; i < 17; i++) {
     //     for (int j = 0; j < 2001; j++) {
@@ -5129,7 +5109,7 @@ void stage()
 
 }				//stage()
 
-void stagep()
+void stagep(GameConfig* conf)
 {
 
 //ステージロード
@@ -5143,12 +5123,11 @@ void stagep()
 
 //1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
-//1-1
-    if (sta == 1 && stb == 1 && stc == 0) {
+    //1-1
+    if (conf->stage_info.check(1, 1, 0))
+    {
 
-//new byte stagedate[16][801]={
-
-//                                                                                                                                                                                     中間
+    //中間
 	byte stagedatex[17][1001] = {
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	     0, 0, 0,
@@ -5531,14 +5510,14 @@ void stagep()
 
     }				//sta1
 
-//1-2(地上)
-    if (sta == 1 && stb == 2 && stc == 0) {
+    //1-2(地上)
+    if (conf->stage_info.check(1, 2, 0))
+    {
 
-//マリ　地上　入れ
+    //マリ　地上　入れ
 	chBgm(otom[BGM_FIELD]);
 
 	scrollx = 0 * 100;
-//ma=3000;mb=3000;
 
 	byte stagedatex[17][1001] = {
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,}
@@ -5670,10 +5649,11 @@ void stagep()
 
     }				//sta2
 
-//1-2-1(地下)
-    if (sta == 1 && stb == 2 && stc == 1) {
+    //1-2-1(地下)
+    if (conf->stage_info.check(1, 2, 1))
+    {
 
-//マリ　地下　入れ
+    //マリ　地下　入れ
 	chBgm(otom[BGM_DUNGEON], 40);
 
 	scrollx = 4080 * 100;
@@ -6269,8 +6249,9 @@ void stagep()
 
     }				//sta1-2-1
 
-//1-2(地上)
-    if (sta == 1 && stb == 2 && stc == 2) {
+    //1-2(地上)
+    if (conf->stage_info.check(1, 2, 2))
+    {
 
 //マリ　地上　入れ
 	chBgm(otom[BGM_FIELD]);
@@ -6450,11 +6431,12 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
 //必要BGM+SE
 
-//1-3(地上)
-    if (sta == 1 && stb == 3 && stc == 6) {
-	stc = 0;
-    }
-    if (sta == 1 && stb == 3 && stc == 0) {
+    //1-3(地上)
+    if (conf->stage_info.check(1, 3, 6))
+        conf->stage_info.sub_level = 0;
+
+    if (conf->stage_info.check(1, 3, 0))
+    {
 
 	chBgm(otom[BGM_FIELD]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
@@ -6985,13 +6967,12 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     }				//sta3
 
-//1-3(地下)
-    if (sta == 1 && stb == 3 && stc == 1) {
+    //1-3(地下)
+    if (conf->stage_info.check(1, 3, 1))
+    {
 
-//マリ　地上　入れ
-//Mix_HaltMusic();
+    //マリ　地上　入れ
 	chBgm(otom[BGM_DUNGEON], 40);
-//PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 0 * 100;
 	ma = 6000;
@@ -7062,7 +7043,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	tco = 0;
 //tyobi(15*29,12*29-12,111);
 
-	stc = 0;
+    conf->stage_info.sub_level = 0;
 
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
@@ -7073,8 +7054,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     }				//sta3
 
-//1-3(空中)
-    if (sta == 1 && stb == 3 && stc == 5) {
+    //1-3(空中)
+    if (conf->stage_info.check(1, 3, 5))
+    {
 
 	stagecolor = 3;
 	chBgm(otom[BGM_STAR4]);
@@ -7163,7 +7145,6 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	tyobi(12 * 29, 8 * 29 - 12, 300);
 //txtype[tco]=0;tyobi(13*29,4*29-12,110);
 
-//stc=0;
 
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
@@ -7174,12 +7155,12 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     }				//sta5
 
-//1-4(地下)
-    if (sta == 1 && stb == 4 && stc == 0) {
+    //1-4(地下)
+    if (conf->stage_info.check(1, 4, 0))
+    {
 
-//マリ　地上　入れ
+    //マリ　地上　入れ
 	chBgm(otom[BGM_CASTLE]);
-//PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 4400 * 100;
 	ma = 12000;
@@ -7798,7 +7779,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	sre[t] = 0;
 	srco++;
 
-	stc = 0;
+    conf->stage_info.sub_level = 0;
 
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
@@ -7809,7 +7790,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     }				//sta4
 
-    if (sta == 2 && stb == 1 && stc == 0) {	// 2-1
+    // 2-1
+    if (conf->stage_info.check(2, 1, 0))
+    {
 	ma = 5600;
 	mb = 32000;
 	chBgm(otom[BGM_FIELD]);
@@ -8168,7 +8151,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 2 && stb == 2 && stc == 0) {	//2-2(地上)
+    // 2-2(地上)
+    if (conf->stage_info.check(2, 2, 0))
+    {
 	chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (19 - 19);
@@ -8247,7 +8232,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 2 && stb == 2 && stc == 1) {	//2-2(地下)
+    // 2-2(地下)
+    if (conf->stage_info.check(2, 2, 1))
+    {
 	chBgm(otom[BGM_DUNGEON], 40);
 	stagecolor = 2;
 	ma = 7500;
@@ -8734,9 +8721,11 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 2 && stb == 2 && stc == 2) {	// 2-2 地上
-//
-	chBgm(otom[BGM_FIELD]);
+    // 2-2 地上
+    if (conf->stage_info.check(2, 2, 2))
+    {
+
+    chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (36 - 19);
 	ma = 7500;
@@ -8904,8 +8893,10 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	    }
 	}
     }
-//
-    if (sta == 2 && stb == 3 && stc == 0) {	// 2-3
+
+    // 2-3
+    if (conf->stage_info.check(2, 3, 0))
+    {
 	ma = 7500;
 	mb = 3000 * 8;
 	chBgm(otom[BGM_FIELD]);
@@ -9281,15 +9272,23 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 //
-    if (sta == 2 && stb == 4 && (stc == 0 || stc == 10 || stc == 12)) {	// 2-4(1番)
-	if (stc == 0) {
-	    ma = 7500;
-	    mb = 3000 * 4;
-	} else {
-	    ma = 19500;
-	    mb = 3000 * 11;
-	    stc = 0;
-	}
+    // 2-4(1番)
+    if (conf->stage_info.check(2, 4, 0)  ||
+        conf->stage_info.check(2, 4, 10) ||
+        conf->stage_info.check(2, 4, 12))
+    {
+
+        if (conf->stage_info.sub_level == 0)
+        {
+            ma = 7500;
+            mb = 3000 * 4;
+        }
+        else
+        {
+            ma = 19500;
+            mb = 3000 * 11;
+            conf->stage_info.sub_level = 0;
+        }
 	chBgm(otom[BGM_CASTLE]);
 	stagecolor = 4;
 	scrollx = 2900 * (40 - 19);
@@ -9443,7 +9442,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 2 && stb == 4 && stc == 1) {	// 2-4(2番)
+    // 2-4(2番)
+    if (conf->stage_info.check(2, 4, 1))
+    {
 	ma = 4500;
 	mb = 3000 * 11;
 	chBgm(otom[BGM_CASTLE]);
@@ -9545,7 +9546,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 2 && stb == 4 && stc == 2) {	// 2-4(3番)
+    // 2-4(3番)
+    if (conf->stage_info.check(2, 4, 2))
+    {
 	ma = 4500;
 	mb = 3000 * 11;
 	chBgm(otom[BGM_PUYO]);	//6
@@ -10048,7 +10051,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	}
     }
 
-    if (sta == 3 && stb == 1 && stc == 0) {	// 3-1
+    // 3-1
+    if (conf->stage_info.check(3, 1, 0))
+    {
 	ma = 5600;
 	mb = 32000;
 	chBgm(otom[BGM_FIELD]);
