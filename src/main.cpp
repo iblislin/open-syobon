@@ -45,7 +45,7 @@ void parseArgs(int argc, char* argv[], GameConfig* conf)
 
 
 //メイン描画
-void rpaint()
+void rpaint(GameConfig* conf)
 {
 
 //ダブルバッファリング
@@ -69,7 +69,7 @@ void rpaint()
 //: Clear screen
     FillScreen();
 
-    if (mainZ == 1 && zxon >= 1) {
+    if (mainZ == 1 && !conf->init_stage) {
 
 //背景
 	for (t = 0; t < nmax; t++) {
@@ -1069,7 +1069,7 @@ void rpaint()
 	    fillrect(0, 0, fxmax, fymax);
 	    if (blacktm == 0) {
 		if (blackx == 1) {
-		    zxon = 0;
+            conf->init_stage = true;
 		}
 	    }
 
@@ -1148,6 +1148,79 @@ void rpaint()
 
 }				//rpaint()
 
+
+void initStage(GameConfig* conf)
+{
+    if (!conf->init_stage)
+        return;
+    conf->init_stage = false;
+
+    mainmsgtype = 0;
+
+    stagecolor = 1;
+    ma = 5600;
+    mb = 32000;
+    mmuki = 1;
+    mhp = 1;
+    mc = 0;
+    md = 0;
+    mnobia = 3000;
+    mnobib = 3600;
+
+    mtype = 0;
+
+    fx = 0;
+    fy = 0;
+    fzx = 0;
+    stageonoff = 0;
+
+    //チーターマン　入れ
+    bgmchange(otom[1]);
+
+    stagecls();
+
+    stage();
+
+    //ランダムにさせる
+    if (over == 1) {
+        for (t = 0; t < tmax; t++) {
+            if (rand(3) <= 1) {
+                ta[t] = (rand(500) - 1) * 29 * 100;
+                tb[t] = rand(14) * 100 * 29 - 1200;
+                ttype[t] = rand(142);
+                if (ttype[t] >= 9 && ttype[t] <= 99) {
+                    ttype[t] = rand(8);
+                }
+                txtype[t] = rand(4);
+            }
+        }
+        for (t = 0; t < bmax; t++) {
+            if (rand(2) <= 1) {
+                ba[t] = (rand(500) - 1) * 29 * 100;
+                bb[t] = rand(15) * 100 * 29 - 1200 - 3000;
+                if (rand(6) == 0) {
+                    btype[t] = rand(9);
+                }
+            }
+        }
+
+        srco = 0;
+        t = srco;
+        sra[t] = ma + fx;
+        srb[t] = (13 * 29 - 12) * 100;
+        src[t] = 30 * 100;
+        srtype[t] = 0;
+        sracttype[t] = 0;
+        sre[t] = 0;
+        srsp[t] = 0;
+        srco++;
+
+        if (rand(4) == 0)
+            stagecolor = rand(5);
+    }
+}  // initStage
+
+
 //メインプログラム
 void Mainprogram(GameConfig* conf)
 {
@@ -1160,72 +1233,7 @@ void Mainprogram(GameConfig* conf)
     //キー
     if (mainZ == 1 && tmsgtype == 0) {
 
-	if (zxon == 0) { // init ?
-	    zxon = 1;
-	    mainmsgtype = 0;
-
-	    stagecolor = 1;
-	    ma = 5600;
-	    mb = 32000;
-	    mmuki = 1;
-	    mhp = 1;
-	    mc = 0;
-	    md = 0;
-	    mnobia = 3000;
-	    mnobib = 3600;
-
-	    mtype = 0;
-
-	    fx = 0;
-	    fy = 0;
-	    fzx = 0;
-	    stageonoff = 0;
-
-        //チーターマン　入れ
-	    bgmchange(otom[1]);
-
-	    stagecls();
-
-	    stage();
-
-        //ランダムにさせる
-	    if (over == 1) {
-            for (t = 0; t < tmax; t++) {
-                if (rand(3) <= 1) {
-                    ta[t] = (rand(500) - 1) * 29 * 100;
-                    tb[t] = rand(14) * 100 * 29 - 1200;
-                    ttype[t] = rand(142);
-                    if (ttype[t] >= 9 && ttype[t] <= 99) {
-                        ttype[t] = rand(8);
-                    }
-                    txtype[t] = rand(4);
-                }
-            }
-            for (t = 0; t < bmax; t++) {
-                if (rand(2) <= 1) {
-                    ba[t] = (rand(500) - 1) * 29 * 100;
-                    bb[t] = rand(15) * 100 * 29 - 1200 - 3000;
-                    if (rand(6) == 0) {
-                        btype[t] = rand(9);
-                    }
-                }
-            }
-
-            srco = 0;
-            t = srco;
-            sra[t] = ma + fx;
-            srb[t] = (13 * 29 - 12) * 100;
-            src[t] = 30 * 100;
-            srtype[t] = 0;
-            sracttype[t] = 0;
-            sre[t] = 0;
-            srsp[t] = 0;
-            srco++;
-
-            if (rand(4) == 0)
-                stagecolor = rand(5);
-	    }
-	}  // zxon == 0
+    initStage(conf);
 
     // プレイヤーの移動
     // player movement
@@ -1440,7 +1448,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		mc = 0;
 	    }
 	    if (mtm >= 100 || fast == 1) {
-		zxon = 0;
+		conf->init_stage = true;
 		mainZ = 10;
 		mtm = 0;
 		mkeytm = 0;
@@ -1606,7 +1614,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		if (mtm == 250) {
 		    stb++;
 		    stc = 0;
-		    zxon = 0;
+            conf->init_stage = true;
 		    tyuukan = 0;
 		    mainZ = 10;
 		    maintm = 0;
@@ -1675,7 +1683,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 			sta++;
 			stb = 1;
 			stc = 0;
-			zxon = 0;
+            conf->init_stage = true;
 			tyuukan = 0;
 			mainZ = 10;
 			maintm = 0;
@@ -4392,7 +4400,7 @@ break;
 	if (maintm >= 30) {
 	    maintm = 0;
 	    mainZ = 1;
-	    zxon = 0;
+        conf->init_stage = true;
 	}
     }				//if (mainZ==10){
 
@@ -4472,7 +4480,7 @@ break;
 
 	if (xx[0] == 1) {
 	    mainZ = 10;
-	    zxon = 0;
+        conf->init_stage = true;
 	    maintm = 0;
 	    nokori = 2;
 
@@ -4484,7 +4492,7 @@ break;
     }				//100
 
 //描画
-    rpaint();
+    rpaint(conf);
 
 //30-fps
     conf->fps = 30;

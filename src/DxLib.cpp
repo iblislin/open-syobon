@@ -166,7 +166,8 @@ void UpdateKeys()
 
 byte CheckHitKey(int key)
 {
-    if(key == SDLK_z && keysHeld[SDLK_SEMICOLON]) return true;
+    if(key == SDLK_z && keysHeld[SDLK_SEMICOLON])
+        return true;
     return keysHeld[key];
 }
 

@@ -45,8 +45,8 @@ int stageonoff = 0;
 
 
 //メインプログラム
-void Mainprogram(GameConfig*);
-void rpaint();
+void Mainprogram(GameConfig* conf);
+void rpaint(GameConfig* conf);
 
 
 //サブクラス
@@ -104,10 +104,6 @@ void stagep();
 
 //ループ
 int t, tt, t1, t2, t3, t4;
-
-
-//初期化
-int zxon, zzxon;
 
 //キーコンフィグ
 int key, keytm;
