@@ -10,8 +10,9 @@ extern Mix_Chunk *oto[19];
 extern int anx[160], any[160];  /* x, y of enemy on graph */
 extern int ne[40], nf[40]; /* x, y of background */
 
+void loadSound(GameConfig* conf);
 
-int loadg()  /* load graph from res/ */
+int loadg(GameConfig* conf)  /* load graph from res/ */
 {
     std::map<std::string, SDL_Surface*> srcGraph;
     //プレイヤー
@@ -167,6 +168,15 @@ int loadg()  /* load graph from res/ */
         nf[t] = grap[t][4]->h;
     }
 
+    loadSound(conf);
+
+    return 0;
+}
+
+void loadSound(GameConfig* conf)
+{
+    if (!conf->sound)
+        return;
 
     //ogg読み込み
     otom[1] = LoadMusicMem("BGM/field.ogg"); //50
@@ -175,15 +185,15 @@ int loadg()  /* load graph from res/ */
     otom[4] = LoadMusicMem("BGM/castle.ogg"); //50
     otom[5] = LoadMusicMem("BGM/puyo.ogg"); //50
 
-    oto[1] = LoadSoundMem("SE/jump.ogg");
-    oto[2] = LoadSoundMem("SE/brockcoin.ogg");
-    oto[3] = LoadSoundMem("SE/brockbreak.ogg");
-    oto[4] = LoadSoundMem("SE/coin.ogg");
-    oto[5] = LoadSoundMem("SE/humi.ogg");
-    oto[6] = LoadSoundMem("SE/koura.ogg");
-    oto[7] = LoadSoundMem("SE/dokan.ogg");
-    oto[8] = LoadSoundMem("SE/brockkinoko.ogg");
-    oto[9] = LoadSoundMem("SE/powerup.ogg");
+    oto[1]  = LoadSoundMem("SE/jump.ogg");
+    oto[2]  = LoadSoundMem("SE/brockcoin.ogg");
+    oto[3]  = LoadSoundMem("SE/brockbreak.ogg");
+    oto[4]  = LoadSoundMem("SE/coin.ogg");
+    oto[5]  = LoadSoundMem("SE/humi.ogg");
+    oto[6]  = LoadSoundMem("SE/koura.ogg");
+    oto[7]  = LoadSoundMem("SE/dokan.ogg");
+    oto[8]  = LoadSoundMem("SE/brockkinoko.ogg");
+    oto[9]  = LoadSoundMem("SE/powerup.ogg");
     oto[10] = LoadSoundMem("SE/kirra.ogg");
     oto[11] = LoadSoundMem("SE/goal.ogg");
     oto[12] = LoadSoundMem("SE/death.ogg");
@@ -193,6 +203,4 @@ int loadg()  /* load graph from res/ */
     oto[16] = LoadSoundMem("SE/4-clear.ogg");
     oto[17] = LoadSoundMem("SE/allclear.ogg");
     oto[18] = LoadSoundMem("SE/tekifire.ogg");
-
-    return 0;
 }

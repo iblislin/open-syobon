@@ -17,6 +17,7 @@
 #include <map>
 #include <string>
 
+#include "GameConfig.h"
 #include "joyconfig.h"
 
 #ifndef DXLIB_HEADER
@@ -42,7 +43,7 @@ void PlaySoundMem(Mix_Chunk* s, int l);
 Mix_Chunk* LoadSoundMem(const char* f);
 Mix_Music* LoadMusicMem(const char* f);
 
-int DxLib_Init();
+int DxLib_Init(GameConfig*);
 
 //Main screen
 #define SCREEN_WIDTH  480

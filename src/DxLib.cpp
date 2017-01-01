@@ -12,9 +12,7 @@ SDL_Joystick* joystick;
 bool keysHeld[SDLK_LAST] = {0};
 void deinit();
 
-bool sound = true;
-
-int DxLib_Init()
+int DxLib_Init(GameConfig* conf)
 {
     atexit(deinit);
     setlocale(LC_CTYPE, "ja_JP.UTF-8");
@@ -47,9 +45,9 @@ int DxLib_Init()
     SetFontSize(16);
 
     //Audio Rate, Audio Format, Audio Channels, Audio Buffers
-    if (sound && Mix_OpenAudio(22050, AUDIO_S16SYS, AUDIO_CHANNELS, 1024)) {
+    if (conf->sound && Mix_OpenAudio(22050, AUDIO_S16SYS, AUDIO_CHANNELS, 1024)) {
         std::cerr << "Unable to init SDL_mixer: " << Mix_GetError() << std::endl;
-        sound = false;
+        conf->sound = false;
     }
 
     //Try to get a joystick
@@ -266,25 +264,27 @@ SDL_Surface* LoadGraph(const char *filename)
 
 void PlaySoundMem(Mix_Chunk* s, int l)
 {
-    if(sound) Mix_PlayChannel(-1, s, l);
+    Mix_PlayChannel(-1, s, l);
 }
 
 Mix_Chunk* LoadSoundMem(const char* f)
 {
-    if(!sound) return NULL;
-
     Mix_Chunk* s = Mix_LoadWAV(f);
-    if(s) return s;
-    fprintf(stderr, "Error: Unable to load sound %s: %s\n", f, Mix_GetError());
+    if (s)
+        return s;
+
+    std::cerr << "Error: Unable to load sound " << f << ": "
+              << Mix_GetError() << std::endl;
     return NULL;
 }
 
 Mix_Music* LoadMusicMem(const char* f)
 {
-    if(!sound) return NULL;
-
     Mix_Music* m = Mix_LoadMUS(f);
-    if(m) return m;
-    fprintf(stderr, "Error: Unable to load music %s: %s\n", f, Mix_GetError());
+    if (m)
+        return m;
+
+    std::cerr << "Error: Unable to load music " << f << ": "
+              << Mix_GetError() << std::endl;
     return NULL;
 }

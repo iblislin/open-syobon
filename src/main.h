@@ -1,11 +1,12 @@
+#include "GameConfig.h"
 #include "DxLib.h"
 #include "erl_ai.h"
 
 using namespace std;
 
 
-int loadg();
-void parseArgs(int argc, char* argv[], GameConfig*);
+int loadg(GameConfig* conf);
+void parseArgs(int argc, char* argv[], GameConfig* conf);
 
 //プログラム中
 //main-10
@@ -76,9 +77,9 @@ void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
 void setre();
 void setre2();
 void setno();
-Mix_Music *otom[6];
-Mix_Chunk *oto[19];
-void ot(Mix_Chunk * x);
+Mix_Music *otom[6] = {};
+Mix_Chunk *oto[19] = {};
+void ot(Mix_Chunk * x, bool enableFlag);
 void bgmchange(Mix_Music * x);
 
 //文字
@@ -172,9 +173,9 @@ int egtype[emax];
 
 
 //敵キャラ
-void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
+void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
 	   int xxtype);
-void tekizimen();
+void tekizimen(GameConfig*);
 #define amax 24
 int aco;
 int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
