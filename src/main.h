@@ -36,8 +36,6 @@ int ending = 0;
 
 //ステージ読み込みループ(いじらない)
 int stagerr, stagepoint;
-//オーバーフローさせる
-int over = 0;
 
 //ステージスイッチ
 int stageonoff = 0;

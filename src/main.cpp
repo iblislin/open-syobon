@@ -1146,7 +1146,7 @@ void rpaint(GameConfig* conf)
 #endif
     ScreenFlip();
 
-}				//rpaint()
+}  //rpaint()
 
 
 void initStage(GameConfig* conf)
@@ -1182,7 +1182,8 @@ void initStage(GameConfig* conf)
 
     //ランダムにさせる
     // create a random generated level
-    if (over == 1) {
+    if (conf->stage_info.is_random())
+    {
         for (t = 0; t < tmax; t++) {
             if (rand(3) <= 1) {
                 ta[t] = (rand(500) - 1) * 29 * 100;
@@ -4327,15 +4328,16 @@ break;
 
     }				//if (mainZ==1){
 
-//スタッフロール
+    // スタッフロール
+    // staff roll
     if (mainZ == 2) {
         maintm++;
 
         xx[7] = 46;
-        if (CheckHitKey(KEY_INPUT_1) == 1) {
+        if (CheckHitKey(KEY_INPUT_1))
             end();
-        }
-        if (CheckHitKey(KEY_INPUT_SPACE) == 1) {
+
+        if (CheckHitKey(KEY_INPUT_SPACE)) {
             for (t = 0; t <= xx[7]; t += 1) {
                 xx[12 + t] -= 300;
             }
@@ -4435,7 +4437,6 @@ void enterTitle(GameConfig* conf)
         if (maintm <= 10) {
             maintm = 11;
             conf->stage_info.set(1, 1, 0);
-            over = 0;
         }
 
         if (CheckHitKey(KEY_INPUT_1))
@@ -4458,11 +4459,8 @@ void enterTitle(GameConfig* conf)
         else if (CheckHitKey(KEY_INPUT_9))
             conf->stage_info.set(3, 1, 0);
 
-        else if (CheckHitKey(KEY_INPUT_0)) {
+        else if (CheckHitKey(KEY_INPUT_0))
             conf->stage_info.set(0, 0, 0);
-            xx[0] = 1;
-            over = 1;
-        }
 
         if (CheckHitKey(KEY_INPUT_RETURN))
             xx[0] = 1;
