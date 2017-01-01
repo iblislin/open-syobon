@@ -1228,9 +1228,6 @@ void Mainprogram(GameConfig* conf)
 
     Uint32 startTime = SDL_GetTicks();
 
-    if (ending == 1)
-        mainZ = 2;
-
     //キー
     if (mainZ == 1 && tmsgtype == 0) {
 
@@ -1296,15 +1293,9 @@ void Mainprogram(GameConfig* conf)
 	    }
 // && xx[0]==0 && md<=-10
 
-//if (mjumptm==7 && md>=-900){}
-	    if (xx[0] == 0)
-		actaon[1] = 10;
+        if (xx[0] == 0)
+            actaon[1] = 10;
 	}
-//if (( key & PAD_INPUT_UP) && keytm<=0){actaon[0]=-1;mmuki=0;}
-
-//xx[0]=200;
-//if (actaon[0]==-1){ma-=xx[0];}
-//if (actaon[0]==1){ma+=xx[0];}
 
 //加速による移動
 	xx[0] = 40;
@@ -1390,24 +1381,7 @@ void Mainprogram(GameConfig* conf)
 	    md = -1200;
 	    mjumptm = 10;
 
-//PlaySound( "jump.mp3" , DX_PLAYTYPE_NORMAL ) ;
-
-//PlayMusic( "SE/jump.mp3" , DX_PLAYTYPE_NORMAL ) ;
-
-//PlaySoundMem( oto[1], DX_PLAYTYPE_NORMAL ) ;
-
-//PlaySoundMem( oto[1], DX_PLAYTYPE_BACK) ;
 	    ot(oto[1], conf->sound);
-
-/*
-md=-1040;
-xx[1]=600;if (mc>xx[1] || mc<=-xx[1]){md=-1400;}
-xx[1]=7;xx[2]=400;
-if (mkasok>xx[1] && (mc>xx[2] || mc<=-xx[2])){
-md=-1600;
-if (mc>=800 || mc<=-800){md=-1800;}
-}
-*/
 
 	    mzimen = 0;
 
@@ -1678,27 +1652,22 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		}
 //スタッフロールへ
 
-		if (mtm == 440) {
-		    if (mtype == 301) {
-			ending = 1;
-		    } else {
-            conf->stage_info.series++;
-            conf->stage_info.level = 1;
-            conf->stage_info.sub_level = 0;
-            conf->init_stage = true;
-			tyuukan = 0;
-			mainZ = 10;
-			maintm = 0;
-		    }
-		}
+        if (mtm == 440)
+        {
+            if (mtype == 301)
+                mainZ = 2;
+            else
+            {
+                conf->stage_info.series++;
+                conf->stage_info.level = 1;
+                conf->stage_info.sub_level = 0;
+                conf->init_stage = true;
+                tyuukan = 0;
+                mainZ = 10;
+                maintm = 0;
+            }
+        }
 
-/*
-if (mtm<=1){mc=0;md=0;}
-if (mtm>=2 && mtm<=42){md=600;mmuki=1;}
-if (mtm>43 && mtm<=108){mc=300;}
-if (mtm==110){mb=-80000000;mc=0;}
-if (mtm==250)end();
-*/
 	    }			//mtype==301
 
 	}			//mtype>=100
@@ -3051,15 +3020,6 @@ if (srmuki[t]==1)ma+=srsok[t];
 
 		}		//!
 
-/*
-//ジャンプ台
-if (sracttype[t]==7){
-if (ma+mnobia>xx[8]+xx[0] && ma<xx[8]+xx[12]-xx[0] && mb+mnobib>xx[9]+xx[1]/2 && mb+mnobib<xx[9]+xx[1]*3/2 && md>=-100){
-if (actaon[2]!=1){md=-600;mb-=810;}
-if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
-}}
-*/
-
 		if (sracttype[t] == 2 || sracttype[t] == 4) {
 		    if (srmuki[t] == 0)
 			sra[t] -= srsok[t];
@@ -3742,126 +3702,6 @@ if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
 		    xx[10] = 100;
 		    break;
 
-/*
-case 1:
-xx[10]=180;
-if (axtype[t]==2)xx[10]=0;
-if (axzimen[t]==1){
-ab[t]-=1000;ad[t]=-1200;
-if (axtype[t]==1)ad[t]=-1600;
-if (axtype[t]==2){
-atm[t]+=1;
-if (atm[t]>=2){atm[t]=0;ad[t]=-1600;}else{ad[t]=-1000;}
-}
-}
-
-break;
-
-case 2:
-xx[10]=160;
-if (axtype[t]==1)azimentype[t]=2;xx[10]=100;
-if (axtype[t]==2)xx[10]=0;
-break;
-
-case 3:
-xx[10]=180;
-if (ae[t]==0)ad[t]+=10;
-if (ae[t]==1)ad[t]-=10;
-if (ad[t]>=100)ae[t]=1;
-if (ad[t]<=-100)ae[t]=0;
-ab[t]+=ad[t];//ad[t]+=
-
-if (axtype[t]==1){
-if (ab[t]<mb){ab[t]+=100;}
-}
-if (axtype[t]==2)xx[10]=0;
-break;
-
-case 4:
-if (ae[t]==0)ad[t]+=8;
-if (ae[t]==1)ad[t]-=8;
-if (ad[t]>=80)ae[t]=1;
-if (ad[t]<=-80)ae[t]=0;
-ab[t]+=ad[t];
-
-//sstr=""+atm[t];
-if (axtype[t]>=1){
-xx[22]=200;xx[21]=3600;
-
-if (atm[t]==0){atm[t]=ab[t]%2+1;a2tm[t]=aa[t];if (axtype[t]%2==0)a2tm[t]=ab[t];}
-
-if (axtype[t]%2==1){
-if (aa[t]<a2tm[t]-xx[21]){atm[t]=2;}
-if (aa[t]>a2tm[t]+xx[21]){atm[t]=1;}
-if (atm[t]==1){aa[t]-=xx[22];amuki[t]=0;}
-if (atm[t]==2){aa[t]+=xx[22];amuki[t]=1;}
-}
-if (axtype[t]%2==0){
-if (ab[t]<a2tm[t]-xx[21]){atm[t]=2;}
-if (ab[t]>a2tm[t]+xx[21]){atm[t]=1;}
-if (atm[t]==1){ab[t]-=xx[22];}
-if (atm[t]==2){ab[t]+=xx[22];}
-}
-
-}//axtype1
-
-break;
-
-case 5:
-xx[10]=120;atm[t]++;
-if (axtype[t]==2){xx[10]=200;azimentype[t]=2;}
-if (ma+mnobia>=aa[t]-fx && ma<=aa[t]+anobia[t]-fx && mb+mnobib+1000<ab[t]-fy){
-xx[10]=300;
-if (axtype[t]>=1){
-//xx[10]=240;
-if (atm[t]>=16){amuki[t]+=1;if (amuki[t]>=2)amuki[t]=0;atm[t]=0;
-//if (axtype[t]==2){ab[t]-=600;ad[t]=-900;}
-}}
-}
-break;
-
-case 6:
-atm[t]+=1;xx[10]=0;
-if (axtype[t]==1)atm[t]+=(rand(9)-4);
-if (axtype[t]==2)xx[10]=100;
-if (atm[t]>=40){
-xx[22]=360;if (amuki[t]==0)xx[22]=-xx[22];
-cyobi(aa[t]+amuki[t]*anobia[t],ab[t]+1600,xx[22],0,0,0,0,60);
-atm[t]=0;
-}
-
-if (axtype[t]!=2){
-if (ma+mnobia/2<=aa[t]+anobia[t]/2-fx){amuki[t]=0;}else{amuki[t]=1;}
-}
-break;
-
-case 7:
-xx[10]=160;
-if (axtype[t]==1)xx[10]=240;
-if (axtype[t]==2)xx[10]=60;
-break;
-
-case 8:
-atm[t]+=1;xx[10]=0;
-xx[15]=12;xx[17]=0;
-if (axtype[t]==1)xx[15]=8;
-if (axtype[t]==2){xx[15]=40;xx[17]=3;}
-
-if (atm[t]>=xx[15]){
-for (t3=0;t3<=xx[17];t3++){
-xx[16]=300;xx[22]=rand(xx[16])*5/4-xx[16]/4;
-a2tm[t]+=1;if (a2tm[t]>=1){xx[22]=-xx[22];a2tm[t]=-1;}
-cyobi(aa[t]+amuki[t]*anobia[t]/2,ab[t]+600,xx[22],-400-rand(600),0,80,1,60);
-//if ((xx[16]==0) || t3==xx[16])atm[t]=0;
-}//t
-atm[t]=0;
-}
-
-break;
-
-
-*/
-
 		}		//sw
 
 		if (abrocktm[t] >= 1)
@@ -4390,22 +4230,22 @@ break;
             mainZ = 100;
             nokori = 2;
             maintm = 0;
-            ending = 0;
         }
 
     }				//mainZ==2
 
-    if (mainZ == 10) {
-	maintm++;
+    if (mainZ == 10)
+    {
+        maintm++;
 
-	if (fast == 1)
-	    maintm += 2;
-	if (maintm >= 30) {
-	    maintm = 0;
-	    mainZ = 1;
-        conf->init_stage = true;
-	}
-    }				//if (mainZ==10){
+        if (fast == 1)
+            maintm += 2;
+        if (maintm >= 30) {
+            maintm = 0;
+            mainZ = 1;
+            conf->init_stage = true;
+        }
+    }  // if mainZ==10
 
     //タイトル
     if (mainZ == 100)

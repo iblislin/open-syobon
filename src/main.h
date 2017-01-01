@@ -30,10 +30,6 @@ int trap = 1;
 int tyuukan = 0;
 
 
-//スタッフロール
-int ending = 0;
-
-
 //ステージ読み込みループ(いじらない)
 int stagerr, stagepoint;
 
