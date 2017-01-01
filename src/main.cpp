@@ -5,23 +5,23 @@
 
 int main(int argc, char *argv[])
 {
-    GameConfig gameConf;
+    GameConfig conf;
 
-    parseArgs(argc, argv, &gameConf);
+    parseArgs(argc, argv, &conf);
 
-    if (DxLib_Init(&gameConf) != 0)
+    if (DxLib_Init(&conf) != 0)
         return 1;
 
     //全ロード
-    if (loadg(&gameConf) != 0)
+    if (loadg(&conf) != 0)
         return 1;
 
     //ループ
     while (true) {
         UpdateKeys();
-        Mainprogram(&gameConf);
+        Mainprogram(&conf);
 
-        if (gameConf.endFlag)
+        if (conf.endFlag)
             break;
         else if (CheckHitKey(KEY_INPUT_ESCAPE))
             break;
@@ -1149,7 +1149,7 @@ void rpaint()
 }				//rpaint()
 
 //メインプログラム
-void Mainprogram(GameConfig* gameConf)
+void Mainprogram(GameConfig* conf)
 {
 
     Uint32 startTime = SDL_GetTicks();
@@ -1388,7 +1388,7 @@ void Mainprogram(GameConfig* gameConf)
 //PlaySoundMem( oto[1], DX_PLAYTYPE_NORMAL ) ;
 
 //PlaySoundMem( oto[1], DX_PLAYTYPE_BACK) ;
-	    ot(oto[1], gameConf->sound);
+	    ot(oto[1], conf->sound);
 
 /*
 md=-1040;
@@ -1421,10 +1421,10 @@ if (mc>=800 || mc<=-800){md=-1800;}
 	    mtm = 0;
 	    Mix_HaltChannel(-1);
 	    Mix_HaltMusic();
-	    ot(oto[12], gameConf->sound);
+	    ot(oto[12], conf->sound);
 	    StopSoundMem(oto[16]);
 #ifdef ERL_AI
-        gameConf.endFlag = true;  // end game
+        conf.endFlag = true;  // end game
 #endif
 	}			//mhp
 //if (mhp<=-10){
@@ -1536,7 +1536,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		    if (mtm == 16)
 			mb -= 1100;
 		    if (mtm == 20)
-			ot(oto[10], gameConf->sound);
+			ot(oto[10], conf->sound);
 
 		    if (mtm >= 24) {
 			ma -= 2000;
@@ -1637,7 +1637,7 @@ if (mc>=800 || mc<=-800){md=-1800;}
 		}
 
 		if (mtm == 200) {
-		    ot(oto[17], gameConf->sound);
+		    ot(oto[17], conf->sound);
 		    if (mtype == 301) {
 			na[nco] = 117 * 29 * 100 - 1100;
 			nb[nco] = 4 * 29 * 100;
@@ -1831,7 +1831,7 @@ if (mtm==250)end();
 					xx[16] = 1;
 				    } else if (ttype[t]
 					       == 115) {
-					ot(oto[3], gameConf->sound);
+					ot(oto[3], conf->sound);
 					eyobi(ta[t]
 					      + 1200, tb[t]
 					      +
@@ -1867,7 +1867,7 @@ if (mtm==250)end();
 					     == 400) {
 					md = 0;
 					ta[t] = -8000000;
-					ot(oto[13], gameConf->sound);
+					ot(oto[13], conf->sound);
 					for (tt = 0; tt < tmax; tt++) {
 					    if (ttype[tt] != 7) {
 						ttype[tt]
@@ -1879,7 +1879,7 @@ if (mtm==250)end();
 //音符+
 				    else if (ttype[t]
 					     == 117) {
-					ot(oto[14], gameConf->sound);
+					ot(oto[14], conf->sound);
 					md = -1500;
 					mtype = 2;
 					mtm = 0;
@@ -1938,7 +1938,7 @@ if (mtm==250)end();
 					}	//}
 //壊れる
 					if (ttype[t] == 1 && mzimen == 0) {
-					    ot(oto[3], gameConf->sound);
+					    ot(oto[3], conf->sound);
 					    eyobi(ta[t]
 						  + 1200, tb[t]
 						  +
@@ -1975,7 +1975,7 @@ if (mtm==250)end();
 					}
 //コイン
 					if (ttype[t] == 2 && mzimen == 0) {
-					    ot(oto[4], gameConf->sound);
+					    ot(oto[4], conf->sound);
 					    eyobi(ta[t]
 						  +
 						  10,
@@ -1990,7 +1990,7 @@ if (mtm==250)end();
 					}
 //隠し
 					if (ttype[t] == 7) {
-					    ot(oto[4], gameConf->sound);
+					    ot(oto[4], conf->sound);
 					    eyobi(ta[t]
 						  +
 						  10,
@@ -2074,7 +2074,7 @@ if (mtm==250)end();
 			    && ma + mnobia > xx[8] - 400
 			    && ma < xx[8] + xx[1]) {
 			    ta[t] = -800000;
-			    ot(oto[4], gameConf->sound);
+			    ot(oto[4], conf->sound);
 			}
 		    }
 //剣とってクリア
@@ -2092,7 +2092,7 @@ if (mtm==250)end();
 			    Mix_HaltMusic();
 			    mtype = 301;
 			    mtm = 0;
-			    ot(oto[16], gameConf->sound);
+			    ot(oto[16], conf->sound);
 
 			}
 		    }
@@ -2127,7 +2127,7 @@ if (mtm==250)end();
 			}
 
 			if (xx[17] == 1 && txtype[t] == 0) {
-			    ot(oto[4], gameConf->sound);
+			    ot(oto[4], conf->sound);
 			    eyobi(ta[t] + 10, tb[t],
 				  0, -800, 0, 40, 3000, 3000, 0, 16);
 			    ttype[t] = 3;
@@ -2137,57 +2137,57 @@ if (mtm==250)end();
 //敵出現
 		    if (ttype[t] == 101) {	//xx[9]+xx[1]+3000<mb && // && mb>xx[9]-xx[0]*2
 			if (xx[17] == 1) {
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 			    ttype[t] = 3;
 			    abrocktm[aco] = 16;
 			    if (txtype[t] == 0)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 0, 0);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 0, 0);
 			    if (txtype[t] == 1)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 4, 0);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 4, 0);
 			    if (txtype[t] == 3)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 101, 0);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 101, 0);
 			    if (txtype[t] == 4) {
 				abrocktm[aco] = 20;
-				ayobi(gameConf, ta[t] -
+				ayobi(conf, ta[t] -
 				      400, tb[t] - 1600, 0, 0, 0, 6, 0);
 			    }
 			    if (txtype[t] == 10)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 101, 0);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 101, 0);
 			}
 		    }		//101
 
 //おいしいきのこ出現
 		    if (ttype[t] == 102) {
 			if (xx[17] == 1) {
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 			    ttype[t] = 3;
 			    abrocktm[aco] = 16;
 			    if (txtype[t] == 0)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 100, 0);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 100, 0);
 			    if (txtype[t] == 2)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 100, 2);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 100, 2);
 			    if (txtype[t] == 3)
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 102, 1);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 102, 1);
 			}
 		    }		//102
 
 //まずいきのこ出現
 		    if (ttype[t] == 103) {
 			if (xx[17] == 1) {
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 			    ttype[t] = 3;
 			    abrocktm[aco] = 16;
-			    ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 100, 1);
+			    ayobi(conf, ta[t], tb[t], 0, 0, 0, 100, 1);
 			}
 		    }		//103
 
 //悪スター出し
 		    if (ttype[t] == 104) {
 			if (xx[17] == 1) {
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 			    ttype[t] = 3;
 			    abrocktm[aco] = 16;
-			    ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 110, 0);
+			    ayobi(conf, ta[t], tb[t], 0, 0, 0, 110, 0);
 			}
 		    }		//104
 
@@ -2202,9 +2202,9 @@ if (mtm==250)end();
 			thp[t]++;
 			if (thp[t] >= 16) {
 			    thp[t] = 0;
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 			    abrocktm[aco] = 16;
-			    ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 102, 1);
+			    ayobi(conf, ta[t], tb[t], 0, 0, 0, 102, 1);
 			}
 		    }
 //コイン量産
@@ -2221,7 +2221,7 @@ if (mtm==250)end();
 			if (thp[t] >= 3) {
 			    thp[t] = 0;
 			    titem[t]++;
-			    ot(oto[4], gameConf->sound);
+			    ot(oto[4], conf->sound);
 			    eyobi(ta[t] + 10, tb[t],
 				  0, -800, 0, 40, 3000, 3000, 0, 16);
 //ttype[t]=3;
@@ -2231,13 +2231,13 @@ if (mtm==250)end();
 		    if (ttype[t] == 114) {
 			if (xx[17] == 1) {
 			    if (txtype[t] == 0) {
-				ot(oto[8], gameConf->sound);
+				ot(oto[8], conf->sound);
 				ttype[t] = 3;
 				abrocktm[aco] = 16;
-				ayobi(gameConf, ta[t], tb[t], 0, 0, 0, 102, 1);
+				ayobi(conf, ta[t], tb[t], 0, 0, 0, 102, 1);
 			    }
 			    if (txtype[t] == 2) {
-				ot(oto[4], gameConf->sound);
+				ot(oto[4], conf->sound);
 				eyobi(ta[t] +
 				      10, tb[t],
 				      0, -800, 0, 40, 3000, 3000, 0, 16);
@@ -2249,7 +2249,7 @@ if (mtm==250)end();
 				    ttype[t]
 					= 130;
 				    stageonoff = 0;
-				    ot(oto[13], gameConf->sound);
+				    ot(oto[13], conf->sound);
 				    txtype[t]
 					= 2;
 				    for (t = 0; t < amax; t++) {
@@ -2262,7 +2262,7 @@ if (mtm==250)end();
 					}
 				    }
 				} else {
-				    ot(oto[4], gameConf->sound);
+				    ot(oto[4], conf->sound);
 				    eyobi(ta[t]
 					  +
 					  10,
@@ -2286,9 +2286,9 @@ if (mtm==250)end();
 //Pスイッチ
 		    if (ttype[t] == 116) {
 			if (xx[17] == 1) {
-			    ot(oto[8], gameConf->sound);
+			    ot(oto[8], conf->sound);
 //ot(oto[13]);
-			    ttype[t] = 3;	//abrocktm[aco]=18;ayobi(gameConf, ta[t],tb[t],0,0,0,104,1);
+			    ttype[t] = 3;	//abrocktm[aco]=18;ayobi(conf, ta[t],tb[t],0,0,0,104,1);
 			    tyobi(ta[t] / 100, (tb[t] / 100) - 29, 400);
 			}
 		    }		//116
@@ -2296,7 +2296,7 @@ if (mtm==250)end();
 //ファイアバー強化
 		    if (ttype[t] == 124) {
 			if (xx[17] == 1) {
-			    ot(oto[13], gameConf->sound);
+			    ot(oto[13], conf->sound);
 			    for (t = 0; t < amax; t++) {
 				if (atype[t] == 87 || atype[t]
 				    == 88) {
@@ -2314,13 +2314,13 @@ if (mtm==250)end();
 			if (xx[17] == 1) {
 			    if (txtype[t] != 1) {
 				stageonoff = 0;
-				ot(oto[13], gameConf->sound);
+				ot(oto[13], conf->sound);
 			    }
 			}
 		    } else if (ttype[t] == 131) {
 			if (xx[17] == 1 && txtype[t] != 2) {
 			    stageonoff = 1;
-			    ot(oto[13], gameConf->sound);
+			    ot(oto[13], conf->sound);
 			    if (txtype[t] == 1) {
 				for (t = 0; t < amax; t++) {
 				    if (atype[t] == 87 || atype[t] == 88) {
@@ -2337,7 +2337,7 @@ if (mtm==250)end();
 //ヒント
 		    if (ttype[t] == 300) {
 			if (xx[17] == 1) {
-			    ot(oto[15], gameConf->sound);
+			    ot(oto[15], conf->sound);
 			    if (txtype[t] <= 100) {
 				tmsgtype = 1;
 				tmsgtm = 15;
@@ -2356,7 +2356,7 @@ if (mtm==250)end();
 
 		    if (ttype[t] == 301) {
 			if (xx[17] == 1) {
-			    ot(oto[3], gameConf->sound);
+			    ot(oto[3], conf->sound);
 			    eyobi(ta[t] + 1200,
 				  tb[t] + 1200, 300,
 				  -1000, 0, 160, 1000, 1000, 1, 120);
@@ -2379,7 +2379,7 @@ if (mtm==250)end();
 			&& mb + mnobib > xx[9]
 			&& mb < xx[9] + xx[1]) {
 
-			ot(oto[3], gameConf->sound);
+			ot(oto[3], conf->sound);
 			eyobi(ta[t] + 1200,
 			      tb[t] + 1200, 300, -1000,
 			      0, 160, 1000, 1000, 1, 120);
@@ -2569,34 +2569,34 @@ if (mtm==250)end();
 			    if (sxtype[t] == 0) {
 				mtype = 100;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 0;
 			    }
 //普通
 			    if (sxtype[t] == 1) {
 				mtype = 100;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 1;
 			    }
 //普通
 			    if (sxtype[t] == 2) {
 				mtype = 100;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 2;
 			    }
 			    if (sxtype[t] == 5) {
 				mtype = 100;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 5;
 			    }
 // ループ
 			    if (sxtype[t] == 6) {
 				mtype = 100;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 6;
 			    }
 			}
@@ -2609,7 +2609,7 @@ if (mtm==250)end();
 			    if (sxtype[t] == 0) {
 				mtype = 500;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);	//mxtype=1;
+				ot(oto[7], conf->sound);	//mxtype=1;
 				mtype = 100;
 				mxtype = 10;
 			    }
@@ -2617,14 +2617,14 @@ if (mtm==250)end();
 			    if (sxtype[t] == 2) {
 				mxtype = 3;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);	//mxtype=1;
+				ot(oto[7], conf->sound);	//mxtype=1;
 				mtype = 100;
 			    }
 // ループ
 			    if (sxtype[t] == 6) {
 				mtype = 3;
 				mtm = 0;
-				ot(oto[7], gameConf->sound);
+				ot(oto[7], conf->sound);
 				mxtype = 6;
 			    }
 			}
@@ -2639,40 +2639,40 @@ if (mtm==250)end();
 			if (stype[t] == 100) {
 			    if (sxtype[t] == 0
 				|| sxtype[t] == 1 && ttype[1] != 3) {
-				ayobi(gameConf, sa[t] + 1000, 32000, 0, 0, 0, 3, 0);
+				ayobi(conf, sa[t] + 1000, 32000, 0, 0, 0, 3, 0);
 				sa[t] = -800000000;
-				ot(oto[10], gameConf->sound);
+				ot(oto[10], conf->sound);
 			    }
 			}
 			if (stype[t] == 101) {
-			    ayobi(gameConf, sa[t] + 6000, -4000, 0, 0, 0, 3, 1);
+			    ayobi(conf, sa[t] + 6000, -4000, 0, 0, 0, 3, 1);
 			    sa[t] = -800000000;
-			    ot(oto[10], gameConf->sound);
+			    ot(oto[10], conf->sound);
 			}
 			if (stype[t] == 102) {
 			    if (sxtype[t] == 0) {
 				for (t3 = 0; t3 <= 3; t3++) {
-				    ayobi(gameConf, sa[t]
+				    ayobi(conf, sa[t]
 					  +
 					  t3 * 3000, -3000, 0, 0, 0, 0, 0);
 				}
 			    }
 			    if (sxtype[t] == 1 && mb >= 16000) {
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      1500, 44000, 0, -2000, 0, 4, 0);
 			    } else if (sxtype[t] == 2) {
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      4500, 30000, 0, -1600, 0, 5, 0);
-				ot(oto[10], gameConf->sound);
+				ot(oto[10], conf->sound);
 				sxtype[t] = 3;
 				sa[t] -= 12000;
 			    } else if (sxtype[t] == 3) {
 				sa[t] += 12000;
 				sxtype[t] = 4;
 			    } else if (sxtype[t] == 4) {
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      4500, 30000, 0, -1600, 0, 5, 0);
-				ot(oto[10], gameConf->sound);
+				ot(oto[10], conf->sound);
 				sxtype[t] = 5;
 				sxtype[t] = 0;
 			    }
@@ -2680,13 +2680,13 @@ if (mtm==250)end();
 			    else if (sxtype[t] == 7) {
 				mainmsgtype = 1;
 			    } else if (sxtype[t] == 8) {
-				ayobi(gameConf, sa[t] -
+				ayobi(conf, sa[t] -
 				      5000 -
 				      3000 * 1, 26000, 0, -1600, 0, 5, 0);
-				ot(oto[10], gameConf->sound);
+				ot(oto[10], conf->sound);
 			    } else if (sxtype[t] == 9) {
 				for (t3 = 0; t3 <= 2; t3++) {
-				    ayobi(gameConf, sa[t]
+				    ayobi(conf, sa[t]
 					  +
 					  t3
 					  *
@@ -2702,7 +2702,7 @@ if (mtm==250)end();
 
 			    if (sxtype[t] == 12) {
 				for (t3 = 1; t3 <= 3; t3++) {
-				    ayobi(gameConf, sa[t]
+				    ayobi(conf, sa[t]
 					  +
 					  t3
 					  *
@@ -2722,7 +2722,7 @@ if (mtm==250)end();
 				Mix_HaltMusic();
 				mtype = 302;
 				mtm = 0;
-				ot(oto[16], gameConf->sound);
+				ot(oto[16], conf->sound);
 			    }
 
 			    if (sxtype[t] != 3
@@ -2735,7 +2735,7 @@ if (mtm==250)end();
 			    if (sxtype[t] == 0) {
 				amsgtm[aco] = 10;
 				amsgtype[aco] = 50;
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      9000, sb[t] + 2000, 0, 0, 0, 79, 0);
 				sa[t] = -800000000;
 			    }
@@ -2743,7 +2743,7 @@ if (mtm==250)end();
 			    if (sxtype[t] == 1 && ttype[6] <= 6) {
 				amsgtm[aco] = 10;
 				amsgtype[aco] = 50;
-				ayobi(gameConf, sa[t] -
+				ayobi(conf, sa[t] -
 				      12000, sb[t] + 2000, 0, 0, 0, 79, 0);
 				sa[t] = -800000000;
 				txtype[9] = 500;	//ttype[9]=1;
@@ -2752,19 +2752,19 @@ if (mtm==250)end();
 
 			if (stype[t] == 104) {
 			    if (sxtype[t] == 0) {
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      12000,
 				      sb[t] + 2000 + 3000, 0, 0, 0, 79, 0);
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      12000,
 				      sb[t] + 2000 + 3000, 0, 0, 0, 79, 1);
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      12000,
 				      sb[t] + 2000 + 3000, 0, 0, 0, 79, 2);
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      12000,
 				      sb[t] + 2000 + 3000, 0, 0, 0, 79, 3);
-				ayobi(gameConf, sa[t] +
+				ayobi(conf, sa[t] +
 				      12000,
 				      sb[t] + 2000 + 3000, 0, 0, 0, 79, 4);
 				sa[t] = -800000000;
@@ -2787,7 +2787,7 @@ if (mtm==250)end();
 			    mtype = 300;
 			    mtm = 0;
 			    ma = sa[t] - fx - 2000;
-			    ot(oto[11], gameConf->sound);
+			    ot(oto[11], conf->sound);
 			}
 #ifndef DISABLE_SAVE_FLAG
 //中間ゲート
@@ -2803,7 +2803,7 @@ if (mtm==250)end();
 			sr[t]++;
 			if (sr[t] >= sgtype[t]) {
 			    sr[t] = 0;
-			    ayobi(gameConf, sa[t], 30000,
+			    ayobi(conf, sa[t], 30000,
 				  rand(600) - 300,
 				  -1600 - rand(900), 0, 84, 0);
 			}
@@ -2963,7 +2963,7 @@ if (srmuki[t]==1)ma+=srsok[t];
 			}
 //特殊
 			if (srsp[t] == 1) {
-			    ot(oto[3], gameConf->sound);
+			    ot(oto[3], conf->sound);
 			    eyobi(sra[t] + 200,
 				  srb[t] - 1000,
 				  -240, -1400, 0, 160, 4500, 4500, 2, 120);
@@ -3147,7 +3147,7 @@ if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
 			    btm[t] = 9999999;
 			}
 //10
-			ayobi(gameConf, ba[t], bb[t], 0, 0, 0, btype[t], bxtype[t]);
+			ayobi(conf, ba[t], bb[t], 0, 0, 0, btype[t], bxtype[t]);
 
 		    }
 
@@ -3217,7 +3217,7 @@ if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
 				    fy <
 				    xx[9] + xx[1] * 3 + xx[12] + 1500) {
 				    aa[tt] = -800000;
-				    ot(oto[6], gameConf->sound);
+				    ot(oto[6], conf->sound);
 				}
 			    }
 			}
@@ -3699,7 +3699,7 @@ if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
 					    = 0;
 					aa[tt] -= 1050;
 					ab[tt] -= 1050;
-					ot(oto[9], gameConf->sound);
+					ot(oto[9], conf->sound);
 					aa[t] = -80000000;
 				    }
 				}
@@ -3900,7 +3900,7 @@ break;
 
 //地面判定
 		    if (azimentype[t] != 2) {
-			tekizimen(gameConf);
+			tekizimen(conf);
 		    }
 
 		}		//azimentype[t]>=1
@@ -3947,7 +3947,7 @@ break;
 			    if (axtype[t] == 0)
 				aa[t] = -900000;
 			    if (axtype[t] == 1) {
-				ot(oto[5], gameConf->sound);
+				ot(oto[5], conf->sound);
 				mb = xx[9] - 900 - anobib[t];
 				md = -2100;
 				xx[25] = 1;
@@ -4007,14 +4007,14 @@ break;
 
 			if (atype[t] != 85) {
 			    if (xx[25] == 0) {
-				ot(oto[5], gameConf->sound);
+				ot(oto[5], conf->sound);
 				mb = xx[9] - 1000 - anobib[t];
 				md = -1000;
 			    }
 			}
 			if (atype[t] == 85) {
 			    if (xx[25] == 0) {
-				ot(oto[5], gameConf->sound);
+				ot(oto[5], conf->sound);
 				mb = xx[9] - 4000;
 				md = -1000;
 				axtype[t] = 5;
@@ -4212,17 +4212,17 @@ break;
 			if (atype[t] == 100 && axtype[t] == 0) {
 			    mmsgtm = 30;
 			    mmsgtype = 1;
-			    ot(oto[9], gameConf->sound);
+			    ot(oto[9], conf->sound);
 			}
 			if (atype[t] == 100 && axtype[t] == 1) {
 			    mmsgtm = 30;
 			    mmsgtype = 2;
-			    ot(oto[9], gameConf->sound);
+			    ot(oto[9], conf->sound);
 			}
 			if (atype[t] == 100 && axtype[t] == 2) {
 			    mnobia = 5200;
 			    mnobib = 7300;
-			    ot(oto[9], gameConf->sound);
+			    ot(oto[9], conf->sound);
 			    ma -= 1100;
 			    mb -= 4000;
 			    mtype = 1;
@@ -4242,35 +4242,35 @@ break;
 //?ボール
 			if (atype[t] == 105) {
 			    if (axtype[t] == 0) {
-				ot(oto[4], gameConf->sound);
+				ot(oto[4], conf->sound);
 				sgtype[26] = 6;
 			    }
 			    if (axtype[t] == 1) {
 				txtype[7] = 80;
-				ot(oto[4], gameConf->sound);
+				ot(oto[4], conf->sound);
 
-//ayobi(gameConf, aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);
-				ayobi(gameConf, aa[t] -
+//ayobi(conf, aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);
+				ayobi(conf, aa[t] -
 				      8 * 3000 -
 				      1000, -4 * 3000, 0, 0, 0, 110, 0);
-				ayobi(gameConf, aa[t] -
+				ayobi(conf, aa[t] -
 				      10 *
 				      3000 +
 				      1000, -1 * 3000, 0, 0, 0, 110, 0);
 
-				ayobi(gameConf, aa[t] +
+				ayobi(conf, aa[t] +
 				      4 * 3000 +
 				      1000, -2 * 3000, 0, 0, 0, 110, 0);
-				ayobi(gameConf, aa[t] +
+				ayobi(conf, aa[t] +
 				      5 * 3000 -
 				      1000, -3 * 3000, 0, 0, 0, 110, 0);
-				ayobi(gameConf, aa[t] +
+				ayobi(conf, aa[t] +
 				      6 * 3000 +
 				      1000, -4 * 3000, 0, 0, 0, 110, 0);
-				ayobi(gameConf, aa[t] +
+				ayobi(conf, aa[t] +
 				      7 * 3000 -
 				      1000, -2 * 3000, 0, 0, 0, 110, 0);
-				ayobi(gameConf, aa[t] +
+				ayobi(conf, aa[t] +
 				      8 * 3000 +
 				      1000,
 				      -2 * 3000 - 1000, 0, 0, 0, 110, 0);
@@ -4487,15 +4487,15 @@ break;
     rpaint();
 
 //30-fps
-    gameConf->fps = 30;
+    conf->fps = 30;
     if (CheckHitKey(KEY_INPUT_SPACE) == 1)
-        gameConf->fps = 60;
+        conf->fps = 60;
 
-    wait(startTime, SDL_GetTicks(), 1000 / gameConf->fps);
+    wait(startTime, SDL_GetTicks(), 1000 / conf->fps);
 
 }  // end of Mainprogram()
 
-void tekizimen(GameConfig* gameConf)
+void tekizimen(GameConfig* conf)
 {
 
 //壁
@@ -4627,13 +4627,13 @@ void tekizimen(GameConfig* gameConf)
 		    if (xx[27] == 1 && (ttype[tt] == 7 || ttype[tt] == 1)
 			&& atype[t] == 2) {
 			if (ttype[tt] == 7) {
-			    ot(oto[4], gameConf->sound);
+			    ot(oto[4], conf->sound);
 			    ttype[tt] = 3;
 			    eyobi(ta[tt] + 10,
 				  tb[tt], 0, -800,
 				  0, 40, 3000, 3000, 0, 16);
 			} else if (ttype[tt] == 1) {
-			    ot(oto[3], gameConf->sound);
+			    ot(oto[3], conf->sound);
 			    eyobi(ta[tt] + 1200,
 				  tb[tt] + 1200,
 				  300, -1000, 0, 160, 1000, 1000, 1, 120);
@@ -4657,7 +4657,7 @@ void tekizimen(GameConfig* gameConf)
 		    && aa[t] - fx < xx[8] + xx[1]
 		    && ab[t] + anobib[t] - fy > xx[9]
 		    && ab[t] - fy < xx[9] + xx[1]) {
-		    ot(oto[3], gameConf->sound);
+		    ot(oto[3], conf->sound);
 		    eyobi(ta[tt] + 1200, tb[tt] + 1200, 300,
 			  -1000, 0, 160, 1000, 1000, 1, 120);
 		    eyobi(ta[tt] + 1200, tb[tt] + 1200,
@@ -10432,7 +10432,7 @@ void brockbreak(int t)
 //hosico++;
     }
     if (titem[t] >= 2 && titem[t] <= 7) {
-//ayobi(gameConf, ta[t],tb[t],-800,10,100+(titem[t]-2),0);//end();
+//ayobi(conf, ta[t],tb[t],-800,10,100+(titem[t]-2),0);//end();
     }
 
     ta[t] = -800000;
@@ -10593,7 +10593,7 @@ eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 }				//eyobi
 
 //敵キャラ、アイテム作成
-void ayobi(GameConfig* gameConf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
+void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
 	   int xxtype)
 {
     int rz = 0;
@@ -10632,11 +10632,11 @@ void ayobi(GameConfig* gameConf, int xa, int xb, int xc, int xd, int xnotm, int 
 
 //大砲音
 	    if (xtype == 7 && CheckSoundMem(oto[10]) == 0) {
-		ot(oto[10], gameConf->sound);
+		ot(oto[10], conf->sound);
 	    }
 //ファイア音
 	    if (xtype == 10 && CheckSoundMem(oto[18]) == 0) {
-		ot(oto[18], gameConf->sound);
+		ot(oto[18], conf->sound);
 	    }
 
 	    azimentype[aco] = 1;
