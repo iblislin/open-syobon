@@ -7,9 +7,9 @@ int main(int argc, char *argv[])
 {
     GameConfig gameConf;
 
-    parseArgs(argc, argv);
+    parseArgs(argc, argv, &gameConf);
 
-    if (DxLib_Init() != 0)
+    if (DxLib_Init(&gameConf) != 0)
         return 1;
 
     //全ロード
@@ -17,17 +17,32 @@ int main(int argc, char *argv[])
         return 1;
 
     //ループ
-    while (!CheckHitKey(KEY_INPUT_ESCAPE)) {
+    while (true) {
         UpdateKeys();
         Mainprogram(&gameConf);
 
         if (gameConf.endFlag)
+            break;
+        else if (CheckHitKey(KEY_INPUT_ESCAPE))
             break;
     }
 
     // this will trigger the atexit function registered by DxLib_Init
     return 0;
 }
+
+
+// maybe switch to boost:program_options
+void parseArgs(int argc, char* argv[], GameConfig* conf)
+{
+    if (argc <= 1)
+        return;
+
+    for(auto i=0; i<argc; i++)
+        if (!strcasecmp(argv[i], "-nosound"))
+            conf->sound = false;
+}
+
 
 //メイン描画
 void rpaint()

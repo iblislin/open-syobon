@@ -196,17 +196,3 @@ int loadg()  /* load graph from res/ */
 
     return 0;
 }
-
-extern bool sound;
-
-// maybe switch to boost:program_options
-void parseArgs(int argc, char* argv[])
-{
-    if (argc <= 1)
-        return;
-
-
-    for(auto i=0; i<argc; i++)
-        if (!strcasecmp(argv[i], "-nosound"))
-            sound = false;
-}

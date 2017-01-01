@@ -3,24 +3,9 @@
 
 using namespace std;
 
-#define SHORT
 
 int loadg();
-void parseArgs(int argc, char* argv[]);
-
-class GameConfig {
-    public:
-        bool endFlag;
-
-        int fps;  // frame per second
-        Uint32 startTime; // frame start time
-
-        GameConfig() :
-            endFlag(false),
-            fps(30)
-        {
-        }
-};
+void parseArgs(int argc, char* argv[], GameConfig*);
 
 //プログラム中
 //main-10
