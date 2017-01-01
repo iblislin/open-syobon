@@ -8,10 +8,13 @@ public:
     unsigned int level;
     unsigned int sub_level;
 
+    bool changed;
+
     StageInfo() :
         series(1),
         level(1),
-        sub_level(0)
+        sub_level(0),
+        changed(false)
     {
         /*
          * (0, 0, 0) -> a random generated stage
@@ -23,6 +26,7 @@ public:
         this->series = series;
         this->level = level;
         this->sub_level = sub_level;
+        this->changed = true;
     }
 
     bool check(unsigned int series, unsigned int level,

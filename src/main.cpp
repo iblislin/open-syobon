@@ -4294,15 +4294,14 @@ if (srmuki[t]==1)ma+=srsok[t];
 void enterTitle(GameConfig* conf)
 {
         maintm++;
-        xx[0] = 0;
 
 #ifdef ERL_AI
-        // skip the title and enter level 1
-        xx[0] = 1;
+        // skip the title and enter level 1-1
+        conf->stage_info.set(1, 1, 0);
 #endif
         if (maintm <= 10) {
             maintm = 11;
-            conf->stage_info.set(1, 1, 0);
+            // conf->stage_info.set(1, 1, 0);
         }
 
         if (CheckHitKey(KEY_INPUT_1))
@@ -4329,21 +4328,23 @@ void enterTitle(GameConfig* conf)
             conf->stage_info.set(0, 0, 0);
 
         if (CheckHitKey(KEY_INPUT_RETURN))
-            xx[0] = 1;
+            conf->stage_info.changed = true;
+        else if (CheckHitKey(KEY_INPUT_Z))
+            conf->stage_info.changed = true;
 
-        if (CheckHitKey(KEY_INPUT_Z))
-            xx[0] = 1;
+        if (!conf->stage_info.changed)
+            return;
 
-        if (xx[0]) {
-            mainZ = 10;
-            conf->init_stage = true;
-            maintm = 0;
-            nokori = 2;
+        // reset for next usage
+        conf->stage_info.changed = false;
 
-            fast = 0;
-            trap = 0;
-            tyuukan = 0;
-        }
+        mainZ = 10;
+        maintm = 0;
+        nokori = 2;
+
+        fast = 0;
+        trap = 0;
+        tyuukan = 0;
 }
 
 
