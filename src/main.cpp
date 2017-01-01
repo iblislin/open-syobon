@@ -2774,7 +2774,7 @@ if (mtm==250)end();
 			    ma = sa[t] - fx - 2000;
 			    ot(oto[11]);
 			}
-#ifdef DISABLE_SAVE_FLAG
+#ifndef DISABLE_SAVE_FLAG
 //中間ゲート
 			if (stype[t] == 500 && mtype == 0 && mhp >= 1) {
 			    tyuukan += 1;
