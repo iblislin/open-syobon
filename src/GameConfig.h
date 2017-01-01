@@ -14,8 +14,8 @@ public:
         sub_level(0)
     {
         /*
-            * (0, 0, 0) -> a random generated stage
-            * */
+         * (0, 0, 0) -> a random generated stage
+         */
     }
 
     void set(unsigned int series, unsigned int level, unsigned int sub_level)
