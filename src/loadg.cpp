@@ -179,11 +179,11 @@ void loadSound(GameConfig* conf)
         return;
 
     //ogg読み込み
-    otom[1] = LoadMusicMem("BGM/field.ogg"); // volume: 50%
-    otom[2] = LoadMusicMem("BGM/dungeon.ogg"); // volume: 40%
-    otom[3] = LoadMusicMem("BGM/star4.ogg"); // volume: 50%
-    otom[4] = LoadMusicMem("BGM/castle.ogg"); // volume: 50%
-    otom[5] = LoadMusicMem("BGM/puyo.ogg"); // volume: 50%
+    otom[1] = LoadMusicMem("bgm/field.ogg"); // volume: 50%
+    otom[2] = LoadMusicMem("bgm/dungeon.ogg"); // volume: 40%
+    otom[3] = LoadMusicMem("bgm/star4.ogg"); // volume: 50%
+    otom[4] = LoadMusicMem("bgm/castle.ogg"); // volume: 50%
+    otom[5] = LoadMusicMem("bgm/puyo.ogg"); // volume: 50%
 
     oto[1]  = LoadSoundMem("SE/jump.ogg");
     oto[2]  = LoadSoundMem("SE/brockcoin.ogg");
