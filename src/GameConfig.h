@@ -20,4 +20,11 @@ class GameConfig {
         }
 };
 
+// BGM
+#define BGM_FIELD    1
+#define BGM_DUNGEON  2
+#define BGM_STAR4    3
+#define BGM_CASTLE   4
+#define BGM_PUYO     5
+
 #endif  /* ifndef GameConfig_H */
