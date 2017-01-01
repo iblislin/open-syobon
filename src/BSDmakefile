@@ -3,5 +3,8 @@
 .cpp.o:
 	${CXX} ${CXXFLAGS} -o ${.TARGET} -c ${.IMPSRC}
 
+.o:
+	${CXX} ${CXXFLAGS} -o ${.TARGET} ${.ALLSRC} ${LDFLAGS}
+
 .erl.beam:
 	erlc ${ERLCFLAGS} ${.IMPSRC}

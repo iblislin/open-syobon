@@ -4,3 +4,5 @@ SyobonAction
 cscope.out
 *.so
 *.beam
+
+src/tests/Main
