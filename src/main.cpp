@@ -10408,15 +10408,16 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 }				//stagep
 
 //BGM変更
-void bgmchange(Mix_Music * x)
+void bgmchange(Mix_Music * music)
 {
     Mix_HaltMusic();
-//otom[0]=0;
-    otom[0] = x;
-    Mix_PlayMusic(otom[0], -1);;
-    if(x == otom[2]) Mix_VolumeMusic(MIX_MAX_VOLUME * 40 / 100);
-    else Mix_VolumeMusic(MIX_MAX_VOLUME * 50 / 100);
-}				//bgmchange()
+    Mix_PlayMusic(music, -1);
+
+    if(music == otom[2])
+        Mix_VolumeMusic(MIX_MAX_VOLUME * 40 / 100);
+    else
+        Mix_VolumeMusic(MIX_MAX_VOLUME * 50 / 100);
+}  // bgmchange()
 
 //ブロック出現
 
