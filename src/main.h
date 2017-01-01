@@ -80,7 +80,7 @@ void setno();
 Mix_Music *otom[6] = {};
 Mix_Chunk *oto[19] = {};
 void ot(Mix_Chunk * x, bool enableFlag);
-void bgmchange(Mix_Music * x);
+void chBgm(Mix_Music* music);
 
 //文字
 void str(string c, int a, int b);

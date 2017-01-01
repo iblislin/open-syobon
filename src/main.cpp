@@ -1175,7 +1175,7 @@ void initStage(GameConfig* conf)
     stageonoff = 0;
 
     //チーターマン　入れ
-    bgmchange(otom[1]);
+    chBgm(otom[1]);
 
     stagecls();
 
@@ -3337,7 +3337,7 @@ if (actaon[2]==1){mb-=400;md=-1400;mjumptm=10;}
 			    if (mtype == 300) {
 				mtype = 0;
 				StopSoundMem(oto[11]);
-				bgmchange(otom[1]);
+				chBgm(otom[1]);
 			    }
 			    for (t1 = 0; t1 < smax; t1++) {
 				if (stype[t1] == 104)
@@ -4342,7 +4342,7 @@ break;
 
         if (maintm <= 1) {
             maintm = 2;
-            bgmchange(otom[5]);
+            chBgm(otom[5]);
             xx[10] = 0;
             for (t = 0; t <= xx[7]; t += 1) {
             xx[12 + t] = 980000;
@@ -4381,7 +4381,7 @@ break;
         }			//t
 
         if (xx[30] == -200) {
-            bgmchange(otom[5]);
+            chBgm(otom[5]);
         }
         if (xx[30] <= -400) {
             mainZ = 100;
@@ -5536,7 +5536,7 @@ void stagep()
 
 //マリ　地上　入れ
 //Mix_HaltMusic();
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 0 * 100;
@@ -5676,7 +5676,7 @@ void stagep()
     if (sta == 1 && stb == 2 && stc == 1) {
 
 //マリ　地下　入れ
-	bgmchange(otom[2]);
+	chBgm(otom[2]);
 
 	scrollx = 4080 * 100;
 	ma = 6000;
@@ -6276,7 +6276,7 @@ void stagep()
 
 //マリ　地上　入れ
 //Mix_HaltMusic();
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 900 * 100;
@@ -6460,7 +6460,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 1 && stb == 3 && stc == 0) {
 
 //Mix_HaltMusic();
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 3900 * 100;
@@ -6994,7 +6994,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
 //マリ　地上　入れ
 //Mix_HaltMusic();
-	bgmchange(otom[2]);
+	chBgm(otom[2]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 0 * 100;
@@ -7081,7 +7081,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 1 && stb == 3 && stc == 5) {
 
 	stagecolor = 3;
-	bgmchange(otom[3]);
+	chBgm(otom[3]);
 
 	scrollx = 0 * 100;
 	ma = 3000;
@@ -7183,7 +7183,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
 //マリ　地上　入れ
 //Mix_HaltMusic();
-	bgmchange(otom[4]);
+	chBgm(otom[4]);
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 4400 * 100;
@@ -7817,7 +7817,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 2 && stb == 1 && stc == 0) {	// 2-1
 	ma = 5600;
 	mb = 32000;
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 	stagecolor = 1;
 	scrollx = 2900 * (113 - 19);
 	//
@@ -8174,7 +8174,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     }
 
     if (sta == 2 && stb == 2 && stc == 0) {	//2-2(地上)
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 	stagecolor = 1;
 	scrollx = 2900 * (19 - 19);
 	//
@@ -8253,7 +8253,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     }
 
     if (sta == 2 && stb == 2 && stc == 1) {	//2-2(地下)
-	bgmchange(otom[2]);
+	chBgm(otom[2]);
 	stagecolor = 2;
 	ma = 7500;
 	mb = 9000;
@@ -8741,7 +8741,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     if (sta == 2 && stb == 2 && stc == 2) {	// 2-2 地上
 //
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 	stagecolor = 1;
 	scrollx = 2900 * (36 - 19);
 	ma = 7500;
@@ -8913,7 +8913,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 2 && stb == 3 && stc == 0) {	// 2-3
 	ma = 7500;
 	mb = 3000 * 8;
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 	stagecolor = 1;
 	scrollx = 2900 * (126 - 19);
 	//
@@ -9295,7 +9295,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	    mb = 3000 * 11;
 	    stc = 0;
 	}
-	bgmchange(otom[4]);
+	chBgm(otom[4]);
 	stagecolor = 4;
 	scrollx = 2900 * (40 - 19);
 	//
@@ -9451,7 +9451,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 2 && stb == 4 && stc == 1) {	// 2-4(2番)
 	ma = 4500;
 	mb = 3000 * 11;
-	bgmchange(otom[4]);
+	chBgm(otom[4]);
 	stagecolor = 4;
 	scrollx = 2900 * (21 - 19);
 	//
@@ -9553,7 +9553,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 2 && stb == 4 && stc == 2) {	// 2-4(3番)
 	ma = 4500;
 	mb = 3000 * 11;
-	bgmchange(otom[5]);	//6
+	chBgm(otom[5]);	//6
 	stagecolor = 4;
 	scrollx = 2900 * (128 - 19);
 	//
@@ -10056,7 +10056,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     if (sta == 3 && stb == 1 && stc == 0) {	// 3-1
 	ma = 5600;
 	mb = 32000;
-	bgmchange(otom[1]);
+	chBgm(otom[1]);
 	stagecolor = 5;
 	scrollx = 2900 * (112 - 19);
 	byte stagedatex[17][1001] = {
@@ -10408,7 +10408,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 }				//stagep
 
 //BGM変更
-void bgmchange(Mix_Music * music)
+void chBgm(Mix_Music * music)
 {
     Mix_HaltMusic();
     Mix_PlayMusic(music, -1);
@@ -10417,7 +10417,7 @@ void bgmchange(Mix_Music * music)
         Mix_VolumeMusic(MIX_MAX_VOLUME * 40 / 100);
     else
         Mix_VolumeMusic(MIX_MAX_VOLUME * 50 / 100);
-}  // bgmchange()
+}  // chBgm()
 
 //ブロック出現
 
