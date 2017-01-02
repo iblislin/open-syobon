@@ -84,14 +84,9 @@ loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
       res_ok(From, Ref),
       loop(C);
 
-    %% {From, Ref, stop_actuator} ->
-    %%   Msg = {self(), terminate},
-    %%   [Actuator ! Msg || Actuator <- Actuators],
-    %%   res_ok(From, Ref),
-    %%   loop(C);
-
     {From, Ref, set, net, Val} ->
       NewC = C#cortex{net=Val},
+      %% TODO: link to all of neuron PIDs
       res_ok(From, Ref),
       loop(NewC);
 
