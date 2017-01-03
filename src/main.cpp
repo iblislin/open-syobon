@@ -45,7 +45,7 @@ void parseArgs(int argc, char* argv[], GameConfig* conf)
 
 
 //メイン描画
-void rpaint(GameConfig* conf)
+void renderMain(GameConfig* conf)
 {
 
     //ダブルバッファリング
@@ -78,11 +78,12 @@ void rpaint(GameConfig* conf)
     else if (mainZ == 2)
         renderStaffRoll(conf);
 
-    //Showing lives
+    // Showing lives
     else if (mainZ == 10)
         renderLivePanel(conf);
 
-    //タイトル
+    // タイトル
+    // title
     else if (mainZ == 100)
         renderTitle(conf);
 
@@ -91,7 +92,7 @@ void rpaint(GameConfig* conf)
 #endif
     ScreenFlip();
 
-}  //rpaint()
+}  // renderMain
 
 
 void renderStage(GameConfig* conf)
@@ -4309,7 +4310,7 @@ if (srmuki[t]==1)ma+=srsok[t];
 
     // 描画
     // render
-    rpaint(conf);
+    renderMain(conf);
 
     //30-fps
     conf->fps = 30;

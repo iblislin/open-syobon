@@ -39,7 +39,7 @@ int stageonoff = 0;
 
 //メインプログラム
 void Mainprogram(GameConfig* conf);
-void rpaint(GameConfig* conf);
+void renderMain(GameConfig* conf);
 
 void renderLivePanel(GameConfig* conf);
 void renderStaffRoll(GameConfig* conf);
