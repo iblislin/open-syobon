@@ -50,21 +50,23 @@ void rpaint(GameConfig* conf)
 
     //ダブルバッファリング
     setcolor(0, 0, 0);
-    //if (stagecolor==1)setcolor(170,170,255);
+
     if (stagecolor == 1)
         setcolor(160, 180, 250);
-    if (stagecolor == 2)
+    else if (stagecolor == 2)
         setcolor(10, 10, 10);
-    if (stagecolor == 3)
+    else if (stagecolor == 3)
         setcolor(160, 180, 250);
-    if (stagecolor == 4)
+    else if (stagecolor == 4)
         setcolor(10, 10, 10);
-    if (stagecolor == 5) {
+
+    if (stagecolor == 5)
+    {
         setcolor(160, 180, 250);
         mrzimen = 1;
-    } else {
-        mrzimen = 0;
     }
+    else
+        mrzimen = 0;
 
     FillScreen();
 
@@ -73,7 +75,7 @@ void rpaint(GameConfig* conf)
         renderStage(conf);
 
     // staff roll
-    if (mainZ == 2)
+    else if (mainZ == 2)
         renderStaffRoll(conf);
 
     //Showing lives
