@@ -45,7 +45,7 @@ Mix_Music* LoadMusicMem(const char* f);
 
 int DxLib_Init(GameConfig*);
 
-//Main screen
+// Main screen
 #define SCREEN_WIDTH  480
 #define SCREEN_HEIGHT 420
 extern SDL_Surface *screen;

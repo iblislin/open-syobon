@@ -82,7 +82,11 @@ void ChangeFontType(byte type)
 
 void DrawString(int a, int b, const char *x, Uint32 c)
 {
-    SDL_Color color = { static_cast<Uint8>(c >> 16), static_cast<Uint8>(c >> 8), static_cast<Uint8>(c) };
+    SDL_Color color = {
+        static_cast<Uint8>(c >> 16),
+        static_cast<Uint8>(c >> 8),
+        static_cast<Uint8>(c)
+    };
     SDL_Surface *rendered = TTF_RenderUTF8_Solid(font[fontsize], x, color);
     if (fontType == DX_FONTTYPE_EDGE) {
 	SDL_Color blk = { 0, 0, 0 };
@@ -183,15 +187,15 @@ byte WaitKey()
     }
 }
 
-void DrawGraphZ(int a, int b, SDL_Surface * mx)
+void DrawGraphZ(int x, int y, SDL_Surface * surface)
 {
-    if(mx)
-    {
-        SDL_Rect offset;
-        offset.x = a;
-        offset.y = b;
-        SDL_BlitSurface(mx, NULL, screen, &offset);
-    }
+    if (surface == NULL)
+        return;
+
+    SDL_Rect offset;
+    offset.x = x;
+    offset.y = y;
+    SDL_BlitSurface(surface, NULL, screen, &offset);
 }
 
 void DrawTurnGraphZ(int a, int b, SDL_Surface * mx)
