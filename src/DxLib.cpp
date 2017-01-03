@@ -183,11 +183,6 @@ byte WaitKey()
     }
 }
 
-/*Uint32 GetColor(byte r, byte g, byte b)
-{
-    return r << 8 * 3 | g << 8 * 2 | b << 8 | 0xFF;
-}*/
-
 void DrawGraphZ(int a, int b, SDL_Surface * mx)
 {
     if(mx)

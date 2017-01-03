@@ -49,7 +49,14 @@ public:
 class Player
 {
 public:
-    int nokori = 3;
+    int lives = 2; // nokori ?
+
+    Player() {}
+
+    void reset_lives()
+    {
+        this->lives = 2;
+    }
 };
 
 
@@ -61,6 +68,8 @@ public:
     // stage
     bool init_stage = true;  // init stage or not
     StageInfo stage_info;
+
+    Player player;
 
     bool endFlag = false;
 

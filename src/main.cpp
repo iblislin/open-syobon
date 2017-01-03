@@ -1167,15 +1167,15 @@ void rpaint(GameConfig* conf)
 
 void renderLivePanel(GameConfig* conf)
 {
-        setc0();
-        FillScreen();
+    setc0();
+    FillScreen();
 
-        SetFontSize(16);
-        SetFontThickness(4);
+    SetFontSize(16);
+    SetFontThickness(4);
 
-        drawimage(grap[0][0], 190, 190);
-        DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
-                nokori);
+    drawimage(grap[0][0], 190, 190);
+    DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
+                     conf->player.lives);
 }
 
 
@@ -1457,7 +1457,7 @@ void Mainprogram(GameConfig* conf)
 		mainZ = 10;
 		mtm = 0;
 		mkeytm = 0;
-		nokori--;
+		conf->player.lives--;
 		if (fast == 1)
 		    mtype = 0;
 	    }			//mtm>=100
@@ -4258,7 +4258,7 @@ if (srmuki[t]==1)ma+=srsok[t];
         }
         if (xx[30] <= -400) {
             mainZ = 100;
-            nokori = 2;
+            conf->player.reset_lives();
             maintm = 0;
         }
 
@@ -4344,7 +4344,7 @@ void enterTitle(GameConfig* conf)
 
         mainZ = 10;
         maintm = 0;
-        nokori = 2;
+        conf->player.reset_lives();
 
         fast = 0;
         trap = 0;
