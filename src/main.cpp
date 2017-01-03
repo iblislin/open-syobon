@@ -4242,19 +4242,10 @@ if (srmuki[t]==1)ma+=srsok[t];
         enterStaffRoll(conf);
 
     if (SCENE_LIVE_PANEL == *scene)
-    {
-        maintm++;
+        enterLivePanel(conf);
 
-        if (fast == 1)
-            maintm += 2;
-        if (maintm >= 30) {
-            maintm = 0;
-            *scene = SCENE_STAGE;
-            conf->init_stage = true;
-        }
-    }  // SCENE_LIVE_PANEL
-
-    //タイトル
+    // タイトル
+    // title
     if (SCENE_TITLE == *scene)
         enterTitle(conf);
 
@@ -4265,6 +4256,22 @@ if (srmuki[t]==1)ma+=srsok[t];
     wait(startTime, SDL_GetTicks(), 1000 / get_fps());
 
 }  // end of Mainprogram()
+
+
+void enterLivePanel(GameConfig* conf)
+{
+    maintm++;
+
+    if (fast == 1)
+        maintm += 2;
+
+    if (maintm >= 30)
+    {
+        maintm = 0;
+        conf->cur_scene = SCENE_STAGE;
+        conf->init_stage = true;
+    }
+}
 
 
 void enterStaffRoll(GameConfig* conf)

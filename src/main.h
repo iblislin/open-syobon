@@ -93,6 +93,7 @@ void str(string c, int a, int b);
 void stagecls();
 void stage(GameConfig* conf);
 void stagep(GameConfig* conf);
+void enterLivePanel(GameConfig* conf);
 void enterStaffRoll(GameConfig* conf);
 void enterTitle(GameConfig* conf);
 
