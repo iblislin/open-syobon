@@ -189,7 +189,7 @@ byte WaitKey()
 
 void DrawGraphZ(int x, int y, SDL_Surface * surface)
 {
-    if (surface == NULL)
+    if (NULL == surface)
         return;
 
     SDL_Rect offset;

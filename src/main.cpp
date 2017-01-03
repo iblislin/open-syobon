@@ -1102,37 +1102,12 @@ void rpaint(GameConfig* conf)
         }			//blacktm
     }  // mainZ == 1
 
-    if (mainZ == 2) {
+    // staff roll
+    if (mainZ == 2)
+        renderStaffRoll(conf);
 
-        setcolor(255, 255, 255);
-        str("制作・プレイに関わった方々",
-                240 - 13 * 20 / 2, xx[12] / 100);
-        str("ステージ１　プレイ", 240 - 9 * 20 / 2, xx[13] / 100);
-        //Theres an encoding error here, this is only temporary
-        //str("æy@]`y",240-6*20/2,xx[14]/100);
-        str("TODO: Fix this encoding error...",240-6*20/2,xx[14]/100);
-        str("ステージ２　プレイ", 240 - 9 * 20 / 2, xx[15] / 100);
-        str("友人　willowlet ", 240 - 8 * 20 / 2, xx[16] / 100);
-        str("ステージ３　プレイ", 240 - 9 * 20 / 2, xx[17] / 100);
-        str("友人　willowlet ", 240 - 8 * 20 / 2, xx[18] / 100);
-        str("ステージ４　プレイ", 240 - 9 * 20 / 2, xx[19] / 100);
-        str("友人２　ann ", 240 - 6 * 20 / 2, xx[20] / 100);
-        str("ご協力", 240 - 3 * 20 / 2, xx[21] / 100);
-        str("Ｔ先輩", 240 - 3 * 20 / 2, xx[22] / 100);
-        str("Ｓ先輩", 240 - 3 * 20 / 2, xx[23] / 100);
-        str("動画技術提供", 240 - 6 * 20 / 2, xx[24] / 100);
-        str("Ｋ先輩", 240 - 3 * 20 / 2, xx[25] / 100);
-        str("動画キャプチャ・編集・エンコード",
-                240 - 16 * 20 / 2, xx[26] / 100);
-        str("willowlet ", 240 - 5 * 20 / 2, xx[27] / 100);
-        str("プログラム・描画・ネタ・動画編集",
-                240 - 16 * 20 / 2, xx[28] / 100);
-        str("ちく", 240 - 2 * 20 / 2, xx[29] / 100);
-
-        str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
-    }
     //Showing lives
-    if (mainZ == 10)
+    else if (mainZ == 10)
         renderLivePanel(conf);
 
     //タイトル
@@ -1145,6 +1120,38 @@ void rpaint(GameConfig* conf)
     ScreenFlip();
 
 }  //rpaint()
+
+
+void renderStaffRoll(GameConfig* conf)
+{
+    setcolor(255, 255, 255);
+    str("制作・プレイに関わった方々",
+        240 - 13 * 20 / 2, xx[12] / 100);
+    str("ステージ１　プレイ", 240 - 9 * 20 / 2, xx[13] / 100);
+    //Theres an encoding error here, this is only temporary
+    //str("æy@]`y",240-6*20/2,xx[14]/100);
+    str("TODO: Fix this encoding error...",240-6*20/2,xx[14]/100);
+    str("ステージ２　プレイ", 240 - 9 * 20 / 2, xx[15] / 100);
+    str("友人　willowlet ", 240 - 8 * 20 / 2, xx[16] / 100);
+    str("ステージ３　プレイ", 240 - 9 * 20 / 2, xx[17] / 100);
+    str("友人　willowlet ", 240 - 8 * 20 / 2, xx[18] / 100);
+    str("ステージ４　プレイ", 240 - 9 * 20 / 2, xx[19] / 100);
+    str("友人２　ann ", 240 - 6 * 20 / 2, xx[20] / 100);
+    str("ご協力", 240 - 3 * 20 / 2, xx[21] / 100);
+    str("Ｔ先輩", 240 - 3 * 20 / 2, xx[22] / 100);
+    str("Ｓ先輩", 240 - 3 * 20 / 2, xx[23] / 100);
+    str("動画技術提供", 240 - 6 * 20 / 2, xx[24] / 100);
+    str("Ｋ先輩", 240 - 3 * 20 / 2, xx[25] / 100);
+    str("動画キャプチャ・編集・エンコード",
+        240 - 16 * 20 / 2, xx[26] / 100);
+    str("willowlet ", 240 - 5 * 20 / 2, xx[27] / 100);
+    str("プログラム・描画・ネタ・動画編集",
+        240 - 16 * 20 / 2, xx[28] / 100);
+    str("ちく", 240 - 2 * 20 / 2, xx[29] / 100);
+
+    str("プレイしていただき　ありがとうございました〜",
+        240 - 22 * 20 / 2, xx[30] / 100);
+}  // renderStaffRoll
 
 
 void renderTitle(GameConfig* conf)
