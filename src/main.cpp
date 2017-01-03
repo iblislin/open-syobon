@@ -47,6 +47,7 @@ void parseArgs(int argc, char* argv[], GameConfig* conf)
 //メイン描画
 void renderMain(GameConfig* conf)
 {
+    int *scene = &conf->cur_scene;
 
     //ダブルバッファリング
     setcolor(0, 0, 0);
@@ -71,20 +72,20 @@ void renderMain(GameConfig* conf)
     FillScreen();
 
     // stage
-    if (mainZ == 1 && !conf->init_stage)
+    if (SCENE_STAGE == *scene && !conf->init_stage)
         renderStage(conf);
 
     // staff roll
-    else if (mainZ == 2)
+    else if (SCENE_STAFF_ROLL == *scene)
         renderStaffRoll(conf);
 
     // Showing lives
-    else if (mainZ == 10)
+    else if (SCENE_LIVE_PANEL == *scene)
         renderLivePanel(conf);
 
     // タイトル
     // title
-    else if (mainZ == 100)
+    else if (SCENE_TITLE == *scene)
         renderTitle(conf);
 
 #ifdef ERL_AI
@@ -1284,9 +1285,10 @@ void Mainprogram(GameConfig* conf)
 {
 
     Uint32 startTime = SDL_GetTicks();
-
+    int *scene = &conf->cur_scene;
     //キー
-    if (mainZ == 1 && tmsgtype == 0) {
+    if (*scene == SCENE_STAGE && tmsgtype == 0)
+    {
 
     initStage(conf);
 
@@ -1310,13 +1312,18 @@ void Mainprogram(GameConfig* conf)
             actaon[3] = 1;
 	    }
 	}
-	if (CheckHitKey(KEY_INPUT_F1) == 1) {
-	    mainZ = 100;
-	}
-	if (CheckHitKey(KEY_INPUT_O) == 1) {
+
+    if (CheckHitKey(KEY_INPUT_F1))
+        *scene = SCENE_TITLE;
+
+    // commit suicide
+    else if (CheckHitKey(KEY_INPUT_O))
+    {
 	    if (mhp >= 1)
             mhp = 0;
-        if (conf->stage_info.sub_level >= 5) {
+
+        if (conf->stage_info.sub_level >= 5)
+        {
             conf->stage_info.sub_level = 0;
             stagepoint = 0;
         }
@@ -1333,21 +1340,25 @@ void Mainprogram(GameConfig* conf)
 	    }
 	}
 
-	if (CheckHitKey(KEY_INPUT_Z) == 1
-	    || CheckHitKey(KEY_INPUT_UP) == 1
-	    || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP)) {
-	    if (mjumptm == 8 && md >= -900) {
-		md = -1300;
-//ダッシュ中
-		xx[22] = 200;
-		if (mc >= xx[22] || mc <= -xx[22]) {
-		    md = -1400;
-		}
-		xx[22] = 600;
-		if (mc >= xx[22] || mc <= -xx[22]) {
-		    md = -1500;
-		}
-	    }
+    if (CheckHitKey(KEY_INPUT_Z) == 1
+        || CheckHitKey(KEY_INPUT_UP) == 1
+        || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP))
+    {
+        if (mjumptm == 8 && md >= -900)
+        {
+            md = -1300;
+            //ダッシュ中
+            xx[22] = 200;
+            if (mc >= xx[22] || mc <= -xx[22])
+            {
+                md = -1400;
+            }
+            xx[22] = 600;
+            if (mc >= xx[22] || mc <= -xx[22])
+            {
+                md = -1500;
+            }
+        }
 // && xx[0]==0 && md<=-10
 
         if (xx[0] == 0)
@@ -1481,7 +1492,7 @@ void Mainprogram(GameConfig* conf)
 	    }
 	    if (mtm >= 100 || fast == 1) {
 		conf->init_stage = true;
-		mainZ = 10;
+        *scene = SCENE_LIVE_PANEL;
 		mtm = 0;
 		mkeytm = 0;
 		conf->player.lives--;
@@ -1649,7 +1660,7 @@ void Mainprogram(GameConfig* conf)
             conf->stage_info.sub_level = 0;
             conf->init_stage = true;
             tyuukan = 0;
-            mainZ = 10;
+            *scene = SCENE_LIVE_PANEL;
             maintm = 0;
 		}
 	    }			//mtype==300
@@ -1712,7 +1723,7 @@ void Mainprogram(GameConfig* conf)
         if (mtm == 440)
         {
             if (mtype == 301)
-                mainZ = 2;
+                *scene = SCENE_STAFF_ROLL;
             else
             {
                 conf->stage_info.series++;
@@ -1720,7 +1731,7 @@ void Mainprogram(GameConfig* conf)
                 conf->stage_info.sub_level = 0;
                 conf->init_stage = true;
                 tyuukan = 0;
-                mainZ = 10;
+                *scene = SCENE_LIVE_PANEL;
                 maintm = 0;
             }
         }
@@ -4223,11 +4234,12 @@ if (srmuki[t]==1)ma+=srsok[t];
 //if (xx[3]==1){if (tyuukan==1)tyuukan=1;}
 	}			//kscroll
 
-    }				//if (mainZ==1){
+    }  // SCENE_STAGE
 
     // スタッフロール
     // staff roll
-    if (mainZ == 2) {
+    if (SCENE_STAFF_ROLL == *scene)
+    {
         maintm++;
 
         xx[7] = 46;
@@ -4284,14 +4296,13 @@ if (srmuki[t]==1)ma+=srsok[t];
             chBgm(otom[BGM_PUYO]);
         }
         if (xx[30] <= -400) {
-            mainZ = 100;
+            *scene = SCENE_TITLE;
             conf->player.reset_lives();
             maintm = 0;
         }
+    }  // SCENE_STAFF_ROLL
 
-    }				//mainZ==2
-
-    if (mainZ == 10)
+    if (SCENE_LIVE_PANEL == *scene)
     {
         maintm++;
 
@@ -4299,13 +4310,13 @@ if (srmuki[t]==1)ma+=srsok[t];
             maintm += 2;
         if (maintm >= 30) {
             maintm = 0;
-            mainZ = 1;
+            *scene = SCENE_STAGE;
             conf->init_stage = true;
         }
-    }  // if mainZ==10
+    }  // SCENE_LIVE_PANEL
 
     //タイトル
-    if (mainZ == 100)
+    if (SCENE_TITLE == *scene)
         enterTitle(conf);
 
     // 描画
@@ -4377,9 +4388,9 @@ void enterTitle(GameConfig* conf)
         // reset for next usage
         conf->stage_info.changed = false;
 
-        mainZ = 10;
-        maintm = 0;
+        conf->cur_scene = SCENE_LIVE_PANEL;
         conf->player.reset_lives();
+        maintm = 0;
 
         fast = 0;
         trap = 0;
