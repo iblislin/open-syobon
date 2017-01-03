@@ -4,17 +4,13 @@
 class StageInfo
 {
 public:
-    unsigned int series;
-    unsigned int level;
-    unsigned int sub_level;
+    unsigned int series    = 1;
+    unsigned int level     = 1;
+    unsigned int sub_level = 0;
 
-    bool changed;
+    bool changed = false;
 
-    StageInfo() :
-        series(1),
-        level(1),
-        sub_level(0),
-        changed(false)
+    StageInfo()
     {
         /*
          * (0, 0, 0) -> a random generated stage
@@ -49,26 +45,28 @@ public:
     }
 };
 
+
+class Player
+{
+public:
+    int nokori = 3;
+};
+
+
 class GameConfig
 {
 public:
-    bool sound;  // enable sound or not
+    bool sound = true;  // enable sound or not
 
     // stage
-    bool init_stage;  // init stage or not
+    bool init_stage = true;  // init stage or not
     StageInfo stage_info;
 
-    bool endFlag;
+    bool endFlag = false;
 
-    int fps;  // frame per second
+    int fps = 30;  // frame per second
 
-    GameConfig() :
-        sound(true),
-        init_stage(true),
-        endFlag(false),
-        fps(30)
-    {
-    }
+    GameConfig() {}
 };
 
 // BGM
