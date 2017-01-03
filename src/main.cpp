@@ -3276,27 +3276,25 @@ if (srmuki[t]==1)ma+=srsok[t];
 		    break;
 
 //スーパージエン
-		case 4:
-		    xx[10] = 120;
-		    xx[0] = 250;
-		    xx[8] = aa[t] - fx;
-		    xx[9] = ab[t] - fy;
-		    if (atm[t] >= 0)
-			atm[t]--;
-		    if (abs(ma + mnobia - xx[8] - xx[0] * 2)
-			< 9000
-			&& abs(ma <
-			       xx[8] - anobia[t] +
-			       xx[0] * 2) < 3000
-			&& md <= -600 && atm[t] <= 0) {
-			if (axtype[t] == 1
-			    && mzimen == 0 && axzimen[t] == 1) {
-			    ad[t] = -1600;
-			    atm[t] = 40;
-			    ab[t] -= 1000;
-			}
-		    }		//
-		    break;
+        case 4:
+            xx[10] = 120;
+            xx[0] = 250;
+            xx[8] = aa[t] - fx;
+            xx[9] = ab[t] - fy;
+            if (atm[t] >= 0)
+                atm[t]--;
+            if (abs(ma + mnobia - xx[8] - xx[0] * 2) < 9000
+                && abs(ma < xx[8] - anobia[t] + xx[0] * 2) < 3000
+                && md <= -600 && atm[t] <= 0)
+            {
+                if (axtype[t] == 1 && mzimen == 0 && axzimen[t] == 1)
+                {
+                    ad[t] = -1600;
+                    atm[t] = 40;
+                    ab[t] -= 1000;
+                }
+            }
+            break;
 
 //クマー
 		case 5:
