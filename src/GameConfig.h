@@ -73,8 +73,6 @@ public:
 
     bool endFlag = false;
 
-    int fps = 30;  // frame per second
-
     GameConfig() {}
 };
 

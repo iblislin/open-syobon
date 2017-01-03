@@ -4309,17 +4309,25 @@ if (srmuki[t]==1)ma+=srsok[t];
         enterTitle(conf);
 
     // 描画
-    // render
+    // render main screen
     renderMain(conf);
 
-    //30-fps
-    conf->fps = 30;
-    if (CheckHitKey(KEY_INPUT_SPACE))
-        conf->fps = 60;
-
-    wait(startTime, SDL_GetTicks(), 1000 / conf->fps);
+    wait(startTime, SDL_GetTicks(), 1000 / get_fps());
 
 }  // end of Mainprogram()
+
+
+int get_fps()
+{
+    /* Get the frame per second
+     * Change fps to 60 if user press the space bar.
+     * Default is 30.
+     * */
+
+    if (CheckHitKey(KEY_INPUT_SPACE))
+        return 60;
+    return 30;
+}
 
 
 void enterTitle(GameConfig* conf)

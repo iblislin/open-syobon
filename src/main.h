@@ -47,6 +47,10 @@ void renderStage(GameConfig* conf);
 void renderTitle(GameConfig* conf);
 
 
+// helper functions
+int get_fps();
+
+
 //サブクラス
 //(ウエイト系
 void wait(Uint32 stime, Uint32 etime, int frame_time);
