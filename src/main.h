@@ -41,6 +41,7 @@ int stageonoff = 0;
 void Mainprogram(GameConfig* conf);
 void rpaint(GameConfig* conf);
 void renderLivePanel(GameConfig* conf);
+void renderTitle(GameConfig* conf);
 
 
 //サブクラス

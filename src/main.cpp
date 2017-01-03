@@ -1136,33 +1136,39 @@ void rpaint(GameConfig* conf)
         renderLivePanel(conf);
 
     //タイトル
-    if (mainZ == 100) {
+    else if (mainZ == 100)
+        renderTitle(conf);
 
-        setcolor(160, 180, 250);
-        fillrect(0, 0, fxmax, fymax);
-
-        drawimage(titleGraph, 240 - 380 / 2, 60);
-
-        drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
-        drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
-
-        //プレイヤー
-        drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
-        for (t = 0; t <= 16; t++) {
-            drawimage(grap[5][1], 29 * t, 13 * 29 - 12);
-            drawimage(grap[6][1], 29 * t, 14 * 29 - 12);
-        }
-
-        setcolor(0, 0, 0);
-        str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
-
-    }
 #ifdef ERL_AI
     debug_screen();
 #endif
     ScreenFlip();
 
 }  //rpaint()
+
+
+void renderTitle(GameConfig* conf)
+{
+    setcolor(160, 180, 250);
+    fillrect(0, 0, fxmax, fymax);
+
+    drawimage(titleGraph, 240 - 380 / 2, 60);
+
+    drawimage(grap[0][4], 12 * 30, 10 * 29 - 12);
+    drawimage(grap[1][4], 6 * 30, 12 * 29 - 12);
+
+    // プレイヤー
+    // player icon
+    drawimage(grap[0][0], 2 * 30, 12 * 29 - 12 - 6);
+    for (auto i=0; i<=16; i++)
+    {
+        drawimage(grap[5][1], 29 * i, 13 * 29 - 12);
+        drawimage(grap[6][1], 29 * i, 14 * 29 - 12);
+    }
+
+    setcolor(0, 0, 0);
+    str("Enterキーを押せ!!", 240 - 8 * 20 / 2, 250);
+}  // renderTitle
 
 
 void renderLivePanel(GameConfig* conf)
@@ -1176,7 +1182,7 @@ void renderLivePanel(GameConfig* conf)
     drawimage(grap[0][0], 190, 190);
     DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
                      conf->player.lives);
-}
+}  // renderLivePanel
 
 
 void initStage(GameConfig* conf)
