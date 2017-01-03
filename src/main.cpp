@@ -1480,26 +1480,28 @@ void Mainprogram(GameConfig* conf)
 	}			//mhp
 //if (mhp<=-10){
 	if (mtype == 200) {
-	    if (mtm <= 11) {
-		mc = 0;
-		md = 0;
-	    }
-	    if (mtm == 12) {
-		md = -1200;
-	    }
-	    if (mtm >= 12) {
-		mc = 0;
-	    }
-	    if (mtm >= 100 || fast == 1) {
-		conf->init_stage = true;
-        *scene = SCENE_LIVE_PANEL;
-		mtm = 0;
-		mkeytm = 0;
-		conf->player.lives--;
-		if (fast == 1)
-		    mtype = 0;
-	    }			//mtm>=100
-	}			//mtype==200
+        if (mtm <= 11) {
+            mc = 0;
+            md = 0;
+        }
+        if (mtm == 12) {
+            md = -1200;
+        }
+        if (mtm >= 12) {
+            mc = 0;
+        }
+        if (mtm >= 100 || fast == 1)
+        {
+            conf->init_stage = true;
+            *scene = SCENE_LIVE_PANEL;
+            conf->player.lives--;
+            mtm = 0;
+            mkeytm = 0;
+
+            if (fast == 1)
+                mtype = 0;
+        }			//mtm>=100
+    }			//mtype==200
 
 //音符によるワープ
 	if (mtype == 2) {
@@ -3275,7 +3277,7 @@ if (srmuki[t]==1)ma+=srsok[t];
 //xx[10]=100;
 		    break;
 
-//スーパージエン
+        //スーパージエン
         case 4:
             xx[10] = 120;
             xx[0] = 250;
@@ -4355,10 +4357,8 @@ void enterTitle(GameConfig* conf)
         // skip the title and enter level 1-1
         conf->stage_info.set(1, 1, 0);
 #endif
-        if (maintm <= 10) {
+        if (maintm <= 10)
             maintm = 11;
-            // conf->stage_info.set(1, 1, 0);
-        }
 
         if (CheckHitKey(KEY_INPUT_1))
             conf->stage_info.set(1, 1, 0);

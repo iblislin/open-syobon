@@ -20,7 +20,8 @@ int maintm = 0;
 //ステージ
 int stagecolor = 1;
 
-//クイック
+// クイック
+// quick
 int fast = 1;
 
 //トラップ表示
