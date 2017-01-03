@@ -87,6 +87,9 @@ loop(C=#cortex{sensor=Sensor, actuator=Actuator, net=Net,
     {From, Ref, set, net, Val} ->
       NewC = C#cortex{net=Val},
       %% TODO: link to all of neuron PIDs
+      %%       but note the potential race condiction:
+      %%       it is possible for a process to die
+      %%       before the link has been set up.
       res_ok(From, Ref),
       loop(NewC);
 

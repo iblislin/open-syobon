@@ -36,7 +36,7 @@ loop(N=#neuron{weights=W,
       Collector ! {neuron, Ref, LO, Result},
       loop(N);
 
-    {Cortex, terminate} -> exit(ok);
+    {Cortex, terminate} -> exit(normal);
 
     {Cortex, set, collector, Val} ->
       NewN = N#neuron{collector=Val},
