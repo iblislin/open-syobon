@@ -18,6 +18,7 @@ Down - Enter warp pipe
 0-9 (On menu) - Level Select
 F1 - Back to title
 Space - 2x speed
+O - Commit Suicide
 
 *Gamepad/Joystick Notes:
 Your gamepad or joystick may not work by default with Open Syobon Action. Check
