@@ -4239,68 +4239,7 @@ if (srmuki[t]==1)ma+=srsok[t];
     // スタッフロール
     // staff roll
     if (SCENE_STAFF_ROLL == *scene)
-    {
-        maintm++;
-
-        xx[7] = 46;
-        if (CheckHitKey(KEY_INPUT_1))
-            end();
-
-        if (CheckHitKey(KEY_INPUT_SPACE)) {
-            for (t = 0; t <= xx[7]; t += 1) {
-                xx[12 + t] -= 300;
-            }
-        }
-
-        if (maintm <= 1) {
-            maintm = 2;
-            chBgm(otom[BGM_PUYO]);
-            xx[10] = 0;
-            for (t = 0; t <= xx[7]; t += 1) {
-            xx[12 + t] = 980000;
-            }
-            xx[12] = 460;
-            xx[13] = 540;
-            xx[14] = 590;
-            xx[15] = 650;
-            xx[16] = 700;
-            xx[17] = 760;
-            xx[18] = 810;
-            xx[19] = 870;
-            xx[20] = 920;
-
-            xx[21] = 1000;
-            xx[22] = 1050;
-            xx[23] = 1100;
-            xx[24] = 1180;
-            xx[25] = 1230;
-
-            xx[26] = 1360;
-            xx[27] = 1410;
-            xx[28] = 1540;
-            xx[29] = 1590;
-
-            xx[30] = 1800;
-
-            for (t = 0; t <= xx[7]; t += 1) {
-            xx[12 + t] *= 100;
-            }
-        }
-
-        xx[10] += 1;
-        for (t = 0; t <= xx[7]; t += 1) {
-            xx[12 + t] -= 100;
-        }			//t
-
-        if (xx[30] == -200) {
-            chBgm(otom[BGM_PUYO]);
-        }
-        if (xx[30] <= -400) {
-            *scene = SCENE_TITLE;
-            conf->player.reset_lives();
-            maintm = 0;
-        }
-    }  // SCENE_STAFF_ROLL
+        enterStaffRoll(conf);
 
     if (SCENE_LIVE_PANEL == *scene)
     {
@@ -4326,6 +4265,72 @@ if (srmuki[t]==1)ma+=srsok[t];
     wait(startTime, SDL_GetTicks(), 1000 / get_fps());
 
 }  // end of Mainprogram()
+
+
+void enterStaffRoll(GameConfig* conf)
+{
+    maintm++;
+
+    xx[7] = 46;
+    if (CheckHitKey(KEY_INPUT_1))
+        end();
+
+    if (CheckHitKey(KEY_INPUT_SPACE)) {
+        for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] -= 300;
+        }
+    }
+
+    if (maintm <= 1) {
+        maintm = 2;
+        chBgm(otom[BGM_PUYO]);
+        xx[10] = 0;
+        for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] = 980000;
+        }
+        xx[12] = 460;
+        xx[13] = 540;
+        xx[14] = 590;
+        xx[15] = 650;
+        xx[16] = 700;
+        xx[17] = 760;
+        xx[18] = 810;
+        xx[19] = 870;
+        xx[20] = 920;
+
+        xx[21] = 1000;
+        xx[22] = 1050;
+        xx[23] = 1100;
+        xx[24] = 1180;
+        xx[25] = 1230;
+
+        xx[26] = 1360;
+        xx[27] = 1410;
+        xx[28] = 1540;
+        xx[29] = 1590;
+
+        xx[30] = 1800;
+
+        for (t = 0; t <= xx[7]; t += 1) {
+            xx[12 + t] *= 100;
+        }
+    }
+
+    xx[10] += 1;
+    for (t = 0; t <= xx[7]; t += 1) {
+        xx[12 + t] -= 100;
+    }			//t
+
+    if (xx[30] == -200) {
+        chBgm(otom[BGM_PUYO]);
+    }
+
+    if (xx[30] <= -400) {
+        conf->cur_scene = SCENE_TITLE;
+        conf->player.reset_lives();
+        maintm = 0;
+    }
+}  // SCENE_STAFF_ROLL
 
 
 int get_fps()
