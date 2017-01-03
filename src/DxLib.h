@@ -36,7 +36,6 @@
 
 //Sound
 #define AUDIO_CHANNELS 4
-#define CheckSoundMem(s) !s
 #define DX_PLAYTYPE_BACK 0
 #define DX_PLAYTYPE_LOOP -1
 void PlaySoundMem(Mix_Chunk* s, int l);

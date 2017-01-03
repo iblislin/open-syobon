@@ -4236,17 +4236,13 @@ if (srmuki[t]==1)ma+=srsok[t];
 
     }  // SCENE_STAGE
 
-    // スタッフロール
-    // staff roll
-    if (SCENE_STAFF_ROLL == *scene)
+    else if (SCENE_STAFF_ROLL == *scene)
         enterStaffRoll(conf);
 
-    if (SCENE_LIVE_PANEL == *scene)
+    else if (SCENE_LIVE_PANEL == *scene)
         enterLivePanel(conf);
 
-    // タイトル
-    // title
-    if (SCENE_TITLE == *scene)
+    else if (SCENE_TITLE == *scene)
         enterTitle(conf);
 
     // 描画
@@ -4795,6 +4791,8 @@ if (a==3)g.setFont(Font.getFont(Font.SIZE_LARGE));
 void ot(Mix_Chunk * x, bool enableFlag)
 {
     if (!enableFlag)
+        return;
+    else if (NULL == x)
         return;
 
     PlaySoundMem(x, DX_PLAYTYPE_BACK);
@@ -10562,14 +10560,12 @@ void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtyp
 	    anobia[aco] = anx[atype[aco]];
 	    anobib[aco] = any[atype[aco]];
 
-//大砲音
-	    if (xtype == 7 && CheckSoundMem(oto[10]) == 0) {
-		ot(oto[10], conf->sound);
-	    }
-//ファイア音
-	    if (xtype == 10 && CheckSoundMem(oto[18]) == 0) {
-		ot(oto[18], conf->sound);
-	    }
+        //大砲音
+        if (xtype == 7)
+            ot(oto[10], conf->sound);
+        //ファイア音
+        if (xtype == 10)
+            ot(oto[18], conf->sound);
 
 	    azimentype[aco] = 1;
 
