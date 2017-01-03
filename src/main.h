@@ -96,6 +96,7 @@ void stage(GameConfig* conf);
 void stagep(GameConfig* conf);
 void enterLivePanel(GameConfig* conf);
 void enterStaffRoll(GameConfig* conf);
+void enterStage(GameConfig* conf);
 void enterTitle(GameConfig* conf);
 
 
