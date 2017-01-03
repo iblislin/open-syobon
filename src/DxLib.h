@@ -62,7 +62,7 @@ extern TTF_Font *font[FONT_MAX];
 void SetFontSize(byte size);
 void ChangeFontType(byte type);
 void DrawString(int a, int b, const char *x, Uint32 c);
-void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
+void DrawFormatString(int a, int b, Uint32 color, const char* str, ...);
 
 //Key Aliases
 #define KEY_INPUT_ESCAPE SDLK_ESCAPE

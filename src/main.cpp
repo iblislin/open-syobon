@@ -48,7 +48,7 @@ void parseArgs(int argc, char* argv[], GameConfig* conf)
 void rpaint(GameConfig* conf)
 {
 
-//ダブルバッファリング
+    //ダブルバッファリング
     setcolor(0, 0, 0);
     //if (stagecolor==1)setcolor(170,170,255);
     if (stagecolor == 1)
@@ -1132,19 +1132,9 @@ void rpaint(GameConfig* conf)
         str("プレイしていただき　ありがとうございました〜", 240 - 22 * 20 / 2, xx[30] / 100);
     }
     //Showing lives
-    if (mainZ == 10) {
+    if (mainZ == 10)
+        renderLivePanel(conf);
 
-        setc0();
-        FillScreen();
-
-        SetFontSize(16);
-        SetFontThickness(4);
-
-        drawimage(grap[0][0], 190, 190);
-        DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
-                nokori);
-
-    }
     //タイトル
     if (mainZ == 100) {
 
@@ -1173,6 +1163,20 @@ void rpaint(GameConfig* conf)
     ScreenFlip();
 
 }  //rpaint()
+
+
+void renderLivePanel(GameConfig* conf)
+{
+        setc0();
+        FillScreen();
+
+        SetFontSize(16);
+        SetFontThickness(4);
+
+        drawimage(grap[0][0], 190, 190);
+        DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
+                nokori);
+}
 
 
 void initStage(GameConfig* conf)

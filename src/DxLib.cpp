@@ -101,13 +101,15 @@ void DrawString(int a, int b, const char *x, Uint32 c)
     SDL_FreeSurface(rendered);
 }
 
-void DrawFormatString(int a, int b, Uint32 color, const char *str, ...)
+void DrawFormatString(int a, int b, Uint32 color, const char* str, ...)
 {
     va_list args;
     char *newstr = new char[strlen(str) + 16];
+
     va_start(args, str);
     vsprintf(newstr, str, args);
     va_end(args);
+
     DrawString(a, b, newstr, color);
     delete[] newstr;
 }
