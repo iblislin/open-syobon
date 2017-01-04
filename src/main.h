@@ -121,7 +121,6 @@ int sgtype[smax];
 
 //プレイヤー
 int mainmsgtype;
-int ma, mb; // player location on the screen (ma, mb) is (x, y)
 int mnobia, mnobib;
 int mc, md; // the acceleration of player (a_x, a_y)
 int macttype, atkon, atktm, mactsok, msstar, mactp, mact;

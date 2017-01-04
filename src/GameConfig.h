@@ -15,6 +15,24 @@
 #define SCENE_LIVE_PANEL  3
 #define SCENE_STAFF_ROLL  4
 
+
+class Location
+{
+public:
+    int x = 0;
+    int y = 0;
+
+    Location()
+    {
+    }
+
+    Location(int x, int y)
+    {
+        this->x = x;
+        this->y = y;
+    }
+};
+
 class StageInfo
 {
 public:
@@ -65,6 +83,7 @@ class Player
 public:
     int lives = 2; // nokori ?
     int hp = 1; // health point, hp > 0 denote alive
+    Location loc;
 
     Player() {}
 

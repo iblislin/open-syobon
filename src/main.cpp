@@ -297,21 +297,21 @@ void renderStage(GameConfig* conf)
         {
             // 読みこんだグラフィックを拡大描画
             if (mact == 0)
-                drawimage(grap[0][0], ma / 100, mb / 100);
+                drawimage(grap[0][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
             if (mact == 1)
-                drawimage(grap[1][0], ma / 100, mb / 100);
+                drawimage(grap[1][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
         }
         if (mzimen == 0) {
-            drawimage(grap[2][0], ma / 100, mb / 100);
+            drawimage(grap[2][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
         }
     }
     //巨大化
     else if (mtype == 1) {
-        drawimage(grap[41][0], ma / 100, mb / 100);
+        drawimage(grap[41][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
     }
 
     else if (mtype == 200) {
-        drawimage(grap[3][0], ma / 100, mb / 100);
+        drawimage(grap[3][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
     }
 
     mirror = 0;
@@ -474,8 +474,8 @@ void renderStage(GameConfig* conf)
 
             //ニャッスン
             if (atype[t] == 86) {
-                if (ma >= aa[t] - fx - mnobia - 4000
-                        && ma <= aa[t] - fx + anobia[t] + 4000) {
+                if (conf->player.loc.x >= aa[t] - fx - mnobia - 4000
+                        && conf->player.loc.x <= aa[t] - fx + anobia[t] + 4000) {
                     drawimage(grap[152][3], xx[0] / 100, xx[1] / 100);
                 } else {
                     drawimage(grap[86][3], xx[0] / 100, xx[1] / 100);
@@ -935,10 +935,10 @@ void renderStage(GameConfig* conf)
             xs[0] = "溶岩と合体したい……";
 
         setc0();
-        str(xs[0], (ma + mnobia + 300) / 100 - 1, mb / 100 - 1);
-        str(xs[0], (ma + mnobia + 300) / 100 + 1, mb / 100 + 1);
+        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100 - 1, conf->player.loc.y / 100 - 1);
+        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100 + 1, conf->player.loc.y / 100 + 1);
         setc1();
-        str(xs[0], (ma + mnobia + 300) / 100, mb / 100);
+        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100, conf->player.loc.y / 100);
 
     }  // mmsgtm >= 1
 
@@ -1212,15 +1212,18 @@ void initStage(GameConfig* conf)
 {
     if (!conf->init_stage)
         return;
+
+    Player* player = &conf->player;
+
     conf->init_stage = false;
 
     mainmsgtype = 0;
 
     stagecolor = 1;
-    ma = 5600;
-    mb = 32000;
+    player->loc.x = 5600;
+    conf->player.loc.y = 32000;
     mmuki = 1;
-    conf->player.hp = 1;
+    player->hp = 1;
     mc = 0;
     md = 0;
     mnobia = 3000;
@@ -1266,7 +1269,7 @@ void initStage(GameConfig* conf)
 
         srco = 0;
         t = srco;
-        sra[t] = ma + fx;
+        sra[t] = player->loc.x + fx;
         srb[t] = (13 * 29 - 12) * 100;
         src[t] = 30 * 100;
         srtype[t] = 0;
@@ -1312,6 +1315,7 @@ void Mainprogram(GameConfig* conf)
 void enterStage(GameConfig* conf)
 {
     int *scene = &conf->cur_scene;
+    Player* player = &conf->player;
 
     // init stage if need
     // it depends on conf->init_stage
@@ -1348,8 +1352,8 @@ void enterStage(GameConfig* conf)
     // commit suicide
     else if (CheckHitKey(KEY_INPUT_O))
     {
-        if (conf->player.is_alive())
-            conf->player.hp = 0;
+        if (player->is_alive())
+            player->hp = 0;
 
         if (conf->stage_info.sub_level >= 5)
         {
@@ -1496,7 +1500,7 @@ void enterStage(GameConfig* conf)
     if (mjumptm >= 0)
         mjumptm--;
     if (actaon[1] == 1 && mzimen == 1) {
-        mb -= 400;
+        player->loc.y -= 400;
         md = -1200;
         mjumptm = 10;
 
@@ -1513,13 +1517,13 @@ void enterStage(GameConfig* conf)
 
     // HPがなくなったとき
     // when run out of HP (?
-    if (!conf->player.is_alive() && conf->player.hp >= -9)
+    if (!player->is_alive() && player->hp >= -9)
     {
         mkeytm = 12;
 
         // wtf, another magic number -20,
         // still not sure why
-        conf->player.hp = -20;
+        player->hp = -20;
 
         mtype = 200;
         mtm = 0;
@@ -1551,7 +1555,7 @@ void enterStage(GameConfig* conf)
         {
             conf->init_stage = true;
             *scene = SCENE_LIVE_PANEL;
-            conf->player.lives--;
+            player->lives--;
             mtm = 0;
             mkeytm = 0;
 
@@ -1567,7 +1571,7 @@ void enterStage(GameConfig* conf)
 
         mkeytm = 2;
         md = -1500;
-        if (mb <= -6000)
+        if (player->loc.y <= -6000)
         {
             blackx = 1;
             blacktm = 20;
@@ -1584,10 +1588,10 @@ void enterStage(GameConfig* conf)
     if (mtype == 3)
     {
         md = -2400;
-        if (mb <= -6000)
+        if (player->loc.y <= -6000)
         {
-            mb = -80000000;
-            conf->player.hp = 0;
+            player->loc.y = -80000000;
+            player->hp = 0;
         }
     }
     //mtypeによる特殊的な移動
@@ -1605,12 +1609,12 @@ void enterStage(GameConfig* conf)
                 t = 28;
                 if (mtm <= 16)
                 {
-                    mb += 240;
+                    player->loc.y += 240;
                     mzz = 100;
                 }
                 if (mtm == 17)
                 {
-                    mb = -80000000;
+                    player->loc.y = -80000000;
                 }
                 if (mtm == 23)
                 {
@@ -1647,7 +1651,7 @@ void enterStage(GameConfig* conf)
                 if (mtm == 160)
                 {
                     mtype = 0;
-                    conf->player.hp--;
+                    player->hp--;
                 }
 
             }
@@ -1656,20 +1660,20 @@ void enterStage(GameConfig* conf)
                 mc = 0;
                 md = 0;
                 if (mtm <= 16) {
-                    ma += 240;
+                    player->loc.x += 240;
                 }
                 if (mtm == 16)
-                    mb -= 1100;
+                    player->loc.y -= 1100;
                 if (mtm == 20)
                     ot(oto[10], conf->sound);
 
                 if (mtm >= 24) {
-                    ma -= 2000;
+                    player->loc.x -= 2000;
                     mmuki = 0;
                 }
                 if (mtm >= 48) {
                     mtype = 0;
-                    conf->player.hp--;
+                    player->hp--;
                 }
 
             }
@@ -1678,20 +1682,20 @@ void enterStage(GameConfig* conf)
                 mc = 0;
                 md = 0;
                 if (mtm <= 16 && mxtype != 3) {
-                    mb += 240;
+                    player->loc.y += 240;
                 }
                 if (mtm <= 16 && mxtype == 3) {
-                    ma += 240;
+                    player->loc.x += 240;
                 }
                 if (mtm == 19 && mxtype == 2) {
-                    conf->player.hp = 0;
+                    player->hp = 0;
                     mtype = 2000;
                     mtm = 0;
                     mmsgtm = 30;
                     mmsgtype = 51;
                 }
                 if (mtm == 19 && mxtype == 5) {
-                    conf->player.hp = 0;
+                    player->hp = 0;
                     mtype = 2000;
                     mtm = 0;
                     mmsgtm = 30;
@@ -1704,7 +1708,7 @@ void enterStage(GameConfig* conf)
                     else
                         conf->stage_info.sub_level++;
 
-                    mb = -80000000;
+                    player->loc.y = -80000000;
                     mxtype = 0;
                     blackx = 1;
                     blacktm = 20;
@@ -1733,7 +1737,7 @@ void enterStage(GameConfig* conf)
             }
             if (mtm == 110)
             {
-                mb = -80000000;
+                player->loc.y = -80000000;
                 mc = 0;
             }
             if (mtm == 250)
@@ -1760,7 +1764,7 @@ void enterStage(GameConfig* conf)
                     && (mtype == 301 && mtm <= 102
                         || mtype == 302 && mtm <= 60)) {
                 xx[5] = 500;
-                ma -= xx[5];
+                player->loc.x -= xx[5];
                 fx += xx[5];
                 fzx += xx[5];
             }
@@ -1828,8 +1832,8 @@ void enterStage(GameConfig* conf)
     {
         mkeytm--;
     }
-    ma += mc;
-    mb += md;
+    player->loc.x += mc;
+    player->loc.y += md;
     if (mc < 0)
         mactp += (-mc);
     if (mc >= 0)
@@ -1914,28 +1918,28 @@ void enterStage(GameConfig* conf)
     mzimen = 0;
 
     //場外
-    if (mtype <= 9 && conf->player.is_alive())
+    if (mtype <= 9 && player->is_alive())
     {
-        if (ma < 100)
+        if (player->loc.x < 100)
         {
-            ma = 100;
+            player->loc.x = 100;
             mc = 0;
         }
-        if (ma + mnobia > fxmax)
+        if (player->loc.x + mnobia > fxmax)
         {
-            ma = fxmax - mnobia;
+            player->loc.x = fxmax - mnobia;
             mc = 0;
         }
     }
-    if (mb >= 38000 && conf->player.hp >= 0 && stagecolor == 4)
+    if (player->loc.y >= 38000 && player->hp >= 0 && stagecolor == 4)
     {
-        conf->player.hp = -2;
+        player->hp = -2;
         mmsgtm = 30;
         mmsgtype = 55;
     }
-    if (mb >= 52000 && conf->player.hp >= 0)
+    if (player->loc.y >= 52000 && player->hp >= 0)
     {
-        conf->player.hp = -2;
+        player->hp = -2;
     }
     //ブロック
     //1-れんが、コイン、無し、土台、7-隠し
@@ -1966,10 +1970,10 @@ void enterStage(GameConfig* conf)
                         if (ttype[t] != 7 && ttype[t] != 110
                                 && !(ttype[t] == 114))
                         {
-                            if (ma + mnobia > xx[8] + xx[0] * 2 + 100
-                                    && ma < xx[8] + xx[1] - xx[0] * 2 - 100
-                                    && mb + mnobib > xx[9]
-                                    && mb + mnobib < xx[9] + xx[1]
+                            if (player->loc.x + mnobia > xx[8] + xx[0] * 2 + 100
+                                    && player->loc.x < xx[8] + xx[1] - xx[0] * 2 - 100
+                                    && player->loc.y + mnobib > xx[9]
+                                    && player->loc.y + mnobib < xx[9] + xx[1]
                                     && md >= -100)
                             {
                                 if (ttype[t] != 115 && ttype[t] != 400
@@ -1977,7 +1981,7 @@ void enterStage(GameConfig* conf)
                                         && ttype[t] != 118
                                         && ttype[t] != 120)
                                 {
-                                    mb = xx[9] - mnobib + 100;
+                                    player->loc.y = xx[9] - mnobib + 100;
                                     md = 0;
                                     mzimen = 1;
                                     xx[16] = 1;
@@ -2055,15 +2059,15 @@ void enterStage(GameConfig* conf)
                             //下
                             if (t3 == xx[21] && mtype != 100 && ttype[t] != 117)
                             {
-                                if (ma + mnobia > xx[8] + xx[0] * 2 + 800
-                                        && ma < xx[8] + xx[1] - xx[0] * 2 - 800
-                                        && mb > xx[9] - xx[0] * 2
-                                        && mb < xx[9] + xx[1] - xx[0] * 2
+                                if (player->loc.x + mnobia > xx[8] + xx[0] * 2 + 800
+                                        && player->loc.x < xx[8] + xx[1] - xx[0] * 2 - 800
+                                        && player->loc.y > xx[9] - xx[0] * 2
+                                        && player->loc.y < xx[9] + xx[1] - xx[0] * 2
                                         && md <= 0)
                                 {
                                     xx[16] = 1;
                                     xx[17] = 1;
-                                    mb = xx[9] + xx[1] + xx[0];
+                                    player->loc.y = xx[9] + xx[1] + xx[0];
 
                                     if (md < 0)
                                     {
@@ -2098,7 +2102,7 @@ void enterStage(GameConfig* conf)
                                         ot(oto[4], conf->sound);
                                         eyobi(ta[t] + 10, tb [t], 0, -800, 0,
                                                 40, 3000, 3000, 0, 16);
-                                        mb = xx[9] + xx[1] + xx[0];
+                                        player->loc.y = xx[9] + xx[1] + xx[0];
                                         ttype[t] = 3;
                                         if (md < 0)
                                         {
@@ -2110,7 +2114,7 @@ void enterStage(GameConfig* conf)
                                     {
                                         mmsgtm = 30;
                                         mmsgtype = 3;
-                                        conf->player.hp--;
+                                        player->hp--;
                                     }
                                 }
                             }
@@ -2124,23 +2128,23 @@ void enterStage(GameConfig* conf)
                                     {
                                         if (ta[t] >= -20000)
                                         {
-                                            if (ma + mnobia > xx[8]
-                                                    && ma < xx[8] + xx[2]
-                                                    && mb + mnobib > xx[9] + xx[1] / 2 - xx[0]
-                                                    && mb < xx[9] + xx[2]
+                                            if (player->loc.x + mnobia > xx[8]
+                                                    && player->loc.x < xx[8] + xx[2]
+                                                    && player->loc.y + mnobib > xx[9] + xx[1] / 2 - xx[0]
+                                                    && player->loc.y < xx[9] + xx[2]
                                                     && mc >= 0)
                                             {
-                                                ma = xx[8] - mnobia;
+                                                player->loc.x = xx[8] - mnobia;
                                                 mc = 0;
                                                 xx[16] = 1;
                                             }
-                                            if (ma + mnobia > xx[8] + xx[2]
-                                                    && ma < xx[8] + xx[1]
-                                                    && mb + mnobib > xx[9] + xx[1] / 2 - xx[0]
-                                                    && mb < xx[9] + xx[2]
+                                            if (player->loc.x + mnobia > xx[8] + xx[2]
+                                                    && player->loc.x < xx[8] + xx[1]
+                                                    && player->loc.y + mnobib > xx[9] + xx[1] / 2 - xx[0]
+                                                    && player->loc.y < xx[9] + xx[2]
                                                     && mc <= 0)
                                             {
-                                                ma = xx[8] + xx[1];
+                                                player->loc.x = xx[8] + xx[1];
                                                 mc = 0;
                                                 xx[16] = 1;
                                             }
@@ -2156,13 +2160,13 @@ void enterStage(GameConfig* conf)
 
                 if (ttype[t] == 800)
                 {
-                    if (mb >
+                    if (player->loc.y >
                             xx[9] - xx[0] * 2 - 2000
-                            && mb <
+                            && player->loc.y <
                             xx[9] + xx[1] - xx[0] * 2 +
                             2000
-                            && ma + mnobia > xx[8] - 400
-                            && ma < xx[8] + xx[1])
+                            && player->loc.x + mnobia > xx[8] - 400
+                            && player->loc.x < xx[8] + xx[1])
                     {
                         ta[t] = -800000;
                         ot(oto[4], conf->sound);
@@ -2171,13 +2175,13 @@ void enterStage(GameConfig* conf)
                 //剣とってクリア
                 if (ttype[t] == 140)
                 {
-                    if (mb >
+                    if (player->loc.y >
                             xx[9] - xx[0] * 2 - 2000
-                            && mb <
+                            && player->loc.y <
                             xx[9] + xx[1] - xx[0] * 2 +
                             2000
-                            && ma + mnobia > xx[8] - 400
-                            && ma < xx[8] + xx[1])
+                            && player->loc.x + mnobia > xx[8] - 400
+                            && player->loc.x < xx[8] + xx[1])
                     {
                         ta[t] = -800000;	//ot(oto[4]);
                         sracttype[20] = 1;
@@ -2192,32 +2196,32 @@ void enterStage(GameConfig* conf)
                 //特殊的
                 if (ttype[t] == 100)
                 {
-                    if (mb >
+                    if (player->loc.y >
                             xx[9] - xx[0] * 2 - 2000
-                            && mb <
+                            && player->loc.y <
                             xx[9] + xx[1] - xx[0] * 2 +
                             2000
-                            && ma + mnobia > xx[8] - 400
-                            && ma < xx[8] + xx[1]
+                            && player->loc.x + mnobia > xx[8] - 400
+                            && player->loc.x < xx[8] + xx[1]
                             && md <= 0)
                     {
                         if (txtype[t] == 0)
-                            tb[t] = mb + fy - 1200 - xx[1];
+                            tb[t] = player->loc.y + fy - 1200 - xx[1];
                     }
 
                     if (txtype[t] == 1)
                     {
                         if (xx[17] == 1)
                         {
-                            if (ma +
+                            if (player->loc.x +
                                     mnobia >
                                     xx[8] - 400
-                                    && ma < xx[8] + xx[1] / 2 - 1500)
+                                    && player->loc.x < xx[8] + xx[1] / 2 - 1500)
                             {
                                 ta[t] += 3000;
                             }
-                            else if (ma + mnobia >= xx[8] + xx[1] / 2 - 1500
-                                    && ma < xx[8] + xx[1])
+                            else if (player->loc.x + mnobia >= xx[8] + xx[1] / 2 - 1500
+                                    && player->loc.x < xx[8] + xx[1])
                             {
                                 ta[t] -= 3000;
                             }
@@ -2519,10 +2523,10 @@ void enterStage(GameConfig* conf)
             }
             else if (mtype == 1)
             {
-                if (ma + mnobia > xx[8]
-                        && ma < xx[8] + xx[1]
-                        && mb + mnobib > xx[9]
-                        && mb < xx[9] + xx[1])
+                if (player->loc.x + mnobia > xx[8]
+                        && player->loc.x < xx[8] + xx[1]
+                        && player->loc.y + mnobib > xx[9]
+                        && player->loc.y < xx[9] + xx[1])
                 {
 
                     ot(oto[3], conf->sound);
@@ -2589,10 +2593,10 @@ void enterStage(GameConfig* conf)
                 //おちるブロック
                 if (stype[t] == 51)
                 {
-                    if (ma + mnobia >
+                    if (player->loc.x + mnobia >
                             xx[8] + xx[0] + 3000
-                            && ma < xx[8] + sc[t] - xx[0]
-                            && mb + mnobib >
+                            && player->loc.x < xx[8] + sc[t] - xx[0]
+                            && player->loc.y + mnobib >
                             xx[9] + 3000 && sgtype[t] == 0)
                     {
                         if (sxtype[t] == 0)
@@ -2601,10 +2605,10 @@ void enterStage(GameConfig* conf)
                             sr[t] = 0;
                         }
                     }
-                    if (ma + mnobia >
+                    if (player->loc.x + mnobia >
                             xx[8] + xx[0] + 1000
-                            && ma < xx[8] + sc[t] - xx[0]
-                            && mb + mnobib >
+                            && player->loc.x < xx[8] + sc[t] - xx[0]
+                            && player->loc.y + mnobib >
                             xx[9] + 3000 && sgtype[t] == 0)
                     {
                         if ((sxtype[t] == 10)
@@ -2617,7 +2621,7 @@ void enterStage(GameConfig* conf)
 
                     if ((sxtype[t] == 1)
                             && sb[27] >= 25000
-                            && sa[27] > ma + mnobia
+                            && sa[27] > player->loc.x + mnobia
                             && t != 27 && sgtype[t] == 0)
                     {
                         sgtype[t] = 1;
@@ -2626,17 +2630,17 @@ void enterStage(GameConfig* conf)
                     if (sxtype[t] == 2
                             && sb[28] >= 48000
                             && t != 28 && sgtype[t] == 0
-                            && conf->player.is_alive())
+                            && player->is_alive())
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
                     }
-                    if ((sxtype[t] == 3 && mb >= 30000 || sxtype[t] == 4 && mb >= 25000)
+                    if ((sxtype[t] == 3 && player->loc.y >= 30000 || sxtype[t] == 4 && player->loc.y >= 25000)
                             && sgtype[t] == 0
-                            && conf->player.is_alive()
-                            && ma + mnobia >
+                            && player->is_alive()
+                            && player->loc.x + mnobia >
                             xx[8] + xx[0] + 3000 - 300
-                            && ma < xx[8] + sc[t] - xx[0])
+                            && player->loc.x < xx[8] + sc[t] - xx[0])
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
@@ -2652,12 +2656,12 @@ void enterStage(GameConfig* conf)
                             sr[t] = 1600;
                         }
                         sb[t] += sr[t];
-                        if (ma + mnobia > xx[8] + xx[0]
-                                && ma < xx[8] + sc[t] - xx[0]
-                                && mb + mnobib > xx[9]
-                                && mb < xx[9] + sd[t] + xx[0])
+                        if (player->loc.x + mnobia > xx[8] + xx[0]
+                                && player->loc.x < xx[8] + sc[t] - xx[0]
+                                && player->loc.y + mnobib > xx[9]
+                                && player->loc.y < xx[9] + sd[t] + xx[0])
                         {
-                            conf->player.hp--;
+                            player->hp--;
                             xx[7] = 1;
                         }
                     }
@@ -2666,11 +2670,11 @@ void enterStage(GameConfig* conf)
                 if (stype[t] == 52)
                 {
                     if (sgtype[t] == 0
-                            && ma + mnobia >
+                            && player->loc.x + mnobia >
                             xx[8] + xx[0] + 2000
-                            && ma <
+                            && player->loc.x <
                             xx[8] + sc[t] - xx[0] - 2500
-                            && mb + mnobib > xx[9] - 3000)
+                            && player->loc.y + mnobib > xx[9] - 3000)
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
@@ -2688,42 +2692,42 @@ void enterStage(GameConfig* conf)
                 //通常地面
                 if (xx[7] == 0)
                 {
-                    if (ma + mnobia > xx[8] + xx[0]
-                            && ma < xx[8] + sc[t] - xx[0]
-                            && mb + mnobib > xx[9]
-                            && mb + mnobib < xx[9] + xx[1]
+                    if (player->loc.x + mnobia > xx[8] + xx[0]
+                            && player->loc.x < xx[8] + sc[t] - xx[0]
+                            && player->loc.y + mnobib > xx[9]
+                            && player->loc.y + mnobib < xx[9] + xx[1]
                             && md >= -100)
                     {
-                        mb = sb[t] - fy - mnobib + 100;
+                        player->loc.y = sb[t] - fy - mnobib + 100;
                         md = 0;
                         mzimen = 1;
                     }
-                    if (ma + mnobia > xx[8] - xx[0]
-                            && ma < xx[8] + xx[2]
-                            && mb + mnobib >
+                    if (player->loc.x + mnobia > xx[8] - xx[0]
+                            && player->loc.x < xx[8] + xx[2]
+                            && player->loc.y + mnobib >
                             xx[9] + xx[1] * 3 / 4
-                            && mb < xx[9] + sd[t] - xx[2])
+                            && player->loc.y < xx[9] + sd[t] - xx[2])
                     {
-                        ma = xx[8] - xx[0] - mnobia;
+                        player->loc.x = xx[8] - xx[0] - mnobia;
                         mc = 0;
                     }
-                    if (ma + mnobia > xx[8] + sc[t] - xx[0]
-                            && ma < xx[8] + sc[t] + xx[0]
-                            && mb + mnobib >
+                    if (player->loc.x + mnobia > xx[8] + sc[t] - xx[0]
+                            && player->loc.x < xx[8] + sc[t] + xx[0]
+                            && player->loc.y + mnobib >
                             xx[9] + xx[1] * 3 / 4
-                            && mb < xx[9] + sd[t] - xx[2])
+                            && player->loc.y < xx[9] + sd[t] - xx[2])
                     {
-                        ma = xx[8] + sc[t] + xx[0];
+                        player->loc.x = xx[8] + sc[t] + xx[0];
                         mc = 0;
                     }
-                    if (ma + mnobia >
+                    if (player->loc.x + mnobia >
                             xx[8] + xx[0] * 2
-                            && ma <
+                            && player->loc.x <
                             xx[8] + sc[t] - xx[0] * 2
-                            && mb > xx[9] + sd[t] - xx[1]
-                            && mb < xx[9] + sd[t] + xx[0])
+                            && player->loc.y > xx[9] + sd[t] - xx[1]
+                            && player->loc.y < xx[9] + sd[t] + xx[0])
                     {
-                        mb = xx[9] + sd[t] + xx[0];
+                        player->loc.y = xx[9] + sd[t] + xx[0];
                         if (md < 0)
                         {
                             md = -md * 2 / 3;
@@ -2734,11 +2738,11 @@ void enterStage(GameConfig* conf)
                 //入る土管
                 if (stype[t] == 50)
                 {
-                    if (ma + mnobia > xx[8] + 2800
-                            && ma < xx[8] + sc[t] - 3000
-                            && mb + mnobib >
+                    if (player->loc.x + mnobia > xx[8] + 2800
+                            && player->loc.x < xx[8] + sc[t] - 3000
+                            && player->loc.y + mnobib >
                             xx[9] - 1000
-                            && mb + mnobib <
+                            && player->loc.y + mnobib <
                             xx[9] + xx[1] + 3000
                             && mzimen == 1
                             && actaon[3] == 1 && mtype == 0)
@@ -2788,10 +2792,10 @@ void enterStage(GameConfig* conf)
                 //入る土管(左から)
                 if (stype[t] == 40)
                 {
-                    if (ma + mnobia > xx[8] - 300
-                            && ma < xx[8] + sc[t] - 1000
-                            && mb > xx[9] + 1000
-                            && mb + mnobib < xx[9] + xx[1] + 4000
+                    if (player->loc.x + mnobia > xx[8] - 300
+                            && player->loc.x < xx[8] + sc[t] - 1000
+                            && player->loc.y > xx[9] + 1000
+                            && player->loc.y + mnobib < xx[9] + xx[1] + 4000
                             && mzimen == 1 && actaon[4] == 1 && mtype == 0)
                     {
                         //飛び出し
@@ -2825,10 +2829,10 @@ void enterStage(GameConfig* conf)
             }		//stype
             else
             {
-                if (ma + mnobia > xx[8] + xx[0]
-                        && ma < xx[8] + sc[t] - xx[0]
-                        && mb + mnobib > xx[9]
-                        && mb < xx[9] + sd[t] + xx[0])
+                if (player->loc.x + mnobia > xx[8] + xx[0]
+                        && player->loc.x < xx[8] + sc[t] - xx[0]
+                        && player->loc.y + mnobib > xx[9]
+                        && player->loc.y < xx[9] + sd[t] + xx[0])
                 {
                     if (stype[t] == 100)
                     {
@@ -2854,7 +2858,7 @@ void enterStage(GameConfig* conf)
                                 ayobi(conf, sa[t] + t3 * 3000, -3000, 0, 0, 0, 0, 0);
                             }
                         }
-                        if (sxtype[t] == 1 && mb >= 16000)
+                        if (sxtype[t] == 1 && player->loc.y >= 16000)
                         {
                             ayobi(conf, sa[t] + 1500, 44000, 0, -2000, 0, 4, 0);
                         }
@@ -2983,19 +2987,19 @@ void enterStage(GameConfig* conf)
 
                     if (stype[t] == 300
                             && mtype == 0
-                            && mb <
-                            xx[9] + sd[t] + xx[0] - 3000 && conf->player.is_alive())
+                            && player->loc.y <
+                            xx[9] + sd[t] + xx[0] - 3000 && player->is_alive())
                     {
                         Mix_HaltMusic();
                         mtype = 300;
                         mtm = 0;
-                        ma = sa[t] - fx - 2000;
+                        player->loc.x = sa[t] - fx - 2000;
                         ot(oto[11], conf->sound);
                     }
 
 #ifndef DISABLE_SAVE_FLAG
                     //中間ゲート
-                    if (stype[t] == 500 && mtype == 0 && conf->player.is_alive())
+                    if (stype[t] == 500 && mtype == 0 && player->is_alive())
                     {
                         tyuukan += 1;
                         sa[t] = -80000000;
@@ -3092,15 +3096,15 @@ void enterStage(GameConfig* conf)
 
             //乗ったとき
             if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1)
-                    && conf->player.is_alive())
+                    && player->is_alive())
             {
-                if (ma + mnobia > xx[8] + xx[0]
-                        && ma < xx[8] + xx[12] - xx[0]
-                        && mb + mnobib > xx[9]
-                        && mb + mnobib < xx[9] + xx[1]
+                if (player->loc.x + mnobia > xx[8] + xx[0]
+                        && player->loc.x < xx[8] + xx[12] - xx[0]
+                        && player->loc.y + mnobib > xx[9]
+                        && player->loc.y + mnobib < xx[9] + xx[1]
                         && md >= -100)
                 {
-                    mb = xx[9] - mnobib + 100;
+                    player->loc.y = xx[9] - mnobib + 100;
 
                     if (srtype[t] == 1)
                     {
@@ -3125,7 +3129,7 @@ void enterStage(GameConfig* conf)
                     if (sracttype[t] == 1 && sron[t] == 1
                             || sracttype[t] == 3 || sracttype[t] == 5)
                     {
-                        mb += sre[t];
+                        player->loc.y += sre[t];
                     }
 
                     if (sracttype[t] == 7)
@@ -3133,11 +3137,11 @@ void enterStage(GameConfig* conf)
                         if (actaon[2] != 1)
                         {
                             md = -600;
-                            mb -= 810;
+                            player->loc.y -= 810;
                         }
                         if (actaon[2] == 1)
                         {
-                            mb -= 400;
+                            player->loc.y -= 400;
                             md = -1400;
                             mjumptm = 10;
                         }
@@ -3162,7 +3166,7 @@ void enterStage(GameConfig* conf)
                         srmove[t] += 1;
                         if (srmove[t] >= 100)
                         {
-                            conf->player.hp = 0;
+                            player->hp = 0;
                             mmsgtype = 53;
                             mmsgtm = 30;
                             srmove[t] = -5000;
@@ -3175,7 +3179,7 @@ void enterStage(GameConfig* conf)
                         srmove[t] += 1;
                         if (srmove[t] >= 100)
                         {
-                            conf->player.hp = 0;
+                            player->hp = 0;
                             mmsgtype = 53;
                             mmsgtm = 30;
                             srmove[t] = -5000;
@@ -3192,9 +3196,9 @@ void enterStage(GameConfig* conf)
 
                 if (srsp[t] == 11)
                 {
-                    if (ma + mnobia >
+                    if (player->loc.x + mnobia >
                             xx[8] + xx[0] - 2000
-                            && ma < xx[8] + xx[12] - xx[0])
+                            && player->loc.x < xx[8] + xx[12] - xx[0])
                     {
                         sron[t] = 1;
                     }
@@ -3205,10 +3209,10 @@ void enterStage(GameConfig* conf)
                     }
                 }
                 //トゲ(下)
-                if (ma + mnobia > xx[8] + xx[0]
-                        && ma < xx[8] + xx[12] - xx[0]
-                        && mb > xx[9] - xx[1] / 2
-                        && mb < xx[9] + xx[1] / 2)
+                if (player->loc.x + mnobia > xx[8] + xx[0]
+                        && player->loc.x < xx[8] + xx[12] - xx[0]
+                        && player->loc.y > xx[9] - xx[1] / 2
+                        && player->loc.y < xx[9] + xx[1] / 2)
                 {
                     if (srtype[t] == 2)
                     {
@@ -3216,9 +3220,9 @@ void enterStage(GameConfig* conf)
                         {
                             md = -md;
                         }
-                        mb += 110;
+                        player->loc.y += 110;
                         if (mmutekitm <= 0)
-                            conf->player.hp--;
+                            player->hp--;
                         if (mmutekion != 1)
                             mmutekitm = 40;
                     }
@@ -3226,8 +3230,8 @@ void enterStage(GameConfig* conf)
                 //落下
                 if (sracttype[t] == 6)
                 {
-                    if (ma + mnobia > xx[8] + xx[0]
-                            && ma < xx[8] + xx[12] - xx[0])
+                    if (player->loc.x + mnobia > xx[8] + xx[0]
+                            && player->loc.x < xx[8] + xx[12] - xx[0])
                     {
                         sron[t] = 1;
                     }
@@ -3439,8 +3443,8 @@ void enterStage(GameConfig* conf)
                     xx[9] = ab[t] - fy;
                     if (atm[t] >= 0)
                         atm[t]--;
-                    if (abs(ma + mnobia - xx[8] - xx[0] * 2) < 9000
-                            && abs(ma < xx[8] - anobia[t] + xx[0] * 2) < 3000
+                    if (abs(player->loc.x + mnobia - xx[8] - xx[0] * 2) < 9000
+                            && abs(player->loc.x < xx[8] - anobia[t] + xx[0] * 2) < 3000
                             && md <= -600 && atm[t] <= 0)
                     {
                         if (axtype[t] == 1 && mzimen == 0 && axzimen[t] == 1)
@@ -3470,12 +3474,12 @@ void enterStage(GameConfig* conf)
                     if (atm[t] >= 10)
                     {
                         atm[t]++;
-                        if (conf->player.is_alive())
+                        if (player->is_alive())
                         {
                             if (atm[t] <= 19)
                             {
-                                ma = xx[0];
-                                mb = xx[1] - 3000;
+                                player->loc.x = xx[0];
+                                player->loc.y = xx[1] - 3000;
                                 mtype = 0;
                             }
                             xx[10] = 0;
@@ -3484,7 +3488,7 @@ void enterStage(GameConfig* conf)
                                 mc = 700;
                                 mkeytm = 24;
                                 md = -1200;
-                                mb = xx[1] - 1000 - 3000;
+                                player->loc.y = xx[1] - 1000 - 3000;
                                 amuki[t] = 1;
                                 if (axtype[t] == 1)
                                 {
@@ -3671,7 +3675,7 @@ void enterStage(GameConfig* conf)
                     atm[t] += 1;
                     if (axtype[t] == 0)
                     {
-                        if (atm[t] == 50 && mb >= 6000)
+                        if (atm[t] == 50 && player->loc.y >= 6000)
                         {
                             ac[t] = 300;
                             ad[t] -= 1600;
@@ -3766,16 +3770,16 @@ void enterStage(GameConfig* conf)
                         axtype[t] = 1;
                         amuki[t] = 1;
                     }
-                    if (mb >= 30000
-                            && ma >= aa[t] - 3000 * 5 - fx
-                            && ma <= aa[t] - fx && axtype[t] == 1)
+                    if (player->loc.y >= 30000
+                            && player->loc.x >= aa[t] - 3000 * 5 - fx
+                            && player->loc.x <= aa[t] - fx && axtype[t] == 1)
                     {
                         axtype[t] = 5;
                         amuki[t] = 0;
                     }
-                    if (mb >= 24000
-                            && ma <= aa[t] + 3000 * 8 - fx
-                            && ma >= aa[t] - fx && axtype[t] == 1)
+                    if (player->loc.y >= 24000
+                            && player->loc.x <= aa[t] + 3000 * 8 - fx
+                            && player->loc.x >= aa[t] - fx && axtype[t] == 1)
                     {
                         axtype[t] = 5;
                         amuki[t] = 1;
@@ -3787,8 +3791,8 @@ void enterStage(GameConfig* conf)
                 case 86:
                     azimentype[t] = 4;
                     xx[23] = 1000;
-                    if (ma >= aa[t] - fx - mnobia - xx[26]
-                            && ma <= aa[t] - fx + anobia[t] + xx[26])
+                    if (player->loc.x >= aa[t] - fx - mnobia - xx[26]
+                            && player->loc.x <= aa[t] - fx + anobia[t] + xx[26])
                     {
                         atm[t] = 1;
                     }
@@ -3824,12 +3828,12 @@ void enterStage(GameConfig* conf)
                         xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
                         xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
 
-                        if (ma + mnobia > xx[8] + xx[5]
-                                && ma < xx[8] + xx[4] - xx[5]
-                                && mb + mnobib > xx[9] + xx[5]
-                                && mb < xx[9] + xx[4] - xx[5])
+                        if (player->loc.x + mnobia > xx[8] + xx[5]
+                                && player->loc.x < xx[8] + xx[4] - xx[5]
+                                && player->loc.y + mnobib > xx[9] + xx[5]
+                                && player->loc.y < xx[9] + xx[4] - xx[5])
                         {
-                            conf->player.hp--;
+                            player->hp--;
                             mmsgtype = 51;
                             mmsgtm = 30;
                         }
@@ -3862,12 +3866,12 @@ void enterStage(GameConfig* conf)
                         xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
                         xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
 
-                        if (ma + mnobia > xx[8] + xx[5]
-                                && ma < xx[8] + xx[4] - xx[5]
-                                && mb + mnobib > xx[9] + xx[5]
-                                && mb < xx[9] + xx[4] - xx[5])
+                        if (player->loc.x + mnobia > xx[8] + xx[5]
+                                && player->loc.x < xx[8] + xx[4] - xx[5]
+                                && player->loc.y + mnobib > xx[9] + xx[5]
+                                && player->loc.y < xx[9] + xx[4] - xx[5])
                         {
-                            conf->player.hp--;
+                            player->hp--;
                             mmsgtype = 51;
                             mmsgtm = 30;
                         }
@@ -4051,10 +4055,10 @@ void enterStage(GameConfig* conf)
                 xx[12] = md;
             xx[25] = 0;
 
-            if (ma + mnobia > xx[8] + xx[0] * 2
-                    && ma < xx[8] + anobia[t] - xx[0] * 2
-                    && mb + mnobib > xx[9] - xx[5]
-                    && mb + mnobib < xx[9] + xx[1] + xx[12]
+            if (player->loc.x + mnobia > xx[8] + xx[0] * 2
+                    && player->loc.x < xx[8] + anobia[t] - xx[0] * 2
+                    && player->loc.y + mnobib > xx[9] - xx[5]
+                    && player->loc.y + mnobib < xx[9] + xx[1] + xx[12]
                     && (mmutekitm <= 0 || md >= 100)
                     && abrocktm[t] <= 0)
             {
@@ -4069,7 +4073,7 @@ void enterStage(GameConfig* conf)
                         if (axtype[t] == 1)
                         {
                             ot(oto[5], conf->sound);
-                            mb = xx[9] - 900 - anobib[t];
+                            player->loc.y = xx[9] - 900 - anobib[t];
                             md = -2100;
                             xx[25] = 1;
                             actaon[2] = 0;
@@ -4090,8 +4094,8 @@ void enterStage(GameConfig* conf)
                             axtype[t] = 0;
                         } else if (axtype[t] == 0)
                         {
-                            if (ma + mnobia > xx[8] + xx[0] * 2
-                                    && ma < xx[8] + anobia[t] / 2 - xx[0] * 4)
+                            if (player->loc.x + mnobia > xx[8] + xx[0] * 2
+                                    && player->loc.x < xx[8] + anobia[t] / 2 - xx[0] * 4)
                             {
                                 axtype[t] = 1;
                                 amuki[t] = 1;
@@ -4131,7 +4135,7 @@ void enterStage(GameConfig* conf)
                         if (xx[25] == 0)
                         {
                             ot(oto[5], conf->sound);
-                            mb = xx[9] - 1000 - anobib[t];
+                            player->loc.y = xx[9] - 1000 - anobib[t];
                             md = -1000;
                         }
                     }
@@ -4140,7 +4144,7 @@ void enterStage(GameConfig* conf)
                         if (xx[25] == 0)
                         {
                             ot(oto[5], conf->sound);
-                            mb = xx[9] - 4000;
+                            player->loc.y = xx[9] - 4000;
                             md = -1000;
                             axtype[t] = 5;
                         }
@@ -4164,10 +4168,10 @@ void enterStage(GameConfig* conf)
                 xx[16] = -3200;
             if (atype[t] == 85)
                 xx[16] = -anobib[t] + 6000;
-            if (ma + mnobia > xx[8] + xx[4]
-                    && ma < xx[8] + anobia[t] - xx[4]
-                    && mb < xx[9] + anobib[t] + xx[15]
-                    && mb + mnobib > xx[9] + anobib[t] - xx[0] + xx[16]
+            if (player->loc.x + mnobia > xx[8] + xx[4]
+                    && player->loc.x < xx[8] + anobia[t] - xx[4]
+                    && player->loc.y < xx[9] + anobib[t] + xx[15]
+                    && player->loc.y + mnobib > xx[9] + anobib[t] - xx[0] + xx[16]
                     && anotm[t] <= 0 && abrocktm[t] <= 0)
             {
                 if (mmutekion == 1)
@@ -4181,11 +4185,11 @@ void enterStage(GameConfig* conf)
                     {
                         //ダメージ
                         if ((atype[t] != 2 || axtype[t] != 0)
-                                && conf->player.is_alive())
+                                && player->is_alive())
                         {
                             if (atype[t] != 6)
                             {
-                                conf->player.hp--;
+                                player->hp--;
                             }
                         }
 
@@ -4195,7 +4199,7 @@ void enterStage(GameConfig* conf)
                         }
                         // せりふ
                         // dialogue
-                        if (!conf->player.hp)
+                        if (!player->hp)
                         {
 
                             if (atype[t] == 0 || atype[t] == 7)
@@ -4320,24 +4324,24 @@ void enterStage(GameConfig* conf)
                         {
                             if (axtype[t] == 0)
                             {
-                                if (ma + mnobia > xx[8] + xx[0] * 2
-                                        && ma < xx[8] + anobia[t] / 2 - xx[0] * 4)
+                                if (player->loc.x + mnobia > xx[8] + xx[0] * 2
+                                        && player->loc.x < xx[8] + anobia[t] / 2 - xx[0] * 4)
                                 {
                                     axtype[t] = 1;
                                     amuki[t] = 1;
-                                    aa[t] = ma + mnobia + fx + mc;
+                                    aa[t] = player->loc.x + mnobia + fx + mc;
                                     mmutekitm = 5;
                                 }
                                 else
                                 {
                                     axtype[t] = 1;
                                     amuki[t] = 0;
-                                    aa[t] = ma - anobia[t] + fx - mc;
+                                    aa[t] = player->loc.x - anobia[t] + fx - mc;
                                     mmutekitm = 5;
                                 }
                             }
                             else
-                                conf->player.hp--;
+                                player->hp--;
                         }
                     }
                 }
@@ -4362,21 +4366,21 @@ void enterStage(GameConfig* conf)
                         mnobia = 5200;
                         mnobib = 7300;
                         ot(oto[9], conf->sound);
-                        ma -= 1100;
-                        mb -= 4000;
+                        player->loc.x -= 1100;
+                        player->loc.y -= 4000;
                         mtype = 1;
-                        conf->player.hp = 50000000;  // wtf
+                        player->hp = 50000000;  // wtf
                     }
 
                     if (atype[t] == 101)
                     {
-                        conf->player.hp--;
+                        player->hp--;
                         mmsgtm = 30;
                         mmsgtype = 11;
                     }
                     if (atype[t] == 102)
                     {
-                        conf->player.hp--;
+                        player->hp--;
                         mmsgtm = 30;
                         mmsgtype = 10;
                     }
@@ -4423,7 +4427,7 @@ void enterStage(GameConfig* conf)
 
                     if (atype[t] == 110)
                     {
-                        conf->player.hp--;
+                        player->hp--;
                         mmsgtm = 30;
                         mmsgtype = 3;
                     }
@@ -4448,10 +4452,10 @@ void enterStage(GameConfig* conf)
         xx[2] = mascrollmax;
         xx[3] = 0;
         xx[1] = xx[2];
-        if (ma > xx[1] && fzx < scrollx)
+        if (player->loc.x > xx[1] && fzx < scrollx)
         {
-            xx[5] = ma - xx[1];
-            ma = xx[1];
+            xx[5] = player->loc.x - xx[1];
+            player->loc.x = xx[1];
             fx += xx[5];
             fzx += xx[5];
             if (xx[1] <= 5000)
@@ -5224,8 +5228,8 @@ void stage(GameConfig* conf)
             if (stype[t] == 500 && tyuukan >= 1) {
                 fx = sa[t] - fxmax / 2;
                 fzx = fx;
-                ma = sa[t] - fx;
-                mb = sb[t] - fy;
+                conf->player.loc.x = sa[t] - fx;
+                conf->player.loc.y = sb[t] - fy;
                 tyuukan--;
                 xx[17]++;
 
@@ -5786,8 +5790,8 @@ void stagep(GameConfig* conf)
 	chBgm(otom[BGM_DUNGEON], 40);
 
 	scrollx = 4080 * 100;
-	ma = 6000;
-	mb = 3000;
+	conf->player.loc.x = 6000;
+	conf->player.loc.y = 3000;
 	stagecolor = 2;
 
 	byte stagedatex[17][1001] = {
@@ -6387,8 +6391,8 @@ void stagep(GameConfig* conf)
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 900 * 100;
-	ma = 7500;
-	mb = 3000 * 9;
+	conf->player.loc.x = 7500;
+	conf->player.loc.y = 3000 * 9;
 
 	byte stagedatex[17][1001] = {
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -6571,7 +6575,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 //PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 3900 * 100;
-//ma=3000;mb=3000;
+//conf->player.loc.x=3000;conf->player.loc.y=3000;
 
 	byte stagedatex[17][1001] = {	//                                                                                                                                                                                     中間
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -7082,8 +7086,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
 	if (stagepoint == 1) {
 	    stagepoint = 0;
-	    ma = 4500;
-	    mb = -3000;
+	    conf->player.loc.x = 4500;
+	    conf->player.loc.y = -3000;
 	    tyuukan = 0;
 	}
 
@@ -7104,8 +7108,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	chBgm(otom[BGM_DUNGEON], 40);
 
 	scrollx = 0 * 100;
-	ma = 6000;
-	mb = 6000;
+	conf->player.loc.x = 6000;
+	conf->player.loc.y = 6000;
 	stagecolor = 2;
 
 	byte stagedatex[17][1001] = {
@@ -7191,8 +7195,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	chBgm(otom[BGM_STAR4]);
 
 	scrollx = 0 * 100;
-	ma = 3000;
-	mb = 33000;
+	conf->player.loc.x = 3000;
+	conf->player.loc.y = 33000;
 
 	stagepoint = 1;
 
@@ -7292,8 +7296,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	chBgm(otom[BGM_CASTLE]);
 
 	scrollx = 4400 * 100;
-	ma = 12000;
-	mb = 6000;
+	conf->player.loc.x = 12000;
+	conf->player.loc.y = 6000;
 	stagecolor = 4;
 
 	byte stagedatex[17][1001] = {	//                                                                                                                                                                                     中間
@@ -7922,8 +7926,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     // 2-1
     if (conf->stage_info.check(2, 1, 0))
     {
-	ma = 5600;
-	mb = 32000;
+	conf->player.loc.x = 5600;
+	conf->player.loc.y = 32000;
 	chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (113 - 19);
@@ -8366,8 +8370,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     {
 	chBgm(otom[BGM_DUNGEON], 40);
 	stagecolor = 2;
-	ma = 7500;
-	mb = 9000;
+	conf->player.loc.x = 7500;
+	conf->player.loc.y = 9000;
 	scrollx = 2900 * (137 - 19);
 //
 	byte stagedatex[17][1001] = {
@@ -8857,8 +8861,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (36 - 19);
-	ma = 7500;
-	mb = 3000 * 9;
+	conf->player.loc.x = 7500;
+	conf->player.loc.y = 3000 * 9;
 //
 	byte stagedatex[17][1001] = {
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -9026,8 +9030,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     // 2-3
     if (conf->stage_info.check(2, 3, 0))
     {
-	ma = 7500;
-	mb = 3000 * 8;
+	conf->player.loc.x = 7500;
+	conf->player.loc.y = 3000 * 8;
 	chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (126 - 19);
@@ -9409,13 +9413,13 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
         if (conf->stage_info.sub_level == 0)
         {
-            ma = 7500;
-            mb = 3000 * 4;
+            conf->player.loc.x = 7500;
+            conf->player.loc.y = 3000 * 4;
         }
         else
         {
-            ma = 19500;
-            mb = 3000 * 11;
+            conf->player.loc.x = 19500;
+            conf->player.loc.y = 3000 * 11;
             conf->stage_info.sub_level = 0;
         }
 	chBgm(otom[BGM_CASTLE]);
@@ -9574,8 +9578,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     // 2-4(2番)
     if (conf->stage_info.check(2, 4, 1))
     {
-	ma = 4500;
-	mb = 3000 * 11;
+	conf->player.loc.x = 4500;
+	conf->player.loc.y = 3000 * 11;
 	chBgm(otom[BGM_CASTLE]);
 	stagecolor = 4;
 	scrollx = 2900 * (21 - 19);
@@ -9678,8 +9682,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     // 2-4(3番)
     if (conf->stage_info.check(2, 4, 2))
     {
-	ma = 4500;
-	mb = 3000 * 11;
+	conf->player.loc.x = 4500;
+	conf->player.loc.y = 3000 * 11;
 	chBgm(otom[BGM_PUYO]);	//6
 	stagecolor = 4;
 	scrollx = 2900 * (128 - 19);
@@ -10183,8 +10187,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     // 3-1
     if (conf->stage_info.check(3, 1, 0))
     {
-	ma = 5600;
-	mb = 32000;
+	conf->player.loc.x = 5600;
+	conf->player.loc.y = 32000;
 	chBgm(otom[BGM_FIELD]);
 	stagecolor = 5;
 	scrollx = 2900 * (112 - 19);
@@ -10737,28 +10741,26 @@ void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtyp
 	    t1 = 0;
 	rz++;
 
-	if (rz <= amax) {
-	    t1 = 3;
+    if (rz <= amax) {
+        t1 = 3;
 
-	    aa[aco] = xa;
-	    ab[aco] = xb;	//ag[aco]=0;ah[aco]=0;ai[aco]=bb[t];//ad[t]=0;aeon[t]=1;
-	    ac[aco] = xc;
-	    ad[aco] = xd;
-	    if (xxtype > 100)
-		ac[aco] = xxtype;
-//ae[aco]=0;af[aco]=0;
-	    atype[aco] = xtype;
-	    if (xxtype >= 0 && xxtype <= 99100)
-		axtype[aco] = xxtype;	//ahp[aco]=iz[bxtype[t]];aytm[aco]=0;
-//if (xxtype==1)end();
-	    anotm[aco] = xnotm;
-	    if (aa[aco] - fx <= ma + mnobia / 2)
-		amuki[aco] = 1;
-	    if (aa[aco] - fx > ma + mnobia / 2)
-		amuki[aco] = 0;
-	    if (abrocktm[aco] >= 1)
-		amuki[aco] = 1;
-	    if (abrocktm[aco] == 20)
+        aa[aco] = xa;
+        ab[aco] = xb;
+        ac[aco] = xc;
+        ad[aco] = xd;
+        if (xxtype > 100)
+            ac[aco] = xxtype;
+        atype[aco] = xtype;
+        if (xxtype >= 0 && xxtype <= 99100)
+            axtype[aco] = xxtype;
+        anotm[aco] = xnotm;
+        if (aa[aco] - fx <= conf->player.loc.x + mnobia / 2)
+            amuki[aco] = 1;
+        if (aa[aco] - fx > conf->player.loc.x + mnobia / 2)
+            amuki[aco] = 0;
+        if (abrocktm[aco] >= 1)
+            amuki[aco] = 1;
+        if (abrocktm[aco] == 20)
 		amuki[aco] = 0;
 
 	    anobia[aco] = anx[atype[aco]];
