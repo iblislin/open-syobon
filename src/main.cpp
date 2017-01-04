@@ -3398,22 +3398,12 @@ void enterStage(GameConfig* conf)
                             xx[9] = ab[tt] - fy;
                             if (t != tt)
                             {
-                                if (aa[t] +
-                                        anobia[t] -
-                                        fx >
-                                        xx[8] +
-                                        xx[0] * 2
-                                        && aa[t] -
-                                        fx <
-                                        xx[8] +
-                                        anobia[tt] -
-                                        xx[0] * 2
-                                        && ab[t] +
-                                        anobib[t] - fy > xx[9] + xx[5]
-                                        && ab[t] +
-                                        anobib[t] -
-                                        fy <
-                                        xx[9] + xx[1] * 3 + xx[12] + 1500) {
+                                if (aa[t] + anobia[t] - fx > xx[8] + xx[0] * 2
+                                        && aa[t] - fx < xx[8] + anobia[tt] - xx[0] * 2
+                                        && ab[t] + anobib[t] - fy > xx[9] + xx[5]
+                                        && ab[t] + anobib[t] - fy <
+                                        xx[9] + xx[1] * 3 + xx[12] + 1500)
+                                {
                                     aa[tt] = -800000;
                                     ot(oto[6], conf->sound);
                                 }
@@ -3425,14 +3415,14 @@ void enterStage(GameConfig* conf)
 
                     //あらまき
                 case 3:
-                    azimentype[t] = 0;	//end();
-                    if (axtype[t] == 0) {
+                    azimentype[t] = 0;
+                    if (axtype[t] == 0)
+                    {
                         ab[t] -= 800;
                     }
                     if (axtype[t] == 1)
                         ab[t] += 1200;
 
-                    //xx[10]=100;
                     break;
 
                     //スーパージエン
@@ -3464,74 +3454,85 @@ void enterStage(GameConfig* conf)
 
                     //デフラグさん
                 case 6:
-                    if (azimentype[t] == 30) {
+                    if (azimentype[t] == 30)
+                    {
                         ad[t] = -1600;
                         ab[t] += ad[t];
                     }
 
                     xx[10] = 120;
-                    if (atm[t] >= 10) {
+                    if (atm[t] >= 10)
+                    {
                         atm[t]++;
-                        if (mhp >= 1) {
-                            if (atm[t] <= 19) {
+                        if (mhp >= 1)
+                        {
+                            if (atm[t] <= 19)
+                            {
                                 ma = xx[0];
                                 mb = xx[1] - 3000;
                                 mtype = 0;
                             }
                             xx[10] = 0;
-                            if (atm[t] == 20) {
+                            if (atm[t] == 20)
+                            {
                                 mc = 700;
                                 mkeytm = 24;
                                 md = -1200;
                                 mb = xx[1] - 1000 - 3000;
                                 amuki[t] = 1;
-                                if (axtype[t] == 1) {
+                                if (axtype[t] == 1)
+                                {
                                     mc = 840;
                                     axtype[t]
                                         = 0;
                                 }
                             }
-                            if (atm[t] == 40) {
+                            if (atm[t] == 40)
+                            {
                                 amuki[t] = 0;
                                 atm[t] = 0;
                             }
                         }
                     }
                     //ポール捨て
-                    if (axtype[t] == 1) {
-                        for (tt = 0; tt < smax; tt++) {
-                            if (stype[tt] == 300) {
-                                if (aa[t] -
-                                        fx >= -8000
-                                        && aa[t] >=
-                                        sa[tt] +
-                                        2000
+                    if (axtype[t] == 1)
+                    {
+                        for (tt = 0; tt < smax; tt++)
+                        {
+                            if (stype[tt] == 300)
+                            {
+                                if (aa[t] - fx >= -8000 && aa[t] >= sa[tt] + 2000
                                         && aa[t] <= sa[tt] + 3600 && axzimen[t]
-                                        == 1) {
+                                        == 1)
+                                {
                                     sa[tt] = -800000;
                                     atm[t] = 100;
                                 }
                             }
                         }
 
-                        if (atm[t] == 100) {
+                        if (atm[t] == 100)
+                        {
                             eyobi(aa[t] + 1200 -
                                     1200,
                                     ab[t] + 3000 -
                                     10 * 3000 - 1500,
                                     0, 0, 0, 0, 1000,
                                     10 * 3000 - 1200, 4, 20);
-                            if (mtype == 300) {
+                            if (mtype == 300)
+                            {
                                 mtype = 0;
                                 StopSoundMem(oto[11]);
                                 chBgm(otom[BGM_FIELD]);
                             }
-                            for (t1 = 0; t1 < smax; t1++) {
+                            for (t1 = 0; t1 < smax; t1++)
+                            {
                                 if (stype[t1] == 104)
                                     sa[t1] = -80000000;
                             }
                         }
-                        if (atm[t] == 120) {
+                        if (atm[t] == 120)
+                        {
                             eyobi(aa[t] + 1200 -
                                     1200,
                                     ab[t] + 3000 -
@@ -3540,858 +3541,918 @@ void enterStage(GameConfig* conf)
                                     160, 1000, 10 * 3000 - 1200, 4, 240);
                             amuki[t] = 1;
                         }
-                        if (atm[t] == 140) {
+                        if (atm[t] == 140)
+                        {
                             amuki[t] = 0;
                             atm[t] = 0;
                         }
-            }
-            if (atm[t] >= 220) {
-                atm[t] = 0;
-                amuki[t] = 0;
-            }
-            //他の敵を投げる
-            for (tt = 0; tt < amax; tt++) {
-                xx[0] = 250;
-                xx[5] = -800;
-                xx[12] = 0;
-                xx[1] = 1600;
-                xx[8] = aa[tt] - fx;
-                xx[9] = ab[tt] - fy;
-                if (t != tt && atype[tt] >= 100) {
-                    if (aa[t] + anobia[t] -
-                            fx >
-                            xx[8] + xx[0] * 2
-                            && aa[t] - fx <
-                            xx[8] + anobia[tt] -
-                            xx[0] * 2
-                            && ab[t] + anobib[t] - fy > xx[9] + xx[5]
-                            && ab[t] +
-                            anobib[t] - fy <
-                            xx[9] + xx[1] * 3 + xx[12] + 1500) {
-                        //aa[tt]=-800000;
-                        amuki[tt] = 1;
-                        aa[tt] = aa[t] + 300;
-                        ab[tt] = ab[t] - 3000;
-                        abrocktm[tt] = 120;	//aa[tt]=0;
-                        atm[t] = 200;
-                        amuki[t] = 1;
                     }
-                }
-            }
 
-            break;
-
-            //ジエン大砲
-            case 7:
-            azimentype[t] = 0;
-            xx[10] = 0;
-            xx[11] = 400;
-            if (axtype[t] == 0)
-                xx[10] = xx[11];
-            if (axtype[t] == 1)
-                xx[10] = -xx[11];
-            if (axtype[t] == 2)
-                ab[t] -= xx[11];
-            if (axtype[t] == 3)
-                ab[t] += xx[11];
-            break;
-
-            //スーパーブーン
-            case 8:
-            azimentype[t] = 0;
-            xx[22] = 20;
-            if (atm[t] == 0) {
-                af[t] += xx[22];
-                ad[t] += xx[22];
-            }
-            if (atm[t] == 1) {
-                af[t] -= xx[22];
-                ad[t] -= xx[22];
-            }
-            if (ad[t] > 300)
-                ad[t] = 300;
-            if (ad[t] < -300)
-                ad[t] = -300;
-            if (af[t] >= 1200)
-                atm[t] = 1;
-            if (af[t] < -0)
-                atm[t] = 0;
-            ab[t] += ad[t];
-            //atype[t]=151;
-            break;
-            //ノーマルブーン
-            case 151:
-            azimentype[t] = 2;
-            break;
-
-            //ファイアー玉
-            case 9:
-            azimentype[t] = 5;
-            ab[t] += ad[t];
-            ad[t] += 100;
-            if (ab[t] >= fymax + 1000) {
-                ad[t] = 900;
-            }
-            if (ab[t] >= fymax + 12000) {
-                ab[t] = fymax;
-                ad[t] = -2600;
-            }
-            break;
-
-            //ファイアー
-            case 10:
-            azimentype[t] = 0;
-            xx[10] = 0;
-            xx[11] = 400;
-            if (axtype[t] == 0)
-                xx[10] = xx[11];
-            if (axtype[t] == 1)
-                xx[10] = -xx[11];
-            break;
-
-            //モララー
-            case 30:
-            atm[t] += 1;
-            if (axtype[t] == 0) {
-                if (atm[t] == 50 && mb >= 6000) {
-                    ac[t] = 300;
-                    ad[t] -= 1600;
-                    ab[t] -= 1000;
-                }
-
-                for (tt = 0; tt < amax; tt++) {
-                    xx[0] = 250;
-                    xx[5] = -800;
-                    xx[12] = 0;
-                    xx[1] = 1600;
-                    xx[8] = aa[tt] - fx;
-                    xx[9] = ab[tt] - fy;
-                    if (t != tt && atype[tt] == 102) {
-                        if (aa[t] +
-                                anobia[t] -
-                                fx >
-                                xx[8] +
-                                xx[0] * 2
-                                && aa[t] -
-                                fx <
-                                xx[8] +
-                                anobia[tt] -
-                                xx[0] * 2
-                                && ab[t] +
-                                anobib[t] - fy > xx[9] + xx[5]
-                                && ab[t] +
-                                anobib[t] -
-                                fy <
-                                xx[9] + xx[1] * 3 + xx[12] + 1500) {
-                            aa[tt] = -800000;
-                            axtype[t]
-                                = 1;
-                            ad[t] = -1600;
-                            amsgtm[t]
-                                = 30;
-                            amsgtype[t]
-                                = 25;
-                        }
+                    if (atm[t] >= 220)
+                    {
+                        atm[t] = 0;
+                        amuki[t] = 0;
                     }
-                }
-            }
-            if (axtype[t] == 1) {
-                azimentype[t] = 0;
-                ab[t] += ad[t];
-                ad[t] += 120;
-            }
-            break;
 
-            //レーザー
-            case 79:
-            azimentype[t] = 0;
-            xx[10] = 1600;
-            if (axtype[t] == 1) {
-                xx[10] = 1200;
-                ab[t] -= 200;
-            }
-            if (axtype[t] == 2) {
-                xx[10] = 1200;
-                ab[t] += 200;
-            }
-            if (axtype[t] == 3) {
-                xx[10] = 900;
-                ab[t] -= 600;
-            }
-            if (axtype[t] == 4) {
-                xx[10] = 900;
-                ab[t] += 600;
-            }
-            break;
-
-            //雲の敵
-            case 80:
-            azimentype[t] = 0;
-            //xx[10]=100;
-            break;
-            case 81:
-            azimentype[t] = 0;
-            break;
-            case 82:
-            azimentype[t] = 0;
-            break;
-            case 83:
-            azimentype[t] = 0;
-            break;
-
-            case 84:
-            azimentype[t] = 2;
-            break;
-
-            case 85:
-            xx[23] = 400;
-            if (axtype[t] == 0) {
-                axtype[t] = 1;
-                amuki[t] = 1;
-            }
-            if (mb >= 30000
-                    && ma >= aa[t] - 3000 * 5 - fx
-                    && ma <= aa[t] - fx && axtype[t] == 1) {
-                axtype[t] = 5;
-                amuki[t] = 0;
-            }
-            if (mb >= 24000
-                    && ma <= aa[t] + 3000 * 8 - fx
-                    && ma >= aa[t] - fx && axtype[t] == 1) {
-                axtype[t] = 5;
-                amuki[t] = 1;
-            }
-            if (axtype[t] == 5)
-                xx[10] = xx[23];
-            break;
-
-            case 86:
-            azimentype[t] = 4;
-            xx[23] = 1000;
-            if (ma >= aa[t] - fx - mnobia - xx[26]
-                    && ma <= aa[t] - fx + anobia[t] + xx[26]) {
-                atm[t] = 1;
-            }
-            if (atm[t] == 1) {
-                ab[t] += 1200;
-            }
-            break;
-
-            //ファイアバー
-            case 87:
-            azimentype[t] = 0;
-            if (aa[t] % 10 != 1)
-                atm[t] += 6;
-            else {
-                atm[t] -= 6;
-            }
-            xx[25] = 2;
-            if (atm[t] > 360 * xx[25])
-                atm[t] -= 360 * xx[25];
-            if (atm[t] < 0)
-                atm[t] += 360 * xx[25];
-
-            for (tt = 0; tt <= axtype[t] % 100; tt++) {
-                xx[26] = 18;
-                xd[4] = tt * xx[26] * cos(atm[t] * pai / 180 / 2);
-                xd[5] = tt * xx[26] * sin(atm[t] * pai / 180 / 2);
-
-                xx[4] = 1800;
-                xx[5] = 800;
-                xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
-                xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
-
-                if (ma + mnobia > xx[8] + xx[5]
-                        && ma < xx[8] + xx[4] - xx[5]
-                        && mb + mnobib > xx[9] + xx[5]
-                        && mb < xx[9] + xx[4] - xx[5]) {
-                    mhp -= 1;
-                    mmsgtype = 51;
-                    mmsgtm = 30;
-                }
-            }
-
-            break;
-
-            case 88:
-            azimentype[t] = 0;
-            if (aa[t] % 10 != 1)
-                atm[t] += 6;
-            else {
-                atm[t] -= 6;
-            }
-            xx[25] = 2;
-            if (atm[t] > 360 * xx[25])
-                atm[t] -= 360 * xx[25];
-            if (atm[t] < 0)
-                atm[t] += 360 * xx[25];
-
-            for (tt = 0; tt <= axtype[t] % 100; tt++) {
-                xx[26] = 18;
-                xd[4] = -tt * xx[26] * cos(atm[t] * pai / 180 / 2);
-                xd[5] = tt * xx[26] * sin(atm[t] * pai / 180 / 2);
-
-                xx[4] = 1800;
-                xx[5] = 800;
-                xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
-                xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
-
-                if (ma + mnobia > xx[8] + xx[5]
-                        && ma < xx[8] + xx[4] - xx[5]
-                        && mb + mnobib > xx[9] + xx[5]
-                        && mb < xx[9] + xx[4] - xx[5]) {
-                    mhp -= 1;
-                    mmsgtype = 51;
-                    mmsgtm = 30;
-                }
-            }
-
-            break;
-
-            case 90:
-            xx[10] = 160;
-            //azimentype[t]=0;
-            break;
-
-            //おいしいキノコ
-            case 100:
-            azimentype[t] = 1;
-            xx[10] = 100;
-
-            //ほかの敵を巨大化
-            if (axtype[t] == 2) {
-                for (tt = 0; tt < amax; tt++) {
-                    xx[0] = 250;
-                    xx[5] = -800;
-                    xx[12] = 0;
-                    xx[1] = 1600;
-                    xx[8] = aa[tt] - fx;
-                    xx[9] = ab[tt] - fy;
-                    if (t != tt) {
-                        if (aa[t] +
-                                anobia[t] -
-                                fx >
-                                xx[8] +
-                                xx[0] * 2
-                                && aa[t] -
-                                fx <
-                                xx[8] +
-                                anobia[tt] -
-                                xx[0] * 2
-                                && ab[t] +
-                                anobib[t] - fy > xx[9] + xx[5]
-                                && ab[t] +
-                                anobib[t] -
-                                fy < xx[9] + xx[1] * 3 + xx[12]) {
-                            if (atype[tt] == 0 || atype[tt] == 4) {
-                                atype[tt] = 90;	//ot(oto[6]);
-                                anobia[tt]
-                                    = 6400;
-                                anobib[tt]
-                                    = 6300;
-                                axtype[tt]
-                                    = 0;
-                                aa[tt] -= 1050;
-                                ab[tt] -= 1050;
-                                ot(oto[9], conf->sound);
-                                aa[t] = -80000000;
+                    //他の敵を投げる
+                    for (tt = 0; tt < amax; tt++)
+                    {
+                        xx[0] = 250;
+                        xx[5] = -800;
+                        xx[12] = 0;
+                        xx[1] = 1600;
+                        xx[8] = aa[tt] - fx;
+                        xx[9] = ab[tt] - fy;
+                        if (t != tt && atype[tt] >= 100)
+                        {
+                            if (aa[t] + anobia[t] -
+                                    fx >
+                                    xx[8] + xx[0] * 2
+                                    && aa[t] - fx <
+                                    xx[8] + anobia[tt] -
+                                    xx[0] * 2
+                                    && ab[t] + anobib[t] - fy > xx[9] + xx[5]
+                                    && ab[t] +
+                                    anobib[t] - fy <
+                                    xx[9] + xx[1] * 3 + xx[12] + 1500)
+                            {
+                                amuki[tt] = 1;
+                                aa[tt] = aa[t] + 300;
+                                ab[tt] = ab[t] - 3000;
+                                abrocktm[tt] = 120;
+                                atm[t] = 200;
+                                amuki[t] = 1;
                             }
                         }
                     }
-                }
-            }
 
-            break;
+                    break;
 
-            //毒キノコ
-            case 102:
-            azimentype[t] = 1;
-            xx[10] = 100;
-            if (axtype[t] == 1)
-                xx[10] = 200;
-            break;
-
-            //悪スター
-            case 110:
-            azimentype[t] = 1;
-            xx[10] = 200;
-            if (axzimen[t] == 1) {
-                ab[t] -= 1200;
-                ad[t] = -1400;
-            }
-            break;
-
-            case 200:
-            azimentype[t] = 1;
-            xx[10] = 100;
-            break;
-
-        }		//sw
-
-        if (abrocktm[t] >= 1)
-            xx[10] = 0;
-
-        if (amuki[t] == 0)
-            aacta[t] -= xx[10];
-        if (amuki[t] == 1)
-            aacta[t] += xx[10];
-
-        //最大値
-        xx[0] = 850;
-        xx[1] = 1200;
-
-        //if (mc>xx[0]){mc=xx[0];}
-        //if (mc<-xx[0]){mc=-xx[0];}
-        if (ad[t] > xx[1] && azimentype[t] != 5) {
-            ad[t] = xx[1];
-        }
-        //行動
-        aa[t] += aacta[t];	//ab[t]+=aactb[t];
-
-        if ((azimentype[t] >= 1 || azimentype[t] == -1)
-                && abrocktm[t] <= 0) {
-            //if (atype[t]==4)end();
-
-            //移動
-            aa[t] += ac[t];
-            if (azimentype[t] >= 1 && azimentype[t] <= 3) {
-                ab[t] += ad[t];
-                ad[t] += 120;
-            }		//ad[t]+=180;
-
-            if (axzimen[t] == 1) {
-                xx[0] = 100;
-                if (ac[t] >= 200) {
-                    ac[t] -= xx[0];
-                } else if (ac[t] <= -200) {
-                    ac[t] += xx[0];
-                } else {
-                    ac[t] = 0;
-                }
-            }
-
-            axzimen[t] = 0;
-
-            //地面判定
-            if (azimentype[t] != 2) {
-                tekizimen(conf);
-            }
-
-        }		//azimentype[t]>=1
-
-        //ブロックから出現するさい
-        if (abrocktm[t] > 0) {
-            abrocktm[t]--;
-            if (abrocktm[t] < 100) {
-                ab[t] -= 180;
-            }
-            if (abrocktm[t] > 100) {
-            }
-            if (abrocktm[t] == 100) {
-                ab[t] -= 800;
-                ad[t] = -1200;
-                ac[t] = 700;
-                abrocktm[t] = 0;
-            }
-        }		//abrocktm[t]>0
-
-        //プレイヤーからの判定
-        xx[0] = 250;
-        xx[1] = 1600;
-        xx[2] = 1000;
-        xx[4] = 500;
-        xx[5] = -800;
-
-        xx[8] = aa[t] - fx;
-        xx[9] = ab[t] - fy;
-        xx[12] = 0;
-        if (md >= 100)
-            xx[12] = md;
-        xx[25] = 0;
-
-        if (ma + mnobia > xx[8] + xx[0] * 2
-                && ma < xx[8] + anobia[t] - xx[0] * 2
-                && mb + mnobib > xx[9] - xx[5]
-                && mb + mnobib < xx[9] + xx[1] + xx[12]
-                && (mmutekitm <= 0 || md >= 100)
-                && abrocktm[t] <= 0)
-        {
-            if (atype[t] != 4 && atype[t] != 9 && atype[t] != 10 &&
-                    (atype[t] <= 78 || atype[t] == 85) && mzimen != 1 && mtype != 200)
-            {
-
-                if (atype[t] == 0) {
+                    //ジエン大砲
+                case 7:
+                    azimentype[t] = 0;
+                    xx[10] = 0;
+                    xx[11] = 400;
                     if (axtype[t] == 0)
-                        aa[t] = -900000;
-                    if (axtype[t] == 1) {
-                        ot(oto[5], conf->sound);
-                        mb = xx[9] - 900 - anobib[t];
-                        md = -2100;
+                        xx[10] = xx[11];
+                    if (axtype[t] == 1)
+                        xx[10] = -xx[11];
+                    if (axtype[t] == 2)
+                        ab[t] -= xx[11];
+                    if (axtype[t] == 3)
+                        ab[t] += xx[11];
+                    break;
+
+                    //スーパーブーン
+                case 8:
+                    azimentype[t] = 0;
+                    xx[22] = 20;
+                    if (atm[t] == 0)
+                    {
+                        af[t] += xx[22];
+                        ad[t] += xx[22];
+                    }
+                    if (atm[t] == 1)
+                    {
+                        af[t] -= xx[22];
+                        ad[t] -= xx[22];
+                    }
+                    if (ad[t] > 300)
+                        ad[t] = 300;
+                    if (ad[t] < -300)
+                        ad[t] = -300;
+                    if (af[t] >= 1200)
+                        atm[t] = 1;
+                    if (af[t] < -0)
+                        atm[t] = 0;
+                    ab[t] += ad[t];
+                    break;
+                    //ノーマルブーン
+
+                case 151:
+                    azimentype[t] = 2;
+                    break;
+
+                    //ファイアー玉
+                case 9:
+                    azimentype[t] = 5;
+                    ab[t] += ad[t];
+                    ad[t] += 100;
+                    if (ab[t] >= fymax + 1000)
+                    {
+                        ad[t] = 900;
+                    }
+                    if (ab[t] >= fymax + 12000)
+                    {
+                        ab[t] = fymax;
+                        ad[t] = -2600;
+                    }
+                    break;
+
+                    //ファイアー
+                case 10:
+                    azimentype[t] = 0;
+                    xx[10] = 0;
+                    xx[11] = 400;
+                    if (axtype[t] == 0)
+                        xx[10] = xx[11];
+                    if (axtype[t] == 1)
+                        xx[10] = -xx[11];
+                    break;
+
+                    //モララー
+                case 30:
+                    atm[t] += 1;
+                    if (axtype[t] == 0)
+                    {
+                        if (atm[t] == 50 && mb >= 6000)
+                        {
+                            ac[t] = 300;
+                            ad[t] -= 1600;
+                            ab[t] -= 1000;
+                        }
+
+                        for (tt = 0; tt < amax; tt++)
+                        {
+                            xx[0] = 250;
+                            xx[5] = -800;
+                            xx[12] = 0;
+                            xx[1] = 1600;
+                            xx[8] = aa[tt] - fx;
+                            xx[9] = ab[tt] - fy;
+                            if (t != tt && atype[tt] == 102)
+                            {
+                                if (aa[t] + anobia[t] - fx > xx[8] + xx[0] * 2
+                                        && aa[t] - fx < xx[8] + anobia[tt] - xx[0] * 2
+                                        && ab[t] + anobib[t] - fy > xx[9] + xx[5]
+                                        && ab[t] + anobib[t] - fy <
+                                        xx[9] + xx[1] * 3 + xx[12] + 1500)
+                                {
+                                    aa[tt] = -800000;
+                                    axtype[t]
+                                        = 1;
+                                    ad[t] = -1600;
+                                    amsgtm[t]
+                                        = 30;
+                                    amsgtype[t]
+                                        = 25;
+                                }
+                            }
+                        }
+                    }
+
+                    if (axtype[t] == 1)
+                    {
+                        azimentype[t] = 0;
+                        ab[t] += ad[t];
+                        ad[t] += 120;
+                    }
+                    break;
+
+                    //レーザー
+                case 79:
+                    azimentype[t] = 0;
+                    xx[10] = 1600;
+                    if (axtype[t] == 1)
+                    {
+                        xx[10] = 1200;
+                        ab[t] -= 200;
+                    }
+                    if (axtype[t] == 2)
+                    {
+                        xx[10] = 1200;
+                        ab[t] += 200;
+                    }
+                    if (axtype[t] == 3)
+                    {
+                        xx[10] = 900;
+                        ab[t] -= 600;
+                    }
+                    if (axtype[t] == 4)
+                    {
+                        xx[10] = 900;
+                        ab[t] += 600;
+                    }
+                    break;
+
+                    //雲の敵
+                case 80:
+                    azimentype[t] = 0;
+                    break;
+                case 81:
+                    azimentype[t] = 0;
+                    break;
+                case 82:
+                    azimentype[t] = 0;
+                    break;
+                case 83:
+                    azimentype[t] = 0;
+                    break;
+
+                case 84:
+                    azimentype[t] = 2;
+                    break;
+
+                case 85:
+                    xx[23] = 400;
+                    if (axtype[t] == 0)
+                    {
+                        axtype[t] = 1;
+                        amuki[t] = 1;
+                    }
+                    if (mb >= 30000
+                            && ma >= aa[t] - 3000 * 5 - fx
+                            && ma <= aa[t] - fx && axtype[t] == 1)
+                    {
+                        axtype[t] = 5;
+                        amuki[t] = 0;
+                    }
+                    if (mb >= 24000
+                            && ma <= aa[t] + 3000 * 8 - fx
+                            && ma >= aa[t] - fx && axtype[t] == 1)
+                    {
+                        axtype[t] = 5;
+                        amuki[t] = 1;
+                    }
+                    if (axtype[t] == 5)
+                        xx[10] = xx[23];
+                    break;
+
+                case 86:
+                    azimentype[t] = 4;
+                    xx[23] = 1000;
+                    if (ma >= aa[t] - fx - mnobia - xx[26]
+                            && ma <= aa[t] - fx + anobia[t] + xx[26])
+                    {
+                        atm[t] = 1;
+                    }
+                    if (atm[t] == 1)
+                    {
+                        ab[t] += 1200;
+                    }
+                    break;
+
+                    //ファイアバー
+                case 87:
+                    azimentype[t] = 0;
+                    if (aa[t] % 10 != 1)
+                        atm[t] += 6;
+                    else
+                    {
+                        atm[t] -= 6;
+                    }
+                    xx[25] = 2;
+                    if (atm[t] > 360 * xx[25])
+                        atm[t] -= 360 * xx[25];
+                    if (atm[t] < 0)
+                        atm[t] += 360 * xx[25];
+
+                    for (tt = 0; tt <= axtype[t] % 100; tt++)
+                    {
+                        xx[26] = 18;
+                        xd[4] = tt * xx[26] * cos(atm[t] * pai / 180 / 2);
+                        xd[5] = tt * xx[26] * sin(atm[t] * pai / 180 / 2);
+
+                        xx[4] = 1800;
+                        xx[5] = 800;
+                        xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
+                        xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
+
+                        if (ma + mnobia > xx[8] + xx[5]
+                                && ma < xx[8] + xx[4] - xx[5]
+                                && mb + mnobib > xx[9] + xx[5]
+                                && mb < xx[9] + xx[4] - xx[5])
+                        {
+                            mhp -= 1;
+                            mmsgtype = 51;
+                            mmsgtm = 30;
+                        }
+                    }
+
+                    break;
+
+                case 88:
+                    azimentype[t] = 0;
+                    if (aa[t] % 10 != 1)
+                        atm[t] += 6;
+                    else
+                    {
+                        atm[t] -= 6;
+                    }
+                    xx[25] = 2;
+                    if (atm[t] > 360 * xx[25])
+                        atm[t] -= 360 * xx[25];
+                    if (atm[t] < 0)
+                        atm[t] += 360 * xx[25];
+
+                    for (tt = 0; tt <= axtype[t] % 100; tt++)
+                    {
+                        xx[26] = 18;
+                        xd[4] = -tt * xx[26] * cos(atm[t] * pai / 180 / 2);
+                        xd[5] = tt * xx[26] * sin(atm[t] * pai / 180 / 2);
+
+                        xx[4] = 1800;
+                        xx[5] = 800;
+                        xx[8] = aa[t] - fx + int (xd[4]) * 100 - xx[4] / 2;
+                        xx[9] = ab[t] - fy + int (xd[5]) * 100 - xx[4] / 2;
+
+                        if (ma + mnobia > xx[8] + xx[5]
+                                && ma < xx[8] + xx[4] - xx[5]
+                                && mb + mnobib > xx[9] + xx[5]
+                                && mb < xx[9] + xx[4] - xx[5])
+                        {
+                            mhp -= 1;
+                            mmsgtype = 51;
+                            mmsgtm = 30;
+                        }
+                    }
+
+                    break;
+
+                case 90:
+                    xx[10] = 160;
+                    break;
+
+                    //おいしいキノコ
+                case 100:
+                    azimentype[t] = 1;
+                    xx[10] = 100;
+
+                    //ほかの敵を巨大化
+                    if (axtype[t] == 2)
+                    {
+                        for (tt = 0; tt < amax; tt++)
+                        {
+                            xx[0] = 250;
+                            xx[5] = -800;
+                            xx[12] = 0;
+                            xx[1] = 1600;
+                            xx[8] = aa[tt] - fx;
+                            xx[9] = ab[tt] - fy;
+                            if (t != tt)
+                            {
+                                if (aa[t] +
+                                        anobia[t] -
+                                        fx >
+                                        xx[8] +
+                                        xx[0] * 2
+                                        && aa[t] -
+                                        fx <
+                                        xx[8] +
+                                        anobia[tt] -
+                                        xx[0] * 2
+                                        && ab[t] +
+                                        anobib[t] - fy > xx[9] + xx[5]
+                                        && ab[t] +
+                                        anobib[t] -
+                                        fy < xx[9] + xx[1] * 3 + xx[12])
+                                {
+                                    if (atype[tt] == 0 || atype[tt] == 4)
+                                    {
+                                        atype[tt] = 90;
+                                        anobia[tt]
+                                            = 6400;
+                                        anobib[tt]
+                                            = 6300;
+                                        axtype[tt]
+                                            = 0;
+                                        aa[tt] -= 1050;
+                                        ab[tt] -= 1050;
+                                        ot(oto[9], conf->sound);
+                                        aa[t] = -80000000;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    break;
+
+                    //毒キノコ
+                case 102:
+                    azimentype[t] = 1;
+                    xx[10] = 100;
+                    if (axtype[t] == 1)
+                        xx[10] = 200;
+                    break;
+
+                    //悪スター
+                case 110:
+                    azimentype[t] = 1;
+                    xx[10] = 200;
+                    if (axzimen[t] == 1)
+                    {
+                        ab[t] -= 1200;
+                        ad[t] = -1400;
+                    }
+                    break;
+
+                case 200:
+                    azimentype[t] = 1;
+                    xx[10] = 100;
+                    break;
+
+            }		//sw
+
+            if (abrocktm[t] >= 1)
+                xx[10] = 0;
+
+            if (amuki[t] == 0)
+                aacta[t] -= xx[10];
+            if (amuki[t] == 1)
+                aacta[t] += xx[10];
+
+            //最大値
+            xx[0] = 850;
+            xx[1] = 1200;
+
+            if (ad[t] > xx[1] && azimentype[t] != 5)
+            {
+                ad[t] = xx[1];
+            }
+            //行動
+            aa[t] += aacta[t];
+
+            if ((azimentype[t] >= 1 || azimentype[t] == -1)
+                    && abrocktm[t] <= 0)
+            {
+                //移動
+                aa[t] += ac[t];
+                if (azimentype[t] >= 1 && azimentype[t] <= 3)
+                {
+                    ab[t] += ad[t];
+                    ad[t] += 120;
+                }
+
+                if (axzimen[t] == 1)
+                {
+                    xx[0] = 100;
+                    if (ac[t] >= 200)
+                    {
+                        ac[t] -= xx[0];
+                    }
+                    else if (ac[t] <= -200)
+                    {
+                        ac[t] += xx[0];
+                    }
+                    else
+                    {
+                        ac[t] = 0;
+                    }
+                }
+
+                axzimen[t] = 0;
+
+                //地面判定
+                if (azimentype[t] != 2)
+                {
+                    tekizimen(conf);
+                }
+
+            }
+
+            //ブロックから出現するさい
+            if (abrocktm[t] > 0)
+            {
+                abrocktm[t]--;
+                if (abrocktm[t] < 100)
+                {
+                    ab[t] -= 180;
+                }
+                if (abrocktm[t] > 100)
+                {
+                }
+                if (abrocktm[t] == 100)
+                {
+                    ab[t] -= 800;
+                    ad[t] = -1200;
+                    ac[t] = 700;
+                    abrocktm[t] = 0;
+                }
+            }
+
+            //プレイヤーからの判定
+            xx[0] = 250;
+            xx[1] = 1600;
+            xx[2] = 1000;
+            xx[4] = 500;
+            xx[5] = -800;
+
+            xx[8] = aa[t] - fx;
+            xx[9] = ab[t] - fy;
+            xx[12] = 0;
+            if (md >= 100)
+                xx[12] = md;
+            xx[25] = 0;
+
+            if (ma + mnobia > xx[8] + xx[0] * 2
+                    && ma < xx[8] + anobia[t] - xx[0] * 2
+                    && mb + mnobib > xx[9] - xx[5]
+                    && mb + mnobib < xx[9] + xx[1] + xx[12]
+                    && (mmutekitm <= 0 || md >= 100)
+                    && abrocktm[t] <= 0)
+            {
+                if (atype[t] != 4 && atype[t] != 9 && atype[t] != 10 &&
+                        (atype[t] <= 78 || atype[t] == 85) && mzimen != 1 && mtype != 200)
+                {
+
+                    if (atype[t] == 0)
+                    {
+                        if (axtype[t] == 0)
+                            aa[t] = -900000;
+                        if (axtype[t] == 1)
+                        {
+                            ot(oto[5], conf->sound);
+                            mb = xx[9] - 900 - anobib[t];
+                            md = -2100;
+                            xx[25] = 1;
+                            actaon[2] = 0;
+                        }
+                    }
+
+                    if (atype[t] == 1)
+                    {
+                        atype[t] = 2;
+                        anobib[t] = 3000;
+                        axtype[t] = 0;
+                    }
+                    //こうら
+                    else if (atype[t] == 2 && md >= 0)
+                    {
+                        if (axtype[t] == 1 || axtype[t] == 2)
+                        {
+                            axtype[t] = 0;
+                        } else if (axtype[t] == 0)
+                        {
+                            if (ma + mnobia > xx[8] + xx[0] * 2
+                                    && ma < xx[8] + anobia[t] / 2 - xx[0] * 4)
+                            {
+                                axtype[t] = 1;
+                                amuki[t] = 1;
+                            }
+                            else
+                            {
+                                axtype[t] = 1;
+                                amuki[t] = 0;
+                            }
+                        }
+                    }
+                    if (atype[t] == 3)
+                    {
                         xx[25] = 1;
+                    }
+
+                    if (atype[t] == 6)
+                    {
+                        atm[t] = 10;
+                        md = 0;
+                        actaon[2] = 0;
+                    }
+
+                    if (atype[t] == 7)
+                    {
+                        aa[t] = -900000;
+                    }
+
+                    if (atype[t] == 8)
+                    {
+                        atype[t] = 151;
+                        ad[t] = 0;
+                    }
+
+                    if (atype[t] != 85)
+                    {
+                        if (xx[25] == 0)
+                        {
+                            ot(oto[5], conf->sound);
+                            mb = xx[9] - 1000 - anobib[t];
+                            md = -1000;
+                        }
+                    }
+                    if (atype[t] == 85)
+                    {
+                        if (xx[25] == 0)
+                        {
+                            ot(oto[5], conf->sound);
+                            mb = xx[9] - 4000;
+                            md = -1000;
+                            axtype[t] = 5;
+                        }
+                    }
+
+                    if (actaon[2] == 1)
+                    {
+                        md = -1600;
                         actaon[2] = 0;
                     }
                 }
-
-                if (atype[t] == 1) {
-                    atype[t] = 2;
-                    anobib[t] = 3000;
-                    axtype[t] = 0;
-                }
-                //こうら
-                else if (atype[t] == 2 && md >= 0) {
-                    if (axtype[t] == 1 || axtype[t] == 2) {
-                        axtype[t] = 0;
-                    } else if (axtype[t] == 0) {
-                        if (ma +
-                                mnobia >
-                                xx[8] +
-                                xx[0] * 2
-                                && ma <
-                                xx[8] + anobia[t] / 2 - xx[0] * 4) {
-                            axtype[t]
-                                = 1;
-                            amuki[t]
-                                = 1;
-                        } else {
-                            axtype[t]
-                                = 1;
-                            amuki[t]
-                                = 0;
-                        }
-                    }
-                }
-                if (atype[t] == 3) {
-                    xx[25] = 1;
-                }
-
-                if (atype[t] == 6) {
-                    atm[t] = 10;
-                    md = 0;
-                    actaon[2] = 0;
-                }
-
-                if (atype[t] == 7) {
-                    aa[t] = -900000;
-                }
-
-                if (atype[t] == 8) {
-                    atype[t] = 151;
-                    ad[t] = 0;
-                }
-
-                if (atype[t] != 85) {
-                    if (xx[25] == 0) {
-                        ot(oto[5], conf->sound);
-                        mb = xx[9] - 1000 - anobib[t];
-                        md = -1000;
-                    }
-                }
-                if (atype[t] == 85) {
-                    if (xx[25] == 0) {
-                        ot(oto[5], conf->sound);
-                        mb = xx[9] - 4000;
-                        md = -1000;
-                        axtype[t] = 5;
-                    }
-                }
-
-                if (actaon[2] == 1) {
-                    md = -1600;
-                    actaon[2] = 0;
-                }
             }
-        }
 
-        xx[15] = -500;
+            xx[15] = -500;
 
-        //プレイヤーに触れた時
-        xx[16] = 0;
-        if (atype[t] == 4 || atype[t] == 9 || atype[t] == 10)
-            xx[16] = -3000;
-        if (atype[t] == 82 || atype[t] == 83 || atype[t] == 84)
-            xx[16] = -3200;
-        if (atype[t] == 85)
-            xx[16] = -anobib[t] + 6000;
-        if (ma + mnobia > xx[8] + xx[4]
-                && ma < xx[8] + anobia[t] - xx[4]
-                && mb < xx[9] + anobib[t] + xx[15]
-                && mb + mnobib > xx[9] + anobib[t] - xx[0] + xx[16]
-                && anotm[t] <= 0 && abrocktm[t] <= 0)
-        {
-            if (mmutekion == 1) {
-                aa[t] = -9000000;
-            }
-            if (mmutekitm <= 0
-                    && (atype[t] <= 99 || atype[t] >= 200))
+            //プレイヤーに触れた時
+            xx[16] = 0;
+            if (atype[t] == 4 || atype[t] == 9 || atype[t] == 10)
+                xx[16] = -3000;
+            if (atype[t] == 82 || atype[t] == 83 || atype[t] == 84)
+                xx[16] = -3200;
+            if (atype[t] == 85)
+                xx[16] = -anobib[t] + 6000;
+            if (ma + mnobia > xx[8] + xx[4]
+                    && ma < xx[8] + anobia[t] - xx[4]
+                    && mb < xx[9] + anobib[t] + xx[15]
+                    && mb + mnobib > xx[9] + anobib[t] - xx[0] + xx[16]
+                    && anotm[t] <= 0 && abrocktm[t] <= 0)
             {
-                if (mmutekion != 1 && mtype != 200)
+                if (mmutekion == 1)
                 {
-                    //if (mmutekitm<=0)
-
-                    //ダメージ
-                    if ((atype[t] != 2 || axtype[t] != 0)
-                            && mhp >= 1) {
-                        if (atype[t] != 6) {
-                            mhp -= 1;
-                            //mmutekitm=40;
-                        }
-                    }
-
-                    if (atype[t] == 6) {
-                        atm[t] = 10;
-                    }
-                    //せりふ
-                    if (mhp == 0) {
-
-                        if (atype[t] == 0 || atype[t]
-                                == 7) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = rand(7)
-                                + 1 + 1000 + (conf->stage_info.level - 1)
-                                * 10;
-                        }
-
-                        if (atype[t] == 1) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = rand(2)
-                                + 15;
-                        }
-
-                        if (atype[t] == 2 && axtype[t]
-                                >= 1 && mmutekitm <= 0) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = 18;
-                        }
-
-                        if (atype[t] == 3) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = 20;
-                        }
-
-                        if (atype[t] == 4) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = rand(7)
-                                + 1 + 1000 + (conf->stage_info.level - 1)
-                                * 10;
-                        }
-
-                        if (atype[t] == 5) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = 21;
-                        }
-
-                        if (atype[t] == 9 || atype[t]
-                                == 10) {
-                            mmsgtm = 30;
-                            mmsgtype = 54;
-                        }
-
-                        if (atype[t] == 31) {
-                            amsgtm[t]
-                                = 30;
-                            amsgtype[t]
-                                = 24;
-                        }
-
-                        if (atype[t] == 80 || atype[t]
-                                == 81) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = 30;
-                        }
-
-                        if (atype[t] == 82) {
-                            amsgtm[t]
-                                = 20;
-                            amsgtype[t]
-                                = rand(1)
-                                + 31;
-                            xx[24] = 900;
-                            atype[t]
-                                = 83;
-                            aa[t] -= xx[24]
-                                + 100;
-                            ab[t] -= xx[24]
-                                - 100 * 0;
-                        }	//82
-
-                        if (atype[t] == 84) {
-                            mmsgtm = 30;
-                            mmsgtype = 50;
-                        }
-
-                        if (atype[t] == 85) {
-                            amsgtm[t]
-                                = 60;
-                            amsgtype[t]
-                                = rand(1)
-                                + 85;
-                        }
-                        //雲
-                        if (atype[t] == 80) {
-                            atype[t]
-                                = 81;
-                        }
-
-                    }	//mhp==0
-
-                    //こうら
-                    if (atype[t] == 2) {
-                        if (axtype[t] == 0) {
-                            if (ma + mnobia > xx[8]
-                                    + xx[0]
-                                    * 2 && ma < xx[8]
-                                    + anobia[t]
-                                    / 2 - xx[0]
-                                    * 4) {
-                                axtype[t]
-                                    = 1;
-                                amuki[t]
-                                    = 1;
-                                aa[t] = ma + mnobia + fx + mc;
-                                mmutekitm = 5;
-                            } else {
-                                axtype[t]
-                                    = 1;
-                                amuki[t]
-                                    = 0;
-                                aa[t] = ma - anobia[t] + fx - mc;
-                                mmutekitm = 5;
+                    aa[t] = -9000000;
+                }
+                if (mmutekitm <= 0
+                        && (atype[t] <= 99 || atype[t] >= 200))
+                {
+                    if (mmutekion != 1 && mtype != 200)
+                    {
+                        //ダメージ
+                        if ((atype[t] != 2 || axtype[t] != 0)
+                                && mhp >= 1)
+                        {
+                            if (atype[t] != 6)
+                            {
+                                mhp -= 1;
                             }
                         }
-                        else
+
+                        if (atype[t] == 6)
                         {
-                            mhp -= 1;
+                            atm[t] = 10;
+                        }
+                        //せりふ
+                        if (mhp == 0)
+                        {
+
+                            if (atype[t] == 0 || atype[t] == 7)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = rand(7)
+                                    + 1 + 1000 + (conf->stage_info.level - 1)
+                                    * 10;
+                            }
+
+                            if (atype[t] == 1)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = rand(2)
+                                    + 15;
+                            }
+
+                            if (atype[t] == 2 && axtype[t]
+                                    >= 1 && mmutekitm <= 0)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = 18;
+                            }
+
+                            if (atype[t] == 3)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = 20;
+                            }
+
+                            if (atype[t] == 4)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = rand(7)
+                                    + 1 + 1000 + (conf->stage_info.level - 1)
+                                    * 10;
+                            }
+
+                            if (atype[t] == 5)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = 21;
+                            }
+
+                            if (atype[t] == 9 || atype[t]
+                                    == 10)
+                            {
+                                mmsgtm = 30;
+                                mmsgtype = 54;
+                            }
+
+                            if (atype[t] == 31)
+                            {
+                                amsgtm[t]
+                                    = 30;
+                                amsgtype[t]
+                                    = 24;
+                            }
+
+                            if (atype[t] == 80 || atype[t]
+                                    == 81)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = 30;
+                            }
+
+                            if (atype[t] == 82)
+                            {
+                                amsgtm[t]
+                                    = 20;
+                                amsgtype[t]
+                                    = rand(1)
+                                    + 31;
+                                xx[24] = 900;
+                                atype[t]
+                                    = 83;
+                                aa[t] -= xx[24]
+                                    + 100;
+                                ab[t] -= xx[24]
+                                    - 100 * 0;
+                            }	//82
+
+                            if (atype[t] == 84)
+                            {
+                                mmsgtm = 30;
+                                mmsgtype = 50;
+                            }
+
+                            if (atype[t] == 85)
+                            {
+                                amsgtm[t]
+                                    = 60;
+                                amsgtype[t]
+                                    = rand(1)
+                                    + 85;
+                            }
+                            //雲
+                            if (atype[t] == 80)
+                            {
+                                atype[t]
+                                    = 81;
+                            }
+
+                        }	//mhp==0
+
+                        //こうら
+                        if (atype[t] == 2)
+                        {
+                            if (axtype[t] == 0)
+                            {
+                                if (ma + mnobia > xx[8] + xx[0] * 2
+                                        && ma < xx[8] + anobia[t] / 2 - xx[0] * 4)
+                                {
+                                    axtype[t] = 1;
+                                    amuki[t] = 1;
+                                    aa[t] = ma + mnobia + fx + mc;
+                                    mmutekitm = 5;
+                                }
+                                else
+                                {
+                                    axtype[t] = 1;
+                                    amuki[t] = 0;
+                                    aa[t] = ma - anobia[t] + fx - mc;
+                                    mmutekitm = 5;
+                                }
+                            }
+                            else
+                            {
+                                mhp -= 1;
+                            }
                         }
                     }
                 }
-            }
-            //アイテム
-            if (atype[t] >= 100 && atype[t] <= 199)
-            {
+                //アイテム
+                if (atype[t] >= 100 && atype[t] <= 199)
+                {
 
-                if (atype[t] == 100 && axtype[t] == 0) {
-                    mmsgtm = 30;
-                    mmsgtype = 1;
-                    ot(oto[9], conf->sound);
-                }
-                if (atype[t] == 100 && axtype[t] == 1) {
-                    mmsgtm = 30;
-                    mmsgtype = 2;
-                    ot(oto[9], conf->sound);
-                }
-                if (atype[t] == 100 && axtype[t] == 2) {
-                    mnobia = 5200;
-                    mnobib = 7300;
-                    ot(oto[9], conf->sound);
-                    ma -= 1100;
-                    mb -= 4000;
-                    mtype = 1;
-                    mhp = 50000000;
-                }
-
-                if (atype[t] == 101) {
-                    mhp -= 1;
-                    mmsgtm = 30;
-                    mmsgtype = 11;
-                }
-                if (atype[t] == 102) {
-                    mhp -= 1;
-                    mmsgtm = 30;
-                    mmsgtype = 10;
-                }
-                //?ボール
-                if (atype[t] == 105) {
-                    if (axtype[t] == 0) {
-                        ot(oto[4], conf->sound);
-                        sgtype[26] = 6;
+                    if (atype[t] == 100 && axtype[t] == 0)
+                    {
+                        mmsgtm = 30;
+                        mmsgtype = 1;
+                        ot(oto[9], conf->sound);
                     }
-                    if (axtype[t] == 1) {
-                        txtype[7] = 80;
-                        ot(oto[4], conf->sound);
-
-                        //ayobi(conf, aa[t]-6*3000+1000,-3*3000,0,0,0,110,0);
-                        ayobi(conf, aa[t] -
-                                8 * 3000 -
-                                1000, -4 * 3000, 0, 0, 0, 110, 0);
-                        ayobi(conf, aa[t] -
-                                10 *
-                                3000 +
-                                1000, -1 * 3000, 0, 0, 0, 110, 0);
-
-                        ayobi(conf, aa[t] +
-                                4 * 3000 +
-                                1000, -2 * 3000, 0, 0, 0, 110, 0);
-                        ayobi(conf, aa[t] +
-                                5 * 3000 -
-                                1000, -3 * 3000, 0, 0, 0, 110, 0);
-                        ayobi(conf, aa[t] +
-                                6 * 3000 +
-                                1000, -4 * 3000, 0, 0, 0, 110, 0);
-                        ayobi(conf, aa[t] +
-                                7 * 3000 -
-                                1000, -2 * 3000, 0, 0, 0, 110, 0);
-                        ayobi(conf, aa[t] +
-                                8 * 3000 +
-                                1000,
-                                -2 * 3000 - 1000, 0, 0, 0, 110, 0);
-                        tb[0] += 3000 * 3;
+                    if (atype[t] == 100 && axtype[t] == 1)
+                    {
+                        mmsgtm = 30;
+                        mmsgtype = 2;
+                        ot(oto[9], conf->sound);
                     }
-                }	//105
+                    if (atype[t] == 100 && axtype[t] == 2)
+                    {
+                        mnobia = 5200;
+                        mnobib = 7300;
+                        ot(oto[9], conf->sound);
+                        ma -= 1100;
+                        mb -= 4000;
+                        mtype = 1;
+                        mhp = 50000000;
+                    }
 
-                if (atype[t] == 110) {
-                    mhp -= 1;
-                    mmsgtm = 30;
-                    mmsgtype = 3;
+                    if (atype[t] == 101)
+                    {
+                        mhp -= 1;
+                        mmsgtm = 30;
+                        mmsgtype = 11;
+                    }
+                    if (atype[t] == 102)
+                    {
+                        mhp -= 1;
+                        mmsgtm = 30;
+                        mmsgtype = 10;
+                    }
+                    //?ボール
+                    if (atype[t] == 105)
+                    {
+                        if (axtype[t] == 0)
+                        {
+                            ot(oto[4], conf->sound);
+                            sgtype[26] = 6;
+                        }
+                        if (axtype[t] == 1)
+                        {
+                            txtype[7] = 80;
+                            ot(oto[4], conf->sound);
+
+                            ayobi(conf, aa[t] -
+                                    8 * 3000 -
+                                    1000, -4 * 3000, 0, 0, 0, 110, 0);
+                            ayobi(conf, aa[t] -
+                                    10 *
+                                    3000 +
+                                    1000, -1 * 3000, 0, 0, 0, 110, 0);
+
+                            ayobi(conf, aa[t] +
+                                    4 * 3000 +
+                                    1000, -2 * 3000, 0, 0, 0, 110, 0);
+                            ayobi(conf, aa[t] +
+                                    5 * 3000 -
+                                    1000, -3 * 3000, 0, 0, 0, 110, 0);
+                            ayobi(conf, aa[t] +
+                                    6 * 3000 +
+                                    1000, -4 * 3000, 0, 0, 0, 110, 0);
+                            ayobi(conf, aa[t] +
+                                    7 * 3000 -
+                                    1000, -2 * 3000, 0, 0, 0, 110, 0);
+                            ayobi(conf, aa[t] +
+                                    8 * 3000 +
+                                    1000,
+                                    -2 * 3000 - 1000, 0, 0, 0, 110, 0);
+                            tb[0] += 3000 * 3;
+                        }
+                    }	//105
+
+                    if (atype[t] == 110)
+                    {
+                        mhp -= 1;
+                        mmsgtm = 30;
+                        mmsgtype = 3;
+                    }
+
+                    aa[t] = -90000000;
                 }
 
-                aa[t] = -90000000;
             }
 
         }
-
-    }
         else
+        {
+            aa[t] = -9000000;
+        }
+
+    }
+
+    // スクロール
+    // scrolling
+    if (kscroll != 1 && kscroll != 2)
     {
-        aa[t] = -9000000;
+        xx[2] = mascrollmax;
+        xx[3] = 0;
+        xx[1] = xx[2];
+        if (ma > xx[1] && fzx < scrollx)
+        {
+            xx[5] = ma - xx[1];
+            ma = xx[1];
+            fx += xx[5];
+            fzx += xx[5];
+            if (xx[1] <= 5000)
+                xx[3] = 1;
+        }
     }
-
-}			//t
-
-//スクロール
-//xx[0]=xx[0];
-//x
-if (kscroll != 1 && kscroll != 2) {
-    xx[2] = mascrollmax;
-    xx[3] = 0;
-    xx[1] = xx[2];
-    if (ma > xx[1] && fzx < scrollx) {
-        xx[5] = ma - xx[1];
-        ma = xx[1];
-        fx += xx[5];
-        fzx += xx[5];
-        if (xx[1] <= 5000)
-            xx[3] = 1;
-    }
-    //if (kscroll!=5){//戻りなし
-    //xx[1]=xx[2]-500;if (ma<xx[1] && fzx>700){xx[5]=xx[1]-ma;ma=xx[1];fx-=xx[5];fzx-=xx[5];}
-    //}
-    //if (xx[3]==1){if (tyuukan==1)tyuukan=1;}
-}			//kscroll
-
 }   // enterStage
 
 void enterLivePanel(GameConfig* conf)
