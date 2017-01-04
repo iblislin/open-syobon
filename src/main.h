@@ -122,7 +122,6 @@ int sgtype[smax];
 //プレイヤー
 int mainmsgtype;
 int mnobia, mnobib;
-int mc, md; // the acceleration of player (a_x, a_y)
 int macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 
 int mtype, mxtype, mtm, mzz;
@@ -236,3 +235,7 @@ string xs[31];
 
 // function prototypes
 void deinit();
+
+#ifdef DEBUG
+void debug_screen(GameConfig*);
+#endif

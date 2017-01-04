@@ -16,22 +16,43 @@
 #define SCENE_STAFF_ROLL  4
 
 
-class Location
+class Pair
 {
+    /*
+     * The (x, y) pair
+     */
+
 public:
     int x = 0;
     int y = 0;
 
-    Location()
+    Pair()
     {
     }
 
-    Location(int x, int y)
+    Pair(int x, int y)
+    {
+        this->set(x, y);
+    }
+
+    void set(int x, int y)
     {
         this->x = x;
         this->y = y;
     }
 };
+
+
+class Location : public Pair
+{
+};
+
+
+class Acce : public Pair
+{
+    /* acceleration */
+};
+
 
 class StageInfo
 {
@@ -84,6 +105,7 @@ public:
     int lives = 2; // nokori ?
     int hp = 1; // health point, hp > 0 denote alive
     Location loc;
+    Acce acce;
 
     Player() {}
 

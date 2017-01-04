@@ -45,3 +45,20 @@ SUITE(Player)
         CHECK_EQUAL(true, p.is_alive());
     }
 }
+
+
+SUITE(Pair)
+{
+    TEST(set)
+    {
+        Pair p;
+
+        p.set(-4, 3);
+        CHECK_EQUAL(-4, p.x);
+        CHECK_EQUAL(3,  p.y);
+
+        p.set(0, 42);
+        CHECK_EQUAL(0,  p.x);
+        CHECK_EQUAL(42, p.y);
+    }
+}
