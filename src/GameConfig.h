@@ -64,12 +64,20 @@ class Player
 {
 public:
     int lives = 2; // nokori ?
+    int hp = 1; // health point, hp > 0 denote alive
 
     Player() {}
 
     void reset_lives()
     {
         this->lives = 2;
+    }
+
+    bool is_alive() const
+    {
+        if (this->hp > 0)
+            return true;
+        return false;
     }
 };
 

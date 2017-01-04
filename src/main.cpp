@@ -1220,7 +1220,7 @@ void initStage(GameConfig* conf)
     ma = 5600;
     mb = 32000;
     mmuki = 1;
-    mhp = 1;
+    conf->player.hp = 1;
     mc = 0;
     md = 0;
     mnobia = 3000;
@@ -1348,8 +1348,8 @@ void enterStage(GameConfig* conf)
     // commit suicide
     else if (CheckHitKey(KEY_INPUT_O))
     {
-        if (mhp >= 1)
-            mhp = 0;
+        if (conf->player.is_alive())
+            conf->player.hp = 0;
 
         if (conf->stage_info.sub_level >= 5)
         {
@@ -1511,11 +1511,16 @@ void enterStage(GameConfig* conf)
     if (mmutekitm >= -1)
         mmutekitm--;
 
-    //HPがなくなったとき
-    if (mhp <= 0 && mhp >= -9)
+    // HPがなくなったとき
+    // when run out of HP (?
+    if (!conf->player.is_alive() && conf->player.hp >= -9)
     {
         mkeytm = 12;
-        mhp = -20;
+
+        // wtf, another magic number -20,
+        // still not sure why
+        conf->player.hp = -20;
+
         mtype = 200;
         mtm = 0;
         Mix_HaltChannel(-1);
@@ -1525,7 +1530,7 @@ void enterStage(GameConfig* conf)
 #ifdef ERL_AI
         conf.endFlag = true;  // end game
 #endif
-    }			//mhp
+    }
 
     if (mtype == 200)
     {
@@ -1582,7 +1587,7 @@ void enterStage(GameConfig* conf)
         if (mb <= -6000)
         {
             mb = -80000000;
-            mhp = 0;
+            conf->player.hp = 0;
         }
     }
     //mtypeによる特殊的な移動
@@ -1642,7 +1647,7 @@ void enterStage(GameConfig* conf)
                 if (mtm == 160)
                 {
                     mtype = 0;
-                    mhp--;
+                    conf->player.hp--;
                 }
 
             }
@@ -1664,7 +1669,7 @@ void enterStage(GameConfig* conf)
                 }
                 if (mtm >= 48) {
                     mtype = 0;
-                    mhp--;
+                    conf->player.hp--;
                 }
 
             }
@@ -1679,14 +1684,14 @@ void enterStage(GameConfig* conf)
                     ma += 240;
                 }
                 if (mtm == 19 && mxtype == 2) {
-                    mhp = 0;
+                    conf->player.hp = 0;
                     mtype = 2000;
                     mtm = 0;
                     mmsgtm = 30;
                     mmsgtype = 51;
                 }
                 if (mtm == 19 && mxtype == 5) {
-                    mhp = 0;
+                    conf->player.hp = 0;
                     mtype = 2000;
                     mtm = 0;
                     mmsgtm = 30;
@@ -1909,7 +1914,7 @@ void enterStage(GameConfig* conf)
     mzimen = 0;
 
     //場外
-    if (mtype <= 9 && mhp >= 1)
+    if (mtype <= 9 && conf->player.is_alive())
     {
         if (ma < 100)
         {
@@ -1922,15 +1927,15 @@ void enterStage(GameConfig* conf)
             mc = 0;
         }
     }
-    if (mb >= 38000 && mhp >= 0 && stagecolor == 4)
+    if (mb >= 38000 && conf->player.hp >= 0 && stagecolor == 4)
     {
-        mhp = -2;
+        conf->player.hp = -2;
         mmsgtm = 30;
         mmsgtype = 55;
     }
-    if (mb >= 52000 && mhp >= 0)
+    if (mb >= 52000 && conf->player.hp >= 0)
     {
-        mhp = -2;
+        conf->player.hp = -2;
     }
     //ブロック
     //1-れんが、コイン、無し、土台、7-隠し
@@ -2105,7 +2110,7 @@ void enterStage(GameConfig* conf)
                                     {
                                         mmsgtm = 30;
                                         mmsgtype = 3;
-                                        mhp--;
+                                        conf->player.hp--;
                                     }
                                 }
                             }
@@ -2620,14 +2625,15 @@ void enterStage(GameConfig* conf)
                     }
                     if (sxtype[t] == 2
                             && sb[28] >= 48000
-                            && t != 28 && sgtype[t] == 0 && mhp >= 1)
+                            && t != 28 && sgtype[t] == 0
+                            && conf->player.is_alive())
                     {
                         sgtype[t] = 1;
                         sr[t] = 0;
                     }
                     if ((sxtype[t] == 3 && mb >= 30000 || sxtype[t] == 4 && mb >= 25000)
                             && sgtype[t] == 0
-                            && mhp >= 1
+                            && conf->player.is_alive()
                             && ma + mnobia >
                             xx[8] + xx[0] + 3000 - 300
                             && ma < xx[8] + sc[t] - xx[0])
@@ -2651,7 +2657,7 @@ void enterStage(GameConfig* conf)
                                 && mb + mnobib > xx[9]
                                 && mb < xx[9] + sd[t] + xx[0])
                         {
-                            mhp--;
+                            conf->player.hp--;
                             xx[7] = 1;
                         }
                     }
@@ -2978,7 +2984,7 @@ void enterStage(GameConfig* conf)
                     if (stype[t] == 300
                             && mtype == 0
                             && mb <
-                            xx[9] + sd[t] + xx[0] - 3000 && mhp >= 1)
+                            xx[9] + sd[t] + xx[0] - 3000 && conf->player.is_alive())
                     {
                         Mix_HaltMusic();
                         mtype = 300;
@@ -2989,7 +2995,7 @@ void enterStage(GameConfig* conf)
 
 #ifndef DISABLE_SAVE_FLAG
                     //中間ゲート
-                    if (stype[t] == 500 && mtype == 0 && mhp >= 1)
+                    if (stype[t] == 500 && mtype == 0 && conf->player.is_alive())
                     {
                         tyuukan += 1;
                         sa[t] = -80000000;
@@ -3086,7 +3092,7 @@ void enterStage(GameConfig* conf)
 
             //乗ったとき
             if (!(mztm >= 1 && mztype == 1 && actaon[3] == 1)
-                    && mhp >= 1)
+                    && conf->player.is_alive())
             {
                 if (ma + mnobia > xx[8] + xx[0]
                         && ma < xx[8] + xx[12] - xx[0]
@@ -3156,7 +3162,7 @@ void enterStage(GameConfig* conf)
                         srmove[t] += 1;
                         if (srmove[t] >= 100)
                         {
-                            mhp = 0;
+                            conf->player.hp = 0;
                             mmsgtype = 53;
                             mmsgtm = 30;
                             srmove[t] = -5000;
@@ -3169,7 +3175,7 @@ void enterStage(GameConfig* conf)
                         srmove[t] += 1;
                         if (srmove[t] >= 100)
                         {
-                            mhp = 0;
+                            conf->player.hp = 0;
                             mmsgtype = 53;
                             mmsgtm = 30;
                             srmove[t] = -5000;
@@ -3212,7 +3218,7 @@ void enterStage(GameConfig* conf)
                         }
                         mb += 110;
                         if (mmutekitm <= 0)
-                            mhp -= 1;
+                            conf->player.hp--;
                         if (mmutekion != 1)
                             mmutekitm = 40;
                     }
@@ -3464,7 +3470,7 @@ void enterStage(GameConfig* conf)
                     if (atm[t] >= 10)
                     {
                         atm[t]++;
-                        if (mhp >= 1)
+                        if (conf->player.is_alive())
                         {
                             if (atm[t] <= 19)
                             {
@@ -3823,7 +3829,7 @@ void enterStage(GameConfig* conf)
                                 && mb + mnobib > xx[9] + xx[5]
                                 && mb < xx[9] + xx[4] - xx[5])
                         {
-                            mhp -= 1;
+                            conf->player.hp--;
                             mmsgtype = 51;
                             mmsgtm = 30;
                         }
@@ -3861,7 +3867,7 @@ void enterStage(GameConfig* conf)
                                 && mb + mnobib > xx[9] + xx[5]
                                 && mb < xx[9] + xx[4] - xx[5])
                         {
-                            mhp -= 1;
+                            conf->player.hp--;
                             mmsgtype = 51;
                             mmsgtm = 30;
                         }
@@ -4175,11 +4181,11 @@ void enterStage(GameConfig* conf)
                     {
                         //ダメージ
                         if ((atype[t] != 2 || axtype[t] != 0)
-                                && mhp >= 1)
+                                && conf->player.is_alive())
                         {
                             if (atype[t] != 6)
                             {
-                                mhp -= 1;
+                                conf->player.hp--;
                             }
                         }
 
@@ -4187,8 +4193,9 @@ void enterStage(GameConfig* conf)
                         {
                             atm[t] = 10;
                         }
-                        //せりふ
-                        if (mhp == 0)
+                        // せりふ
+                        // dialogue
+                        if (!conf->player.hp)
                         {
 
                             if (atype[t] == 0 || atype[t] == 7)
@@ -4306,7 +4313,7 @@ void enterStage(GameConfig* conf)
                                     = 81;
                             }
 
-                        }	//mhp==0
+                        }
 
                         //こうら
                         if (atype[t] == 2)
@@ -4330,9 +4337,7 @@ void enterStage(GameConfig* conf)
                                 }
                             }
                             else
-                            {
-                                mhp -= 1;
-                            }
+                                conf->player.hp--;
                         }
                     }
                 }
@@ -4360,18 +4365,18 @@ void enterStage(GameConfig* conf)
                         ma -= 1100;
                         mb -= 4000;
                         mtype = 1;
-                        mhp = 50000000;
+                        conf->player.hp = 50000000;  // wtf
                     }
 
                     if (atype[t] == 101)
                     {
-                        mhp -= 1;
+                        conf->player.hp--;
                         mmsgtm = 30;
                         mmsgtype = 11;
                     }
                     if (atype[t] == 102)
                     {
-                        mhp -= 1;
+                        conf->player.hp--;
                         mmsgtm = 30;
                         mmsgtype = 10;
                     }
@@ -4418,7 +4423,7 @@ void enterStage(GameConfig* conf)
 
                     if (atype[t] == 110)
                     {
-                        mhp -= 1;
+                        conf->player.hp--;
                         mmsgtm = 30;
                         mmsgtype = 3;
                     }

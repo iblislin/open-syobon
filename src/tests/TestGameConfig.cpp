@@ -22,3 +22,26 @@ SUITE(StageInfoTest)
         CHECK_EQUAL(false, s.is_random());
     }
 }
+
+
+SUITE(Player)
+{
+    TEST(is_alive)
+    {
+        Player p;
+
+        CHECK_EQUAL(1, p.hp);
+
+        p.hp = 0;
+        CHECK_EQUAL(false, p.is_alive());
+
+        p.hp = -1;
+        CHECK_EQUAL(false, p.is_alive());
+
+        p.hp = 42;
+        CHECK_EQUAL(true, p.is_alive());
+
+        p.hp = 1;
+        CHECK_EQUAL(true, p.is_alive());
+    }
+}

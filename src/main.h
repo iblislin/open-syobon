@@ -123,7 +123,6 @@ int sgtype[smax];
 int mainmsgtype;
 int ma, mb; // player location on the screen (ma, mb) is (x, y)
 int mnobia, mnobib;
-int mhp; // player hp, mhp > 0 denote alive
 int mc, md; // the acceleration of player (a_x, a_y)
 int macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 
