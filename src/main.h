@@ -90,9 +90,7 @@ void chBgm(Mix_Music* music, int volume=50);
 void str(string c, int a, int b);
 
 
-//)
-
-void stagecls();
+void stagecls(GameConfig* conf);
 void stage(GameConfig* conf);
 void stagep(GameConfig* conf);
 void enterLivePanel(GameConfig* conf);

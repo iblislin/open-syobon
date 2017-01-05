@@ -1260,7 +1260,7 @@ void initStage(GameConfig* conf)
 
     chBgm(otom[BGM_FIELD]);
 
-    stagecls();
+    stagecls(conf);
 
     stage(conf);
 
@@ -5028,86 +5028,92 @@ void ot(Mix_Chunk * x, bool enableFlag)
     PlaySoundMem(x, DX_PLAYTYPE_BACK);
 }
 
-void stagecls()
+void stagecls(GameConfig* conf)
 {
-    for (t = 0; t < smax; t++) {
-	sa[t] = -9000000;
-	sb[t] = 1;
-	sc[t] = 1;
-	sd[t] = 1;
-	sgtype[t] = 0;
-	stype[t] = 0;
-	sxtype[t] = 0;
+    for (auto t=0; t<smax; t++)
+    {
+        sa[t] = -9000000;
+        sb[t] = 1;
+        sc[t] = 1;
+        sd[t] = 1;
+        sgtype[t] = 0;
+        stype[t] = 0;
+        sxtype[t] = 0;
     }
-//for (t=0;t<spmax;t++){spa[t]=-9000000;szyunni[t]=t;spb[t]=1;spc[t]=1;spd[t]=1;sptype[t]=0;spgtype[t]=0;}
-    for (t = 0; t < tmax; t++) {
-	ta[t] = -9000000;
-	tb[t] = 1;
-	tc[t] = 1;
-	td[t] = 1;
-	titem[t] = 0;
-	txtype[t] = 0;
+
+    for (auto t=0; t<tmax; t++)
+    {
+        ta[t] = -9000000;
+        tb[t] = 1;
+        tc[t] = 1;
+        td[t] = 1;
+        titem[t] = 0;
+        txtype[t] = 0;
     }
-    for (t = 0; t < srmax; t++) {
-	sra[t] = -9000000;
-	srb[t] = 1;
-	src[t] = 1;
-	srd[t] = 1;
-	sre[t] = 0;
-	srf[t] = 0;
-	srmuki[t] = 0;
-	sron[t] = 0;
-	sree[t] = 0;
-	srsok[t] = 0;
-	srmove[t] = 0;
-	srmovep[t] = 0;
-	srsp[t] = 0;
+
+    for (auto t=0; t<srmax; t++)
+    {
+        sra[t] = -9000000;
+        srb[t] = 1;
+        src[t] = 1;
+        srd[t] = 1;
+        sre[t] = 0;
+        srf[t] = 0;
+        srmuki[t] = 0;
+        sron[t] = 0;
+        sree[t] = 0;
+        srsok[t] = 0;
+        srmove[t] = 0;
+        srmovep[t] = 0;
+        srsp[t] = 0;
     }
-//for (t=0;t<sqmax;t++){sqa[t]=-9000000;sqb[t]=1;sqc[t]=1;sqd[t]=1;sqgtype[t]=0;sqtype[t]=0;}
-//for (t=0;t<kmax;t++){ka[t]=-9000000;kmuki[t]=0;ksoka[t]=0;ksokb[t]=0;kxsoka[t]=0;kxsokb[t]=0;}
-//for (t=0;t<imax;t++){ia[t]=-9000000;ib[t]=1;ic[t]=1;id[t]=1;}
-    for (t = 0; t < amax; t++) {
-	aa[t] = -9000000;
-	ab[t] = 1;
-	ac[t] = 0;
-	ad[t] = 1;
-	azimentype[t] = 0;
-	atype[t] = 0;
-	axtype[t] = 0;
-	ae[t] = 0;
-	af[t] = 0;
-	atm[t] = 0;
-	a2tm[t] = 0;
-	abrocktm[t] = 0;
-	amsgtm[t] = 0;
+
+    for (auto t=0; t<amax; t++)
+    {
+        aa[t] = -9000000;
+        ab[t] = 1;
+        ac[t] = 0;
+        ad[t] = 1;
+        azimentype[t] = 0;
+        atype[t] = 0;
+        axtype[t] = 0;
+        ae[t] = 0;
+        af[t] = 0;
+        atm[t] = 0;
+        a2tm[t] = 0;
+        abrocktm[t] = 0;
+        amsgtm[t] = 0;
     }
-    for (t = 0; t < bmax; t++) {
-	ba[t] = -9000000;
-	bb[t] = 1;
-	bz[t] = 1;
-	btm[t] = 0;
-	bxtype[t] = 0;
+
+    for (auto t=0; t<bmax; t++)
+    {
+        ba[t] = -9000000;
+        bb[t] = 1;
+        bz[t] = 1;
+        btm[t] = 0;
+        bxtype[t] = 0;
     }
-    for (t = 0; t < emax; t++) {
-	ea[t] = -9000000;
-	eb[t] = 1;
-	ec[t] = 1;
-	ed[t] = 1;
-	egtype[t] = 0;
+
+    for (auto t=0; t<emax; t++)
+    {
+        ea[t] = -9000000;
+        eb[t] = 1;
+        ec[t] = 1;
+        ed[t] = 1;
+        egtype[t] = 0;
     }
-    for (t = 0; t < nmax; t++) {
-	na[t] = -9000000;
-	nb[t] = 1;
-	nc[t] = 1;
-	nd[t] = 1;
-	ne[t] = 1;
-	nf[t] = 1;
-	ng[t] = 0;
-	ntype[t] = 0;
+
+    for (auto t=0; t<nmax; t++)
+    {
+        na[t] = -9000000;
+        nb[t] = 1;
+        nc[t] = 1;
+        nd[t] = 1;
+        ne[t] = 1;
+        nf[t] = 1;
+        ng[t] = 0;
+        ntype[t] = 0;
     }
-//for (t=0;t<cmax;t++){ca[t]=-9000000;cb[t]=1;contm[t]=0;ctype[t]=0;ce[t]=0;cf[t]=0;}
-//for (t=0;t<vmax;t++){va[t]=-9000000;vtype[t]=0;vb[t]=0;vc[t]=1;vd[t]=1;}
-//for (t=0;t<gmax;t++){ga[t]=-9000000;gx[t]=0;gstring[t]="";}
 
     sco = 0;
     tco = 0;
@@ -5115,8 +5121,7 @@ void stagecls()
     bco = 0;
     eco = 0;
     nco = 0;
-//haikeitouroku();
-}				//stagecls()
+}  // stagecls
 
 //ステージロード
 void stage(GameConfig* conf)
