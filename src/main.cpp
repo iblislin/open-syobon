@@ -108,22 +108,26 @@ void debug_screen(GameConfig* conf)
     str(c, 10, 10 + 15);
 }
 
-
-void renderStage(GameConfig* conf)
+void renderStageBackground(GameConfig* conf)
 {
-    // 背景
-    // background
-    for (t = 0; t < nmax; t++)
+    for (auto t=0; t<nmax; t++)
     {
-        xx[0] = na[t] - fx;
-        xx[1] = nb[t] - fy;
-        xx[2] = ne[ntype[t]] * 100;
-        xx[3] = nf[ntype[t]] * 100;
+        const int x = na[t] - fx;
+        const int y = nb[t] - fy;
+
+        xx[0] = x;
+        xx[1] = y;
         xx[2] = 16000;
         xx[3] = 16000;
 
-        if (xx[0] + xx[2] >= -10 && xx[0] <= fxmax
-                && xx[1] + xx[3] >= -10 && xx[3] <= fymax)
+        /* boundary check */
+        if (x > fxmax)
+            continue;
+        if (y > fymax)
+            continue;
+
+        if (xx[0] + xx[2] >= -10 &&
+            xx[1] + xx[3] >= -10 )
         {
             if (ntype[t] != 3) {
                 if ((ntype[t] == 1 || ntype[t] == 2)
@@ -160,7 +164,12 @@ void renderStage(GameConfig* conf)
                         "プレイしてくれてありがとー");
 
         }
-    }  //t
+    }
+}
+
+void renderStage(GameConfig* conf)
+{
+    renderStageBackground(conf);
 
     //グラ
     for (t = 0; t < emax; t++)

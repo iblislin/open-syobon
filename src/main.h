@@ -45,6 +45,7 @@ void renderMain(GameConfig* conf);
 void renderLivePanel(GameConfig* conf);
 void renderStaffRoll(GameConfig* conf);
 void renderStage(GameConfig* conf);
+void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
 
 
@@ -128,7 +129,7 @@ int mtype, mxtype, mtm, mzz;
 int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
 int mmutekitm, mmutekion;
 int mztm, mztype;
-int actaon[7];
+int actaon[7];  // action ?
 //メッセージ
 int mmsgtm, mmsgtype;
 
@@ -215,7 +216,7 @@ int fmaZ = 0, fmb = 0;
 //強制スクロール
 int kscroll = 0;
 //画面サイズ(ファミコンサイズ×2)(256-224)
-int fxmax = 48000, fymax = 42000;
+int fxmax = SCREEN_WIDTH * 100, fymax = SCREEN_HEIGHT * 100;
 
 
 
