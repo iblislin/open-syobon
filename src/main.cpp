@@ -5128,10 +5128,7 @@ void stage(GameConfig* conf)
 {
     scrollx = 3600 * 100;
 
-//byte stagedate[16][801];
-//byte stagedate2[16][801];
-
-//1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
+    //1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
     stagep(conf);
 
@@ -5273,15 +5270,11 @@ void stagep(GameConfig* conf)
 {
 
 //ステージロード
-//void stage(){
 
-//fzx=6000*100;
     scrollx = 3600 * 100;
 
-//byte stagedate[16][801];
-//byte stagedate2[16][801];
 
-//1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
+    //1-レンガ,2-コイン,3-空,4-土台//5-6地面//7-隠し//
 
     //1-1
     if (conf->stage_info.check(1, 1, 0))
@@ -5575,7 +5568,7 @@ void stagep(GameConfig* conf)
 	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
 
-//追加情報
+    //追加情報
 	tyobi(8 * 29, 9 * 29 - 12, 100);
 	txtype[tco] = 2;
 	tyobi(13 * 29, 9 * 29 - 12, 102);
@@ -5622,7 +5615,8 @@ void stagep(GameConfig* conf)
 	sd[t] = 70000;
 	stype[t] = 101;
 	sco++;
-//t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
+
+    //t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
 	t = 28;
 	sa[t] = 29 * 29 * 100 + 500;
 	sb[t] = (9 * 29 - 12) * 100;
@@ -5659,7 +5653,6 @@ void stagep(GameConfig* conf)
 	btype[t] = 80;
 	bxtype[t] = 0;
 	bco++;
-//t=bco;ba[t]=13*29*100;bb[t]=(5*29-12)*100;btype[t]=81;bxtype[t]=0;bco++;
 
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
@@ -5762,15 +5755,14 @@ void stagep(GameConfig* conf)
 	};
 
 	tco = 0;
-//ヒント1
+    //ヒント1
 	txtype[tco] = 1;
 	tyobi(4 * 29, 9 * 29 - 12, 300);
-//tyobi(7*29,9*29-12,300);
 
-//毒1
+    //毒1
 	tyobi(13 * 29, 8 * 29 - 12, 114);
 
-//t=28;
+    //t=28;
 	sco = 0;
 	t = sco;
 	sa[t] = 14 * 29 * 100 + 500;
@@ -5797,8 +5789,7 @@ void stagep(GameConfig* conf)
 	sxtype[t] = 1;
 	sco++;
 
-//ブロックもどき
-//t=bco;ba[t]=7*29*100;bb[t]=(9*29-12)*100;btype[t]=82;bxtype[t]=0;bco++;
+    //ブロックもどき
 
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
@@ -6174,9 +6165,10 @@ void stagep(GameConfig* conf)
 	txtype[tco] = 2;
 	tyobi(49 * 29, 9 * 29 - 12, 114);
 
-	for (t = 0; t >= -7; t--) {
-	    tyobi(53 * 29, t * 29 - 12, 1);
-	}
+    for (t = 0; t >= -7; t--)
+    {
+        tyobi(53 * 29, t * 29 - 12, 1);
+    }
 
 	txtype[tco] = 1;
 	tyobi(80 * 29, 5 * 29 - 12, 104);
@@ -6413,9 +6405,8 @@ void stagep(GameConfig* conf)
     if (conf->stage_info.check(1, 2, 2))
     {
 
-//マリ　地上　入れ
+    //マリ　地上　入れ
 	chBgm(otom[BGM_FIELD]);
-//PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 900 * 100;
 	conf->player.loc.x = 7500;
@@ -6543,17 +6534,6 @@ void stagep(GameConfig* conf)
 	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
 	};
 
-/*
-//毒1
-tyobi(13*29,8*29-12,114);
-
-//t=28;
-sco=0;
-t=sco;sa[t]=14*29*100+500;sb[t]=(9*29-12)*100;sc[t]=6000;sd[t]=12000-200;stype[t]=50;sxtype[t]=1;sco++;
-t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
-t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
-*/
-
 	t = sco;
 	sa[t] = 5 * 29 * 100 + 500;
 	sb[t] = -6000;
@@ -6562,7 +6542,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	stype[t] = 102;
 	sxtype[t] = 8;
 	sco++;
-//空飛ぶ土管
+    //空飛ぶ土管
 	t = 28;
 	sa[t] = 44 * 29 * 100 + 500;
 	sb[t] = (10 * 29 - 12) * 100;
@@ -6571,7 +6551,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	stype[t] = 50;
 	sco++;
 
-//ポールもどき
+    //ポールもどき
 	bco = 0;
 	t = bco;
 	ba[t] = 19 * 29 * 100;
@@ -6589,7 +6569,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
     }				//sta2
 
-//必要BGM+SE
+    //必要BGM+SE
 
     //1-3(地上)
     if (conf->stage_info.check(1, 3, 6))
@@ -6599,12 +6579,11 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
     {
 
 	chBgm(otom[BGM_FIELD]);
-//PlaySoundMem(oto[0],DX_PLAYTYPE_LOOP) ;
 
 	scrollx = 3900 * 100;
-//conf->player.loc.x=3000;conf->player.loc.y=3000;
 
-	byte stagedatex[17][1001] = {	//                                                                                                                                                                                     中間
+    byte stagedatex[17][1001] = {
+        // 中間
 	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 	     0, 0, 0,
 	     0, 0,
@@ -6924,9 +6903,9 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 
 	tco = 0;
 	tyobi(22 * 29, 3 * 29 - 12, 1);
-//毒1
+    //毒1
 	tyobi(54 * 29, 9 * 29 - 12, 116);
-//音符+
+    //音符+
 	tyobi(18 * 29, 14 * 29 - 12, 117);
 	tyobi(19 * 29, 14 * 29 - 12, 117);
 	tyobi(20 * 29, 14 * 29 - 12, 117);
@@ -6934,17 +6913,17 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	tyobi(61 * 29, 9 * 29 - 12, 101);	//5
 	tyobi(74 * 29, 9 * 29 - 12, 7);	//6
 
-//ヒント2
+    //ヒント2
 	txtype[tco] = 2;
 	tyobi(28 * 29, 9 * 29 - 12, 300);	//7
-//ファイア
+    //ファイア
 	txtype[tco] = 3;
 	tyobi(7 * 29, 9 * 29 - 12, 101);
-//ヒント3
+    //ヒント3
 	txtype[tco] = 4;
 	tyobi(70 * 29, 8 * 29 - 12, 300);	//9
 
-//もろいぶろっく×３
+    //もろいぶろっく×３
 	txtype[tco] = 1;
 	tyobi(58 * 29, 13 * 29 - 12, 115);
 	txtype[tco] = 1;
@@ -6952,15 +6931,14 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	txtype[tco] = 1;
 	tyobi(60 * 29, 13 * 29 - 12, 115);
 
-//ヒントブレイク
+    //ヒントブレイク
 	txtype[tco] = 0;
 	tyobi(111 * 29, 6 * 29 - 12, 301);
-//ジャンプ
+    //ジャンプ
 	txtype[tco] = 0;
 	tyobi(114 * 29, 9 * 29 - 12, 120);
 
-//ファイア
-//tyobi(7*29,9*29-12,101);
+    //ファイア
 
 	bco = 0;
 	t = bco;
@@ -6983,9 +6961,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	sd[t] = 3000;
 	stype[t] = 52;
 	sco++;
-//t=sco;sa[t]=58*29*100;sb[t]=(13*29-12)*100;sc[t]=9000-1;sd[t]=3000;stype[t]=52;sco++;
 
-//土管
+    //土管
 	t = sco;
 	sa[t] = 65 * 29 * 100 + 500;
 	sb[t] = (10 * 29 - 12) * 100;
@@ -6994,9 +6971,8 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	stype[t] = 50;
 	sxtype[t] = 1;
 	sco++;
-//t=28;sa[t]=65*29*100;sb[t]=(10*29-12)*100;sc[t]=6000;sd[t]=9000-200;stype[t]=50;sco++;
 
-//トラップ
+    //トラップ
 	t = sco;
 	sa[t] = 74 * 29 * 100;
 	sb[t] = (8 * 29 - 12) * 100 - 1500;
@@ -7013,7 +6989,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	stype[t] = 102;
 	sxtype[t] = 10;
 	sco++;
-//ポール砲
+    //ポール砲
 	t = sco;
 	sa[t] = 131 * 29 * 100 - 1500;
 	sb[t] = (1 * 29 - 12) * 100 - 3000;
@@ -7022,14 +6998,14 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	stype[t] = 104;
 	sco++;
 
-//？ボール
+    //？ボール
 	t = bco;
 	ba[t] = 10 * 29 * 100 + 100;
 	bb[t] = (11 * 29 - 12) * 100;
 	btype[t] = 105;
 	bxtype[t] = 1;
 	bco++;
-//ブロックもどき
+    //ブロックもどき
 	t = bco;
 	ba[t] = 43 * 29 * 100;
 	bb[t] = (11 * 29 - 12) * 100;
@@ -7850,7 +7826,7 @@ t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtyp
 	bxtype[t] = 0;
 	bco++;
 
-//マグマ
+    //マグマ
 	nco = 0;
 	na[nco] = 7 * 29 * 100 - 300;
 	nb[nco] = 14 * 29 * 100 - 1200;
@@ -10759,96 +10735,60 @@ eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 
 //敵キャラ、アイテム作成
 void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
-	   int xxtype)
+           int xxtype)
 {
     int rz = 0;
-    for (t1 = 0; t1 <= 1; t1++) {
-	t1 = 2;
-	if (aa[aco] >= -9000 && aa[aco] <= 30000)
-	    t1 = 0;
-	rz++;
+    for (t1 = 0; t1 <= 1; t1++)
+    {
+        t1 = 2;
+        if (aa[aco] >= -9000 && aa[aco] <= 30000)
+            t1 = 0;
 
-    if (rz <= amax) {
-        t1 = 3;
+        rz++;
 
-        aa[aco] = xa;
-        ab[aco] = xb;
-        ac[aco] = xc;
-        ad[aco] = xd;
-        if (xxtype > 100)
-            ac[aco] = xxtype;
-        atype[aco] = xtype;
-        if (xxtype >= 0 && xxtype <= 99100)
-            axtype[aco] = xxtype;
-        anotm[aco] = xnotm;
-        if (aa[aco] - fx <= conf->player.loc.x + mnobia / 2)
-            amuki[aco] = 1;
-        if (aa[aco] - fx > conf->player.loc.x + mnobia / 2)
-            amuki[aco] = 0;
-        if (abrocktm[aco] >= 1)
-            amuki[aco] = 1;
-        if (abrocktm[aco] == 20)
-		amuki[aco] = 0;
+        if (rz <= amax)
+        {
+            t1 = 3;
 
-	    anobia[aco] = anx[atype[aco]];
-	    anobib[aco] = any[atype[aco]];
+            aa[aco] = xa;
+            ab[aco] = xb;
+            ac[aco] = xc;
+            ad[aco] = xd;
+            if (xxtype > 100)
+                ac[aco] = xxtype;
+            atype[aco] = xtype;
+            if (xxtype >= 0 && xxtype <= 99100)
+                axtype[aco] = xxtype;
+            anotm[aco] = xnotm;
+            if (aa[aco] - fx <= conf->player.loc.x + mnobia / 2)
+                amuki[aco] = 1;
+            if (aa[aco] - fx > conf->player.loc.x + mnobia / 2)
+                amuki[aco] = 0;
+            if (abrocktm[aco] >= 1)
+                amuki[aco] = 1;
+            if (abrocktm[aco] == 20)
+                amuki[aco] = 0;
 
-        //大砲音
-        if (xtype == 7)
-            ot(oto[10], conf->sound);
-        //ファイア音
-        if (xtype == 10)
-            ot(oto[18], conf->sound);
+            anobia[aco] = anx[atype[aco]];
+            anobib[aco] = any[atype[aco]];
 
-	    azimentype[aco] = 1;
+            //大砲音
+            if (xtype == 7)
+                ot(oto[10], conf->sound);
+            //ファイア音
+            if (xtype == 10)
+                ot(oto[18], conf->sound);
 
-//if (atype[aco]<=30 && atype[aco]!=4)atm[aco]=20;
+            azimentype[aco] = 1;
 
-//azimentype[aco]=1;
+            if (xtype == 87)
+            {
+                atm[aco] = rand(179) + (-90);
+            }
 
-	    switch (atype[aco]) {
-/*
-case 0:case 1:case 2:case 5:case 6:case 7:case 8:
-azimentype[aco]=2;
-break;
-
-case 3:case 4:
-azimentype[aco]=0;
-break;
-
-case 49:case 50://case 2:case 5:case 6:
-azimentype[aco]=4;
-break;
-
-case 80:case 81:case 82:case 83:case 84:case 85:
-azimentype[aco]=1;
-break;
-
-case 100:case 101:case 102:case 103:case 104:case 105:case 106:case 107:case 108:
-azimentype[aco]=1;
-break;
-
-case 120:case 121:case 122:
-azimentype[aco]=1;
-break;
-
-case 130:case 131:case 132:case 133:case 134:
-azimentype[aco]=1;
-break;
-*/
-	    }
-
-	    if (xtype == 87) {
-		atm[aco] = rand(179) + (-90);
-	    }
-
-	    aco += 1;
-	    if (aco >= amax - 1) {
-		aco = 0;
-	    }
-	}			//t1
-
-//if (bz[t]==1){bz[t]=0;}
-    }				//rz
-
-}				//ayobi
+            aco += 1;
+            if (aco >= amax - 1)
+                aco = 0;
+        }  // t1
+    } // rz
+}  //  ayobi
