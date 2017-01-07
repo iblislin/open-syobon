@@ -10,7 +10,8 @@ LDFLAGS+=	-L/usr/local/lib \
 
 ERLCFLAGS=	+native
 
-TESTS_OBJ=	tests/Main.o tests/TestGameConfig.o
+OBJS=		main.o loadg.o DxLib.o Stage.o json/jsoncpp.o
+TESTS_OBJS=	tests/Main.o tests/TestGameConfig.o Stage.o
 
 all: SyobonAction
 
@@ -18,14 +19,16 @@ erl_ai: syobon_nif.so syobon.beam lnalg.beam player.beam neuron.beam \
 	neuron_net.beam cortex.beam sensor.beam actuator.beam \
 	benchmark.beam collector.beam
 
-SyobonAction: main.o loadg.o DxLib.o
-	${CXX} ${CXXFLAGS} main.o loadg.o DxLib.o -o SyobonAction ${LDFLAGS}
+SyobonAction: ${OBJS}
+	${CXX} ${CXXFLAGS} ${OBJS} -o SyobonAction ${LDFLAGS}
 
 main.o: main.cpp main.h GameConfig.h
 
 loadg.o: loadg.cpp
 
 DxLib.o: DxLib.cpp DxLib.h GameConfig.h
+
+Stage.o: Stage.cpp Stage.h
 
 clean:
 	rm -fv *.o
@@ -36,7 +39,7 @@ clean:
 	rm -fv tests/Main
 	rm -fv *.core
 
-tests/Main: ${TESTS_OBJ}
+tests/Main: ${TESTS_OBJS}
 
 test: tests/Main
 	./tests/Main

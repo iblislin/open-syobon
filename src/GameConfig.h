@@ -1,3 +1,6 @@
+#include "Stage.h"
+
+
 #ifndef GameConfig_H
 #define GameConfig_H
 
@@ -51,51 +54,6 @@ class Location : public Pair
 class Acce : public Pair
 {
     /* acceleration */
-};
-
-
-class StageInfo
-{
-public:
-    unsigned int series    = 1;
-    unsigned int level     = 1;
-    unsigned int sub_level = 0;
-
-    bool changed = false;
-
-    StageInfo()
-    {
-        /*
-         * (0, 0, 0) -> a random generated stage
-         */
-    }
-
-    void set(unsigned int series, unsigned int level, unsigned int sub_level)
-    {
-        this->series = series;
-        this->level = level;
-        this->sub_level = sub_level;
-        this->changed = true;
-    }
-
-    bool check(unsigned int series, unsigned int level,
-               unsigned int sub_level) const
-    {
-        if (this->series != series)
-            return false;
-        else if (this->level != level)
-            return false;
-        else if (this->sub_level != sub_level)
-            return false;
-        return true;
-    }
-
-    bool is_random() const
-    {
-        if (!(this->series || this->level || this-> sub_level))
-            return true;
-        return false;
-    }
 };
 
 
