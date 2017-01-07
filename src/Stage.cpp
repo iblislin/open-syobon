@@ -73,6 +73,7 @@ StageMap* StageInfo::get_map(std::tuple<int, int, int> key)
 void StageInfo::init_map()
 {
 	this->maps[std::make_tuple(1, 1, 0)] = new StageMap("stage/1-1-0.json");
+	this->maps[std::make_tuple(1, 2, 0)] = new StageMap("stage/1-2-0.json");
 }
 
 
@@ -90,6 +91,12 @@ StageMap::StageMap(std::string path)
     Json::Value root;
 
     f >> root;
+
+    /* init the 2d std::array */
+    for (auto i=this->data.begin(); i!=this->data.end(); ++i)
+        for (auto j=i->begin(); j<i->end(); ++j)
+            *j = 0;
+
     for (auto i=0; i<root["map"].size(); ++i)
         for (auto j=0; j<root["map"][i].size(); ++j)
             this->data[i][j] = root["map"][i][j].asInt();
