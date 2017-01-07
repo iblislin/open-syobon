@@ -5283,100 +5283,100 @@ void stagep(GameConfig* conf)
     {
         auto stagedatex = conf->stage_info.get_map()->data;
 
-    //追加情報
-	tyobi(8 * 29, 9 * 29 - 12, 100);
-	txtype[tco] = 2;
-	tyobi(13 * 29, 9 * 29 - 12, 102);
-	txtype[tco] = 0;
-	tyobi(14 * 29, 5 * 29 - 12, 101);
-	tyobi(35 * 29, 8 * 29 - 12, 110);
-	tyobi(47 * 29, 9 * 29 - 12, 103);
-	tyobi(59 * 29, 9 * 29 - 12, 112);
-	tyobi(67 * 29, 9 * 29 - 12, 104);
+        //追加情報
+        tyobi(8 * 29, 9 * 29 - 12, 100);
+        txtype[tco] = 2;
+        tyobi(13 * 29, 9 * 29 - 12, 102);
+        txtype[tco] = 0;
+        tyobi(14 * 29, 5 * 29 - 12, 101);
+        tyobi(35 * 29, 8 * 29 - 12, 110);
+        tyobi(47 * 29, 9 * 29 - 12, 103);
+        tyobi(59 * 29, 9 * 29 - 12, 112);
+        tyobi(67 * 29, 9 * 29 - 12, 104);
 
-	sco = 0;
-	t = sco;
-	sa[t] = 20 * 29 * 100 + 500;
-	sb[t] = -6000;
-	sc[t] = 5000;
-	sd[t] = 70000;
-	stype[t] = 100;
-	sco++;
-	t = sco;
-	sa[t] = 54 * 29 * 100 - 500;
-	sb[t] = -6000;
-	sc[t] = 7000;
-	sd[t] = 70000;
-	stype[t] = 101;
-	sco++;
-	t = sco;
-	sa[t] = 112 * 29 * 100 + 1000;
-	sb[t] = -6000;
-	sc[t] = 3000;
-	sd[t] = 70000;
-	stype[t] = 102;
-	sco++;
-	t = sco;
-	sa[t] = 117 * 29 * 100;
-	sb[t] = (2 * 29 - 12) * 100 - 1500;
-	sc[t] = 15000;
-	sd[t] = 3000;
-	stype[t] = 103;
-	sco++;
-	t = sco;
-	sa[t] = 125 * 29 * 100;
-	sb[t] = -6000;
-	sc[t] = 9000;
-	sd[t] = 70000;
-	stype[t] = 101;
-	sco++;
+        sco = 0;
+        t = sco;
+        sa[t] = 20 * 29 * 100 + 500;
+        sb[t] = -6000;
+        sc[t] = 5000;
+        sd[t] = 70000;
+        stype[t] = 100;
+        sco++;
+        t = sco;
+        sa[t] = 54 * 29 * 100 - 500;
+        sb[t] = -6000;
+        sc[t] = 7000;
+        sd[t] = 70000;
+        stype[t] = 101;
+        sco++;
+        t = sco;
+        sa[t] = 112 * 29 * 100 + 1000;
+        sb[t] = -6000;
+        sc[t] = 3000;
+        sd[t] = 70000;
+        stype[t] = 102;
+        sco++;
+        t = sco;
+        sa[t] = 117 * 29 * 100;
+        sb[t] = (2 * 29 - 12) * 100 - 1500;
+        sc[t] = 15000;
+        sd[t] = 3000;
+        stype[t] = 103;
+        sco++;
+        t = sco;
+        sa[t] = 125 * 29 * 100;
+        sb[t] = -6000;
+        sc[t] = 9000;
+        sd[t] = 70000;
+        stype[t] = 101;
+        sco++;
 
-    //t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
-	t = 28;
-	sa[t] = 29 * 29 * 100 + 500;
-	sb[t] = (9 * 29 - 12) * 100;
-	sc[t] = 6000;
-	sd[t] = 12000 - 200;
-	stype[t] = 50;
-	sco++;
-	t = sco;
-	sa[t] = 49 * 29 * 100;
-	sb[t] = (5 * 29 - 12) * 100;
-	sc[t] = 9000 - 1;
-	sd[t] = 3000;
-	stype[t] = 51;
-	sgtype[t] = 0;
-	sco++;
-	t = sco;
-	sa[t] = 72 * 29 * 100;
-	sb[t] = (13 * 29 - 12) * 100;
-	sc[t] = 3000 * 5 - 1;
-	sd[t] = 3000;
-	stype[t] = 52;
-	sco++;
+        //t=sco;sa[t]=77*29*100;sb[t]=(6*29-12)*100-1500;sc[t]=12000;sd[t]=3000;stype[t]=103;sco++;
+        t = 28;
+        sa[t] = 29 * 29 * 100 + 500;
+        sb[t] = (9 * 29 - 12) * 100;
+        sc[t] = 6000;
+        sd[t] = 12000 - 200;
+        stype[t] = 50;
+        sco++;
+        t = sco;
+        sa[t] = 49 * 29 * 100;
+        sb[t] = (5 * 29 - 12) * 100;
+        sc[t] = 9000 - 1;
+        sd[t] = 3000;
+        stype[t] = 51;
+        sgtype[t] = 0;
+        sco++;
+        t = sco;
+        sa[t] = 72 * 29 * 100;
+        sb[t] = (13 * 29 - 12) * 100;
+        sc[t] = 3000 * 5 - 1;
+        sd[t] = 3000;
+        stype[t] = 52;
+        sco++;
 
-	bco = 0;
-	t = bco;
-	ba[t] = 27 * 29 * 100;
-	bb[t] = (9 * 29 - 12) * 100;
-	btype[t] = 0;
-	bxtype[t] = 0;
-	bco++;
-	t = bco;
-	ba[t] = 103 * 29 * 100;
-	bb[t] = (5 * 29 - 12 + 10) * 100;
-	btype[t] = 80;
-	bxtype[t] = 0;
-	bco++;
+        bco = 0;
+        t = bco;
+        ba[t] = 27 * 29 * 100;
+        bb[t] = (9 * 29 - 12) * 100;
+        btype[t] = 0;
+        bxtype[t] = 0;
+        bco++;
+        t = bco;
+        ba[t] = 103 * 29 * 100;
+        bb[t] = (5 * 29 - 12 + 10) * 100;
+        btype[t] = 80;
+        bxtype[t] = 0;
+        bco++;
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++) {
+            for (t = 0; t <= 16; t++) {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
 
-    }				//sta1
+    } // stage 1-1-0
 
     //1-2(地上)
     if (conf->stage_info.check(1, 2, 0))
