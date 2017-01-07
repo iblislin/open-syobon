@@ -90,14 +90,18 @@ StageMap::StageMap(std::string path)
     std::ifstream f(path);
     Json::Value root;
 
-    f >> root;
-
     /* init the 2d std::array */
     for (auto i=this->data.begin(); i!=this->data.end(); ++i)
         for (auto j=i->begin(); j<i->end(); ++j)
             *j = 0;
 
+    if (!f.is_open())
+        throw std::ios::failure("Unabel to read stage file: " + path);
+
+    f >> root;
     for (auto i=0; i<root["map"].size(); ++i)
         for (auto j=0; j<root["map"][i].size(); ++j)
             this->data[i][j] = root["map"][i][j].asInt();
+
+    f.close();
 }
