@@ -86,15 +86,11 @@ StageMap::StageMap(std::string path)
      * path: file path to load
      */
 
-    std::fstream f(path, std::ios::in);
+    std::ifstream f(path);
     Json::Value root;
 
     f >> root;
     for (auto i=0; i<root["map"].size(); ++i)
-    {
         for (auto j=0; j<root["map"][i].size(); ++j)
-        {
             this->data[i][j] = root["map"][i][j].asInt();
-        }
-    }
 }
