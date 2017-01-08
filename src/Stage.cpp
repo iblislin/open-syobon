@@ -74,6 +74,7 @@ void StageInfo::init_map()
 {
 	this->maps[std::make_tuple(1, 1, 0)] = new StageMap("stage/1-1-0.json");
 	this->maps[std::make_tuple(1, 2, 0)] = new StageMap("stage/1-2-0.json");
+	this->maps[std::make_tuple(1, 2, 1)] = new StageMap("stage/1-2-1.json");
 }
 
 
