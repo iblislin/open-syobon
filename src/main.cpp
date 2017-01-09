@@ -5967,43 +5967,40 @@ void stagep(GameConfig* conf)
     // 1-3-5 (空中)
     if (conf->stage_info.check(1, 3, 5))
     {
-	stagecolor = 3;
-	chBgm(otom[BGM_STAR4]);
+        stagecolor = 3;
+        chBgm(otom[BGM_STAR4]);
 
-	scrollx = 0 * 100;
-	conf->player.loc.x = 3000;
-	conf->player.loc.y = 33000;
+        scrollx = 0 * 100;
+        conf->player.loc.x = 3000;
+        conf->player.loc.y = 33000;
 
-	stagepoint = 1;
+        stagepoint = 1;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
-	sco = 0;
-	t = sco;
-	sa[t] = 14 * 29 * 100 - 5;
-	sb[t] = (11 * 29 - 12) * 100;
-	sc[t] = 6000;
-	sd[t] = 15000 - 200;
-	stype[t] = 50;
-	sxtype[t] = 1;
-	sco++;
-//t=sco;sa[t]=12*29*100;sb[t]=(11*29-12)*100;sc[t]=3000;sd[t]=6000-200;stype[t]=40;sxtype[t]=0;sco++;
-//t=sco;sa[t]=14*29*100+1000;sb[t]=-6000;sc[t]=5000;sd[t]=70000;stype[t]=100;sxtype[t]=1;sco++;
+        sco = 0;
+        t = sco;
+        sa[t] = 14 * 29 * 100 - 5;
+        sb[t] = (11 * 29 - 12) * 100;
+        sc[t] = 6000;
+        sd[t] = 15000 - 200;
+        stype[t] = 50;
+        sxtype[t] = 1;
+        sco++;
 
-	txtype[tco] = 0;
-	tyobi(12 * 29, 4 * 29 - 12, 112);
-//ヒント3
-	txtype[tco] = 3;
-	tyobi(12 * 29, 8 * 29 - 12, 300);
-//txtype[tco]=0;tyobi(13*29,4*29-12,110);
+        txtype[tco] = 0;
+        tyobi(12 * 29, 4 * 29 - 12, 112);
 
+        //ヒント3
+        txtype[tco] = 3;
+        tyobi(12 * 29, 8 * 29 - 12, 300);
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++) {
+            for (t = 0; t <= 16; t++) {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
 
     }  // stage 1-3-5
 
