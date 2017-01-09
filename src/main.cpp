@@ -6282,32 +6282,33 @@ void stagep(GameConfig* conf)
 
         //追加情報
         tco = 0;
-        //
+
         txtype[tco] = 6;
         tyobi(1 * 29, 9 * 29 - 12, 300);
         tco += 1;
-        //
+
         txtype[tco] = 0;
         tyobi(40 * 29, 9 * 29 - 12, 110);
         tco += 1;
-        //
+
         txtype[tco] = 7;
         tyobi(79 * 29, 7 * 29 - 12, 300);
         tco += 1;
-        //
+
         txtype[tco] = 2;
         tyobi(83 * 29, 7 * 29 - 12, 102);
         tco += 1;
-        //
+
         txtype[tco] = 0;
         tyobi(83 * 29, 2 * 29 - 12, 114);
         tco += 1;
-        //
-        for (int i = -1; i > -7; i -= 1) {
+
+        for (int i = -1; i > -7; i -= 1)
+        {
             tyobi(85 * 29, i * 29 - 12, 4);
             tco += 1;
         }
-        //
+
         sco = 0;
         sa[sco] = 30 * 29 * 100;
         sb[sco] = (13 * 29 - 12) * 100;
@@ -6316,7 +6317,7 @@ void stagep(GameConfig* conf)
         stype[sco] = 52;
         sxtype[sco] = 0;
         sco += 1;
-        //
+
         sa[sco] = 51 * 29 * 100;
         sb[sco] = (4 * 29 - 12) * 100;
         sc[sco] = 9000 - 1;
@@ -6332,7 +6333,7 @@ void stagep(GameConfig* conf)
         stype[sco] = 52;
         sxtype[sco] = 0;
         sco += 1;
-        //
+
         sa[sco] = 105 * 29 * 100;
         sb[sco] = (13 * 29 - 12) * 100;
         sc[sco] = 15000 - 1;
@@ -6340,108 +6341,78 @@ void stagep(GameConfig* conf)
         stype[sco] = 52;
         sxtype[sco] = 0;
         sco += 1;
-        //
+
         bco = 0;
-        //
+
         ba[bco] = 6 * 29 * 100;
         bb[bco] = (3 * 29 - 12) * 100;
         btype[bco] = 80;
         bxtype[bco] = 0;
         bco += 1;
-        //
+
         ba[bco] = 13 * 29 * 100;
         bb[bco] = (6 * 29 - 12) * 100;
         btype[bco] = 4;
         bxtype[bco] = 1;
         bco += 1;
-        //
+
         ba[bco] = 23 * 29 * 100;
         bb[bco] = (7 * 29 - 12) * 100;
         btype[bco] = 80;
         bxtype[bco] = 0;
         bco += 1;
-        //
+
         ba[bco] = 25 * 29 * 100;
         bb[bco] = (7 * 29 - 12) * 100;
         btype[bco] = 80;
         bxtype[bco] = 1;
         bco += 1;
-        //
+
         ba[bco] = 27 * 29 * 100;
         bb[bco] = (7 * 29 - 12) * 100;
         btype[bco] = 80;
         bxtype[bco] = 0;
         bco += 1;
-        //
+
         ba[bco] = 88 * 29 * 100;
         bb[bco] = (12 * 29 - 12) * 100;
         btype[bco] = 82;
         bxtype[bco] = 1;
         bco += 1;
-        //
-        for (tt = 0; tt <= 1000; tt++) {
-            for (t = 0; t <= 16; t++) {
+
+        for (tt = 0; tt <= 1000; tt++)
+        {
+            for (t = 0; t <= 16; t++)
+            {
                 stagedate[t][tt] = 0;
                 stagedate[t][tt] = stagedatex[t][tt];
             }
         }
     }  // stage 2-1-0
 
-    // 2-2(地上)
+    // 2-2-0(地上)
     if (conf->stage_info.check(2, 2, 0))
     {
 	chBgm(otom[BGM_FIELD]);
 	stagecolor = 1;
 	scrollx = 2900 * (19 - 19);
-	//
-	byte stagedatex[17][1001] = {
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 82, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 7, 7, 0, 0, 0}
-	    ,
-	    {0, 80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {5, 5, 5, 5, 5, 5, 5, 0, 0, 0, 0, 0, 0, 0, 5, 5, 5}
-	    ,
-	    {6, 6, 6, 6, 6, 6, 6, 0, 0, 0, 0, 0, 0, 0, 6, 6, 6}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	};
-	//
+
+    auto stagedatex = conf->stage_info.get_map()->data;
+
 	sa[sco] = 14 * 29 * 100 + 200;
 	sb[sco] = -6000;
 	sc[sco] = 5000;
 	sd[sco] = 70000;
 	stype[sco] = 100;
 	sco += 1;
-	//
+
 	sa[sco] = 12 * 29 * 100 + 1200;
 	sb[sco] = -6000;
 	sc[sco] = 7000;
 	sd[sco] = 70000;
 	stype[sco] = 101;
 	sco += 1;
-	//
+
 	sa[sco] = 12 * 29 * 100;
 	sb[sco] = (13 * 29 - 12) * 100;
 	sc[sco] = 6000 - 1;
@@ -6449,7 +6420,7 @@ void stagep(GameConfig* conf)
 	stype[sco] = 52;
 	sgtype[sco] = 0;
 	sco += 1;
-	//
+
 	sa[sco] = 14 * 29 * 100;
 	sb[sco] = (9 * 29 - 12) * 100;
 	sc[sco] = 6000;
@@ -6457,9 +6428,9 @@ void stagep(GameConfig* conf)
 	stype[sco] = 50;
 	sxtype[sco] = 1;
 	sco += 1;
-	//
+
 	tyobi(6 * 29, 9 * 29 - 12, 110);
-	//
+
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
 		stagedate[t][tt] = 0;
