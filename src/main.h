@@ -47,6 +47,7 @@ void renderStaffRoll(GameConfig* conf);
 void renderStage(GameConfig* conf);
 void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
+void renderBlocks(GameConfig* conf);
 
 
 // helper functions
@@ -137,6 +138,7 @@ int mascrollmax = 21000;	//9000
 
 
 //ブロック
+// block
 void tyobi(int x, int y, int type);
 void brockbreak(int t);
 #define tmax 641
