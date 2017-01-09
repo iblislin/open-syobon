@@ -7337,15 +7337,14 @@ void chBgm(Mix_Music* music, int volume /* 0~100 */)
 
 void tyobi(int x, int y, int type)
 {
-
     ta[tco] = x * 100;
     tb[tco] = y * 100;
     ttype[tco] = type;
 
     tco++;
     if (tco >= tmax)
-	tco = 0;
-}				//tyobi
+        tco = 0;
+}  // tyobi
 
 //ブロック破壊
 void brockbreak(int t)
