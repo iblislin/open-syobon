@@ -6390,53 +6390,53 @@ void stagep(GameConfig* conf)
         }
     }  // stage 2-1-0
 
-    // 2-2-0(地上)
+    // 2-2-0 (地上)
     if (conf->stage_info.check(2, 2, 0))
     {
-	chBgm(otom[BGM_FIELD]);
-	stagecolor = 1;
-	scrollx = 2900 * (19 - 19);
+        chBgm(otom[BGM_FIELD]);
+        stagecolor = 1;
+        scrollx = 2900 * (19 - 19);
 
-    auto stagedatex = conf->stage_info.get_map()->data;
+        auto stagedatex = conf->stage_info.get_map()->data;
 
-	sa[sco] = 14 * 29 * 100 + 200;
-	sb[sco] = -6000;
-	sc[sco] = 5000;
-	sd[sco] = 70000;
-	stype[sco] = 100;
-	sco += 1;
+        sa[sco] = 14 * 29 * 100 + 200;
+        sb[sco] = -6000;
+        sc[sco] = 5000;
+        sd[sco] = 70000;
+        stype[sco] = 100;
+        sco += 1;
 
-	sa[sco] = 12 * 29 * 100 + 1200;
-	sb[sco] = -6000;
-	sc[sco] = 7000;
-	sd[sco] = 70000;
-	stype[sco] = 101;
-	sco += 1;
+        sa[sco] = 12 * 29 * 100 + 1200;
+        sb[sco] = -6000;
+        sc[sco] = 7000;
+        sd[sco] = 70000;
+        stype[sco] = 101;
+        sco += 1;
 
-	sa[sco] = 12 * 29 * 100;
-	sb[sco] = (13 * 29 - 12) * 100;
-	sc[sco] = 6000 - 1;
-	sd[sco] = 3000;
-	stype[sco] = 52;
-	sgtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 12 * 29 * 100;
+        sb[sco] = (13 * 29 - 12) * 100;
+        sc[sco] = 6000 - 1;
+        sd[sco] = 3000;
+        stype[sco] = 52;
+        sgtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 14 * 29 * 100;
-	sb[sco] = (9 * 29 - 12) * 100;
-	sc[sco] = 6000;
-	sd[sco] = 12000 - 200;
-	stype[sco] = 50;
-	sxtype[sco] = 1;
-	sco += 1;
+        sa[sco] = 14 * 29 * 100;
+        sb[sco] = (9 * 29 - 12) * 100;
+        sc[sco] = 6000;
+        sd[sco] = 12000 - 200;
+        stype[sco] = 50;
+        sxtype[sco] = 1;
+        sco += 1;
 
-	tyobi(6 * 29, 9 * 29 - 12, 110);
+        tyobi(6 * 29, 9 * 29 - 12, 110);
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++) {
+            for (t = 0; t <= 16; t++) {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }
 
     // 2-2(地下)
