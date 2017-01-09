@@ -6849,80 +6849,82 @@ void stagep(GameConfig* conf)
             conf->stage_info.sub_level = 0;
         }
 
-    chBgm(otom[BGM_CASTLE]);
-	stagecolor = 4;
-	scrollx = 2900 * (40 - 19);
+        chBgm(otom[BGM_CASTLE]);
+        stagecolor = 4;
+        scrollx = 2900 * (40 - 19);
 
         auto stagedatex = conf->stage_info.get_map(std::make_tuple(2, 4, 0))->data;
 
-	tco = 0;
-	txtype[tco] = 0;
-	tyobi(0 * 29, -1 * 29 - 12, 5);
-	tco += 1;
+        tco = 0;
+        txtype[tco] = 0;
+        tyobi(0 * 29, -1 * 29 - 12, 5);
+        tco += 1;
 
-	txtype[tco] = 0;
-	tyobi(4 * 29, -1 * 29 - 12, 5);
-	tco += 1;
+        txtype[tco] = 0;
+        tyobi(4 * 29, -1 * 29 - 12, 5);
+        tco += 1;
 
-	txtype[tco] = 0;
-	tyobi(1 * 29, 14 * 29 - 12, 5);
-	tco += 1;
+        txtype[tco] = 0;
+        tyobi(1 * 29, 14 * 29 - 12, 5);
+        tco += 1;
 
-	txtype[tco] = 0;
-	tyobi(6 * 29, 14 * 29 - 12, 5);
-	tco += 1;
+        txtype[tco] = 0;
+        tyobi(6 * 29, 14 * 29 - 12, 5);
+        tco += 1;
 
-	txtype[tco] = 0;
-	tyobi(7 * 29, 14 * 29 - 12, 5);
-	tco += 1;
+        txtype[tco] = 0;
+        tyobi(7 * 29, 14 * 29 - 12, 5);
+        tco += 1;
 
-	bco = 0;
-	ba[bco] = 2 * 29 * 100 - 1400;
-	bb[bco] = (-2 * 29 - 12) * 100 + 500;
-	btype[bco] = 86;
-	bxtype[bco] = 0;
-	bco += 1;
+        bco = 0;
+        ba[bco] = 2 * 29 * 100 - 1400;
+        bb[bco] = (-2 * 29 - 12) * 100 + 500;
+        btype[bco] = 86;
+        bxtype[bco] = 0;
+        bco += 1;
 
-	ba[bco] = 20 * 29 * 100 + 1500;
-	bb[bco] = (5 * 29 - 12) * 100 + 1500;
-	btype[bco] = 87;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 20 * 29 * 100 + 1500;
+        bb[bco] = (5 * 29 - 12) * 100 + 1500;
+        btype[bco] = 87;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	sco = 0;
-	sa[sco] = 17 * 29 * 100;
-	sb[sco] = (9 * 29 - 12) * 100;
-	sc[sco] = 21000 - 1;
-	sd[sco] = 3000 - 1;
-	stype[sco] = 52;
-	sxtype[sco] = 2;
-	sco += 1;
+        sco = 0;
+        sa[sco] = 17 * 29 * 100;
+        sb[sco] = (9 * 29 - 12) * 100;
+        sc[sco] = 21000 - 1;
+        sd[sco] = 3000 - 1;
+        stype[sco] = 52;
+        sxtype[sco] = 2;
+        sco += 1;
 
-	sa[sco] = 27 * 29 * 100;
-	sb[sco] = (13 * 29 - 12) * 100;
-	sc[sco] = 6000;
-	sd[sco] = 6000;
-	stype[sco] = 50;
-	sxtype[sco] = 6;
-	sco += 1;
+        sa[sco] = 27 * 29 * 100;
+        sb[sco] = (13 * 29 - 12) * 100;
+        sc[sco] = 6000;
+        sd[sco] = 6000;
+        stype[sco] = 50;
+        sxtype[sco] = 6;
+        sco += 1;
 
-	sa[sco] = 34 * 29 * 100;
-	sb[sco] = (5 * 29 - 12) * 100;
-	sc[sco] = 6000;
-	sd[sco] = 30000;
-	stype[sco] = 50;
-	sxtype[sco] = 1;
-	sco += 1;
+        sa[sco] = 34 * 29 * 100;
+        sb[sco] = (5 * 29 - 12) * 100;
+        sc[sco] = 6000;
+        sd[sco] = 30000;
+        stype[sco] = 50;
+        sxtype[sco] = 1;
+        sco += 1;
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++)
+        {
+            for (t = 0; t <= 16; t++)
+            {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }  // stage 2-4-0 / 2-4-10 / 2-4-12
 
-    // 2-4(2番)
+    // 2-4-1 (2番)
     if (conf->stage_info.check(2, 4, 1))
     {
 	conf->player.loc.x = 4500;
@@ -6930,61 +6932,22 @@ void stagep(GameConfig* conf)
 	chBgm(otom[BGM_CASTLE]);
 	stagecolor = 4;
 	scrollx = 2900 * (21 - 19);
-	//
-	byte stagedatex[17][1001] = {
-	    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-	     98}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 7, 7, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 5, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 7, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 5, 5, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 10, 10, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 0,
-	     0}
-	    ,
-	    {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 44, 0,
-	     0}
-	    ,
-	    {0, 0, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 97, 0, 0,
-	     0}
-	    ,
-	    {0, 40, 0, 0, 0, 5, 0, 0, 0, 0, 0, 5, 0, 0, 0, 5, 5, 5,
-	     5}
-	    ,
-	    {86, 41, 0, 86, 0, 5, 86, 0, 0, 86, 0, 5, 86, 0, 0, 86,
-	     0, 0,
-	     86}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	};
-	//
+
+        auto stagedatex = conf->stage_info.get_map()->data;
+
 	tco = 0;
 	txtype[tco] = 1;
 	tyobi(12 * 29, 13 * 29 - 12, 115);
 	tco += 1;
-	//
+
 	txtype[tco] = 1;
 	tyobi(13 * 29, 13 * 29 - 12, 115);
 	tco += 1;
-	//
+
 	txtype[tco] = 1;
 	tyobi(14 * 29, 13 * 29 - 12, 115);
 	tco += 1;
-	//
+
 	sco = 0;
 	sa[sco] = 6 * 29 * 100;
 	sb[sco] = (6 * 29 - 12) * 100;
@@ -6993,7 +6956,7 @@ void stagep(GameConfig* conf)
 	stype[sco] = 52;
 	sxtype[sco] = 0;
 	sco += 1;
-	//
+
 	sa[sco] = 12 * 29 * 100;
 	sb[sco] = (8 * 29 - 12) * 100;
 	sc[sco] = 9000 - 1;
@@ -7001,7 +6964,7 @@ void stagep(GameConfig* conf)
 	stype[sco] = 52;
 	sxtype[sco] = 2;
 	sco += 1;
-	//
+
 	sa[sco] = 15 * 29 * 100;
 	sb[sco] = (11 * 29 - 12) * 100;
 	sc[sco] = 3000;
@@ -7009,7 +6972,7 @@ void stagep(GameConfig* conf)
 	stype[sco] = 40;
 	sxtype[sco] = 2;
 	sco += 1;
-	//
+
 	sa[sco] = 17 * 29 * 100 + 1100;
 	sb[sco] = (0 * 29 - 12) * 100;
 	sc[sco] = 4700;
@@ -7017,14 +6980,14 @@ void stagep(GameConfig* conf)
 	stype[sco] = 0;
 	sxtype[sco] = 0;
 	sco += 1;
-	//
+
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
 		stagedate[t][tt] = 0;
 		stagedate[t][tt] = stagedatex[t][tt];
 	    }
 	}
-    }
+    }  // stage 2-4-1
 
     // 2-4(3番)
     if (conf->stage_info.check(2, 4, 2))
