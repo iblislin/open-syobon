@@ -6927,66 +6927,68 @@ void stagep(GameConfig* conf)
     // 2-4-1 (2番)
     if (conf->stage_info.check(2, 4, 1))
     {
-	conf->player.loc.x = 4500;
-	conf->player.loc.y = 3000 * 11;
-	chBgm(otom[BGM_CASTLE]);
-	stagecolor = 4;
-	scrollx = 2900 * (21 - 19);
+        conf->player.loc.x = 4500;
+        conf->player.loc.y = 3000 * 11;
+        chBgm(otom[BGM_CASTLE]);
+        stagecolor = 4;
+        scrollx = 2900 * (21 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
-	tco = 0;
-	txtype[tco] = 1;
-	tyobi(12 * 29, 13 * 29 - 12, 115);
-	tco += 1;
+        tco = 0;
+        txtype[tco] = 1;
+        tyobi(12 * 29, 13 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(13 * 29, 13 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(13 * 29, 13 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(14 * 29, 13 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(14 * 29, 13 * 29 - 12, 115);
+        tco += 1;
 
-	sco = 0;
-	sa[sco] = 6 * 29 * 100;
-	sb[sco] = (6 * 29 - 12) * 100;
-	sc[sco] = 18000 - 1;
-	sd[sco] = 6000 - 1;
-	stype[sco] = 52;
-	sxtype[sco] = 0;
-	sco += 1;
+        sco = 0;
+        sa[sco] = 6 * 29 * 100;
+        sb[sco] = (6 * 29 - 12) * 100;
+        sc[sco] = 18000 - 1;
+        sd[sco] = 6000 - 1;
+        stype[sco] = 52;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 12 * 29 * 100;
-	sb[sco] = (8 * 29 - 12) * 100;
-	sc[sco] = 9000 - 1;
-	sd[sco] = 3000 - 1;
-	stype[sco] = 52;
-	sxtype[sco] = 2;
-	sco += 1;
+        sa[sco] = 12 * 29 * 100;
+        sb[sco] = (8 * 29 - 12) * 100;
+        sc[sco] = 9000 - 1;
+        sd[sco] = 3000 - 1;
+        stype[sco] = 52;
+        sxtype[sco] = 2;
+        sco += 1;
 
-	sa[sco] = 15 * 29 * 100;
-	sb[sco] = (11 * 29 - 12) * 100;
-	sc[sco] = 3000;
-	sd[sco] = 6000;
-	stype[sco] = 40;
-	sxtype[sco] = 2;
-	sco += 1;
+        sa[sco] = 15 * 29 * 100;
+        sb[sco] = (11 * 29 - 12) * 100;
+        sc[sco] = 3000;
+        sd[sco] = 6000;
+        stype[sco] = 40;
+        sxtype[sco] = 2;
+        sco += 1;
 
-	sa[sco] = 17 * 29 * 100 + 1100;
-	sb[sco] = (0 * 29 - 12) * 100;
-	sc[sco] = 4700;
-	sd[sco] = 38000;
-	stype[sco] = 0;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 17 * 29 * 100 + 1100;
+        sb[sco] = (0 * 29 - 12) * 100;
+        sc[sco] = 4700;
+        sd[sco] = 38000;
+        stype[sco] = 0;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++)
+        {
+            for (t = 0; t <= 16; t++)
+            {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }  // stage 2-4-1
 
     // 2-4(3番)
