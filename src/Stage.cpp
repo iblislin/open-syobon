@@ -73,12 +73,16 @@ StageMap* StageInfo::get_map(std::tuple<int, int, int> key)
 void StageInfo::init_map()
 {
 	this->maps[std::make_tuple(1, 1, 0)] = new StageMap("stage/1-1-0.json");
-	this->maps[std::make_tuple(1, 2, 0)] = new StageMap("stage/1-2-0.json");
+
+    this->maps[std::make_tuple(1, 2, 0)] = new StageMap("stage/1-2-0.json");
 	this->maps[std::make_tuple(1, 2, 1)] = new StageMap("stage/1-2-1.json");
 	this->maps[std::make_tuple(1, 2, 2)] = new StageMap("stage/1-2-2.json");
-	this->maps[std::make_tuple(1, 3, 0)] = new StageMap("stage/1-3-0.json");
+
+    this->maps[std::make_tuple(1, 3, 0)] = new StageMap("stage/1-3-0.json");
 	this->maps[std::make_tuple(1, 3, 1)] = new StageMap("stage/1-3-1.json");
 	this->maps[std::make_tuple(1, 3, 5)] = new StageMap("stage/1-3-5.json");
+
+    this->maps[std::make_tuple(1, 4, 0)] = new StageMap("stage/1-4-0.json");
 }
 
 
