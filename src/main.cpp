@@ -1136,104 +1136,110 @@ void renderLivePanel(GameConfig* conf)
 
 void renderBlocks(GameConfig* conf)
 {
-    for (t = 0; t < tmax; t++)
+    for (auto i=0; i<tmax; i++)
     {
-        xx[0] = ta[t] - fx;
-        xx[1] = tb[t] - fy;
+        xx[0] = ta[i] - fx;
+        xx[1] = tb[i] - fy;
         xx[2] = 32;
         xx[3] = xx[2];
-        if (xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax)
+
+        if (!(xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax))
+            continue;
+
+        xx[9] = 0;
+        if (stagecolor == 2)
+            xx[9] = 30;
+        else if (stagecolor == 4)
+            xx[9] = 60;
+        else if (stagecolor == 5)
+            xx[9] = 90;
+
+        if (ttype[i] < 100)
         {
-            xx[9] = 0;
-            if (stagecolor == 2) {
-                xx[9] = 30;
-            }
-            if (stagecolor == 4) {
-                xx[9] = 60;
-            }
-            if (stagecolor == 5) {
-                xx[9] = 90;
-            }
-
-            if (ttype[t] < 100) {
-                xx[6] = ttype[t] + xx[9];
-                drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
-            }
-
-            if (txtype[t] != 10) {
-
-                if (ttype[t] == 100 || ttype[t] == 101
-                        || ttype[t] == 102
-                        || ttype[t] == 103
-                        || ttype[t] == 104 && txtype[t] == 1
-                        || ttype[t] == 114 && txtype[t] == 1
-                        || ttype[t] == 116) {
-                    xx[6] = 2 + xx[9];
-                    drawimage(grap[xx[6]][1],
-                            xx[0] / 100, xx[1] / 100);
-                }
-
-                if (ttype[t] == 112 || ttype[t] == 104
-                        && txtype[t] == 0 || ttype[t] == 115
-                        && txtype[t] == 1) {
-                    xx[6] = 1 + xx[9];
-                    drawimage(grap[xx[6]][1],
-                            xx[0] / 100, xx[1] / 100);
-                }
-
-                if (ttype[t] == 111 || ttype[t] == 113
-                        || ttype[t] == 115 && txtype[t] == 0
-                        || ttype[t] == 124) {
-                    xx[6] = 3 + xx[9];
-                    drawimage(grap[xx[6]][1],
-                            xx[0] / 100, xx[1] / 100);
-                }
-
-            }
-
-            if (ttype[t] == 117 && txtype[t] == 1) {
-                drawimage(grap[4][5], xx[0] / 100, xx[1] / 100);
-            }
-
-            if (ttype[t] == 117 && txtype[t] >= 3) {
-                drawimage(grap[3][5], xx[0] / 100, xx[1] / 100);
-            }
-
-            if (ttype[t] == 115 && txtype[t] == 3) {
-                xx[6] = 1 + xx[9];
-                drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
-            }
-            //ジャンプ台
-            if (ttype[t] == 120 && txtype[t] != 1) {
-                drawimage(grap[16][1], xx[0] / 100 + 3,
-                        xx[1] / 100 + 2);
-            }
-            //ON-OFF
-            if (ttype[t] == 130)
-                drawimage(grap[10][5], xx[0] / 100, xx[1] / 100);
-            if (ttype[t] == 131)
-                drawimage(grap[11][5], xx[0] / 100, xx[1] / 100);
-
-            if (ttype[t] == 140)
-                drawimage(grap[12][5], xx[0] / 100, xx[1] / 100);
-            if (ttype[t] == 141)
-                drawimage(grap[13][5], xx[0] / 100, xx[1] / 100);
-            if (ttype[t] == 142)
-                drawimage(grap[14][5], xx[0] / 100, xx[1] / 100);
-
-            if (ttype[t] == 300 || ttype[t] == 301)
-                drawimage(grap[1][5], xx[0] / 100, xx[1] / 100);
-
-            //Pスイッチ
-            if (ttype[t] == 400) {
-                drawimage(grap[2][5], xx[0] / 100, xx[1] / 100);
-            }
-            //コイン
-            if (ttype[t] == 800) {
-                drawimage(grap[0][2], xx[0] / 100 + 2,
-                        xx[1] / 100 + 1);
-            }
+            xx[6] = ttype[i] + xx[9];
+            drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
         }
+
+        if (txtype[i] != 10)
+        {
+
+            if (ttype[i] == 100 || ttype[i] == 101
+                    || ttype[i] == 102
+                    || ttype[i] == 103
+                    || ttype[i] == 104 && txtype[i] == 1
+                    || ttype[i] == 114 && txtype[i] == 1
+                    || ttype[i] == 116)
+            {
+                xx[6] = 2 + xx[9];
+                drawimage(grap[xx[6]][1],
+                        xx[0] / 100, xx[1] / 100);
+            }
+
+            if (ttype[i] == 112 || ttype[i] == 104
+                    && txtype[i] == 0 || ttype[i] == 115
+                    && txtype[i] == 1)
+            {
+                xx[6] = 1 + xx[9];
+                drawimage(grap[xx[6]][1],
+                        xx[0] / 100, xx[1] / 100);
+            }
+
+            if (ttype[i] == 111 || ttype[i] == 113
+                    || ttype[i] == 115 && txtype[i] == 0
+                    || ttype[i] == 124)
+            {
+                xx[6] = 3 + xx[9];
+                drawimage(grap[xx[6]][1],
+                        xx[0] / 100, xx[1] / 100);
+            }
+
+        }
+
+        if (ttype[i] == 117 && txtype[i] == 1)
+        {
+            drawimage(grap[4][5], xx[0] / 100, xx[1] / 100);
+        }
+
+        if (ttype[i] == 117 && txtype[i] >= 3)
+        {
+            drawimage(grap[3][5], xx[0] / 100, xx[1] / 100);
+        }
+
+        if (ttype[i] == 115 && txtype[i] == 3)
+        {
+            xx[6] = 1 + xx[9];
+            drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
+        }
+
+        //ジャンプ台
+        if (ttype[i] == 120 && txtype[i] != 1)
+        {
+            drawimage(grap[16][1], xx[0] / 100 + 3,
+                    xx[1] / 100 + 2);
+        }
+        //ON-OFF
+        if (ttype[i] == 130)
+            drawimage(grap[10][5], xx[0] / 100, xx[1] / 100);
+        if (ttype[i] == 131)
+            drawimage(grap[11][5], xx[0] / 100, xx[1] / 100);
+
+        if (ttype[i] == 140)
+            drawimage(grap[12][5], xx[0] / 100, xx[1] / 100);
+        if (ttype[i] == 141)
+            drawimage(grap[13][5], xx[0] / 100, xx[1] / 100);
+        if (ttype[i] == 142)
+            drawimage(grap[14][5], xx[0] / 100, xx[1] / 100);
+
+        if (ttype[i] == 300 || ttype[i] == 301)
+            drawimage(grap[1][5], xx[0] / 100, xx[1] / 100);
+
+        //Pスイッチ
+        if (ttype[i] == 400)
+            drawimage(grap[2][5], xx[0] / 100, xx[1] / 100);
+
+        //コイン
+        if (ttype[i] == 800)
+            drawimage(grap[0][2], xx[0] / 100 + 2, xx[1] / 100 + 1);
     }
 }
 
