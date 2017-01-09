@@ -6641,94 +6641,93 @@ void stagep(GameConfig* conf)
     // 2-2-2 地上
     if (conf->stage_info.check(2, 2, 2))
     {
-
-    chBgm(otom[BGM_FIELD]);
-	stagecolor = 1;
-	scrollx = 2900 * (36 - 19);
-	conf->player.loc.x = 7500;
-	conf->player.loc.y = 3000 * 9;
+        chBgm(otom[BGM_FIELD]);
+        stagecolor = 1;
+        scrollx = 2900 * (36 - 19);
+        conf->player.loc.x = 7500;
+        conf->player.loc.y = 3000 * 9;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
-	bco = 0;
-	ba[bco] = 9 * 29 * 100;
-	bb[bco] = (12 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        bco = 0;
+        ba[bco] = 9 * 29 * 100;
+        bb[bco] = (12 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 10 * 29 * 100;
-	bb[bco] = (11 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 10 * 29 * 100;
+        bb[bco] = (11 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 11 * 29 * 100;
-	bb[bco] = (10 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 11 * 29 * 100;
+        bb[bco] = (10 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 12 * 29 * 100;
-	bb[bco] = (9 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 12 * 29 * 100;
+        bb[bco] = (9 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 13 * 29 * 100;
-	bb[bco] = (8 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 13 * 29 * 100;
+        bb[bco] = (8 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 14 * 29 * 100;
-	bb[bco] = (7 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 14 * 29 * 100;
+        bb[bco] = (7 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 15 * 29 * 100;
-	bb[bco] = (6 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 15 * 29 * 100;
+        bb[bco] = (6 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 16 * 29 * 100;
-	bb[bco] = (5 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 16 * 29 * 100;
+        bb[bco] = (5 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 17 * 29 * 100;
-	bb[bco] = (5 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 17 * 29 * 100;
+        bb[bco] = (5 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 18 * 29 * 100;
-	bb[bco] = (5 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 18 * 29 * 100;
+        bb[bco] = (5 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 19 * 29 * 100;
-	bb[bco] = (5 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 19 * 29 * 100;
+        bb[bco] = (5 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 20 * 29 * 100;
-	bb[bco] = (5 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 20 * 29 * 100;
+        bb[bco] = (5 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++) {
+            for (t = 0; t <= 16; t++) {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }  // stage 2-2-2
 
     // 2-3
