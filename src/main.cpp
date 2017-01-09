@@ -7227,100 +7227,100 @@ void stagep(GameConfig* conf)
     // 3-1
     if (conf->stage_info.check(3, 1, 0))
     {
-	conf->player.loc.x = 5600;
-	conf->player.loc.y = 32000;
-	chBgm(otom[BGM_FIELD]);
-	stagecolor = 5;
-	scrollx = 2900 * (112 - 19);
+        conf->player.loc.x = 5600;
+        conf->player.loc.y = 32000;
+        chBgm(otom[BGM_FIELD]);
+        stagecolor = 5;
+        scrollx = 2900 * (112 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
-	//追加情報
-	tco = 0;
+        //追加情報
+        tco = 0;
 
-	txtype[tco] = 10;
-	tyobi(2 * 29, 9 * 29 - 12, 300);
-	tco += 1;
+        txtype[tco] = 10;
+        tyobi(2 * 29, 9 * 29 - 12, 300);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(63 * 29, 13 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(63 * 29, 13 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(64 * 29, 13 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(64 * 29, 13 * 29 - 12, 115);
+        tco += 1;
 
-	sco = 0;
-	sa[sco] = 13 * 29 * 100;
-	sb[sco] = (13 * 29 - 12) * 100;
-	sc[sco] = 9000 - 1;
-	sd[sco] = 3000;
-	stype[sco] = 52;
-	sxtype[sco] = 0;
-	sco += 1;
+        sco = 0;
+        sa[sco] = 13 * 29 * 100;
+        sb[sco] = (13 * 29 - 12) * 100;
+        sc[sco] = 9000 - 1;
+        sd[sco] = 3000;
+        stype[sco] = 52;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 84 * 29 * 100;
-	sb[sco] = (13 * 29 - 12) * 100;
-	sc[sco] = 9000 - 1;
-	sd[sco] = 3000;
-	stype[sco] = 52;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 84 * 29 * 100;
+        sb[sco] = (13 * 29 - 12) * 100;
+        sc[sco] = 9000 - 1;
+        sd[sco] = 3000;
+        stype[sco] = 52;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	bco = 0;
-	ba[bco] = 108 * 29 * 100;
-	bb[bco] = (6 * 29 - 12) * 100;
-	btype[bco] = 6;
-	bxtype[bco] = 1;
-	bco += 1;
+        bco = 0;
+        ba[bco] = 108 * 29 * 100;
+        bb[bco] = (6 * 29 - 12) * 100;
+        btype[bco] = 6;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 33 * 29 * 100;
-	bb[bco] = (10 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 33 * 29 * 100;
+        bb[bco] = (10 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 36 * 29 * 100;
-	bb[bco] = (0 * 29 - 12) * 100;
-	btype[bco] = 80;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 36 * 29 * 100;
+        bb[bco] = (0 * 29 - 12) * 100;
+        btype[bco] = 80;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 78 * 29 * 100 + 1500;
-	bb[bco] = (7 * 29 - 12) * 100 + 1500;
-	btype[bco] = 88;
-	bxtype[bco] = 105;
-	bco += 1;
+        ba[bco] = 78 * 29 * 100 + 1500;
+        bb[bco] = (7 * 29 - 12) * 100 + 1500;
+        btype[bco] = 88;
+        bxtype[bco] = 105;
+        bco += 1;
 
-	ba[bco] = 80 * 29 * 100 + 1500;
-	bb[bco] = (7 * 29 - 12) * 100 + 1500;
-	btype[bco] = 87;
-	bxtype[bco] = 105;
-	bco += 1;
+        ba[bco] = 80 * 29 * 100 + 1500;
+        bb[bco] = (7 * 29 - 12) * 100 + 1500;
+        btype[bco] = 87;
+        bxtype[bco] = 105;
+        bco += 1;
 
-	ba[bco] = 85 * 29 * 100;
-	bb[bco] = (11 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 85 * 29 * 100;
+        bb[bco] = (11 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	srco = 0;
-	sra[srco] = 41 * 29 * 100;
-	srb[srco] = (3 * 29 - 12) * 100;
-	src[srco] = 3 * 3000;
-	srtype[srco] = 0;
-	sracttype[srco] = 0;
-	sre[srco] = 0;
-	srsp[srco] = 3;
-	srco = 0;
+        srco = 0;
+        sra[srco] = 41 * 29 * 100;
+        srb[srco] = (3 * 29 - 12) * 100;
+        src[srco] = 3 * 3000;
+        srtype[srco] = 0;
+        sracttype[srco] = 0;
+        sre[srco] = 0;
+        srsp[srco] = 3;
+        srco = 0;
 
-	for (tt = 0; tt <= 1000; tt++)
-    {
-	    for (t = 0; t <= 16; t++)
+        for (tt = 0; tt <= 1000; tt++)
         {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+            for (t = 0; t <= 16; t++)
+            {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }  // stage 3-1-0
 
 }  // stagep
