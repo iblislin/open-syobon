@@ -6004,272 +6004,270 @@ void stagep(GameConfig* conf)
 
     }  // stage 1-3-5
 
-    //1-4(地下)
+    // 1-4-0 (地下)
     if (conf->stage_info.check(1, 4, 0))
     {
+        chBgm(otom[BGM_CASTLE]);
 
-    //マリ　地上　入れ
-	chBgm(otom[BGM_CASTLE]);
-
-	scrollx = 4400 * 100;
-	conf->player.loc.x = 12000;
-	conf->player.loc.y = 6000;
-	stagecolor = 4;
+        scrollx = 4400 * 100;
+        conf->player.loc.x = 12000;
+        conf->player.loc.y = 6000;
+        stagecolor = 4;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
-    sco = 0;
-	t = sco;
-	sa[t] = 35 * 29 * 100 - 1500 + 750;
-	sb[t] = (8 * 29 - 12) * 100 - 1500;
-	sc[t] = 1500;
-	sd[t] = 3000;
-	stype[t] = 105;
-	sco++;
-	t = sco;
-	sa[t] = 67 * 29 * 100;
-	sb[t] = (4 * 29 - 12) * 100;
-	sc[t] = 9000 - 1;
-	sd[t] = 3000 * 1 - 1;
-	stype[t] = 51;
-	sxtype[t] = 3;
-	sgtype[t] = 0;
-	sco++;
-	t = sco;
-	sa[t] = 73 * 29 * 100;
-	sb[t] = (13 * 29 - 12) * 100;
-	sc[t] = 3000 * 1 - 1;
-	sd[t] = 3000;
-	stype[t] = 52;
-	sco++;
-//t=sco;sa[t]=79*29*100;sb[t]=(13*29-12)*100;sc[t]=30*3*100-1;sd[t]=6000-200;stype[t]=51;sxtype[t]=4;sco++;
-//t=sco;sa[t]=83*29*100;sb[t]=(-2*29-12)*100;sc[t]=30*5*100-1;sd[t]=3000-200;stype[t]=51;sxtype[t]=4;sco++;
-	t = sco;
-	sa[t] = 123 * 29 * 100;
-	sb[t] = (1 * 29 - 12) * 100;
-	sc[t] = 30 * 6 * 100 - 1 + 0;
-	sd[t] = 3000 - 200;
-	stype[t] = 51;
-	sxtype[t] = 10;
-	sco++;
-//スクロール消し
-	t = sco;
-	sa[t] = 124 * 29 * 100 + 3000;
-	sb[t] = (2 * 29 - 12) * 100;
-	sc[t] = 3000 * 1 - 1;
-	sd[t] = 300000;
-	stype[t] = 102;
-	sxtype[t] = 20;
-	sco++;
-	t = sco;
-	sa[t] = 148 * 29 * 100 + 1000;
-	sb[t] = (-12 * 29 - 12) * 100;
-	sc[t] = 3000 * 1 - 1;
-	sd[t] = 300000;
-	stype[t] = 102;
-	sxtype[t] = 30;
-	sco++;
+        sco = 0;
+        t = sco;
+        sa[t] = 35 * 29 * 100 - 1500 + 750;
+        sb[t] = (8 * 29 - 12) * 100 - 1500;
+        sc[t] = 1500;
+        sd[t] = 3000;
+        stype[t] = 105;
+        sco++;
+        t = sco;
+        sa[t] = 67 * 29 * 100;
+        sb[t] = (4 * 29 - 12) * 100;
+        sc[t] = 9000 - 1;
+        sd[t] = 3000 * 1 - 1;
+        stype[t] = 51;
+        sxtype[t] = 3;
+        sgtype[t] = 0;
+        sco++;
+        t = sco;
+        sa[t] = 73 * 29 * 100;
+        sb[t] = (13 * 29 - 12) * 100;
+        sc[t] = 3000 * 1 - 1;
+        sd[t] = 3000;
+        stype[t] = 52;
+        sco++;
 
-//3連星
-	t = sco;
-	sa[t] = 100 * 29 * 100 + 1000;
-	sb[t] = -6000;
-	sc[t] = 3000;
-	sd[t] = 70000;
-	stype[t] = 102;
-	sxtype[t] = 12;
-	sco++;
+        t = sco;
+        sa[t] = 123 * 29 * 100;
+        sb[t] = (1 * 29 - 12) * 100;
+        sc[t] = 30 * 6 * 100 - 1 + 0;
+        sd[t] = 3000 - 200;
+        stype[t] = 51;
+        sxtype[t] = 10;
+        sco++;
 
-//地面1
-	t = sco;
-	sa[t] = 0 * 29 * 100 - 0;
-	sb[t] = 9 * 29 * 100 + 1700;
-	sc[t] = 3000 * 7 - 1;
-	sd[t] = 3000 * 5 - 1;
-	stype[t] = 200;
-	sxtype[t] = 0;
-	sco++;
-	t = sco;
-	sa[t] = 11 * 29 * 100;
-	sb[t] = -1 * 29 * 100 + 1700;
-	sc[t] = 3000 * 8 - 1;
-	sd[t] = 3000 * 4 - 1;
-	stype[t] = 200;
-	sxtype[t] = 0;
-	sco++;
+        //スクロール消し
+        t = sco;
+        sa[t] = 124 * 29 * 100 + 3000;
+        sb[t] = (2 * 29 - 12) * 100;
+        sc[t] = 3000 * 1 - 1;
+        sd[t] = 300000;
+        stype[t] = 102;
+        sxtype[t] = 20;
+        sco++;
+        t = sco;
+        sa[t] = 148 * 29 * 100 + 1000;
+        sb[t] = (-12 * 29 - 12) * 100;
+        sc[t] = 3000 * 1 - 1;
+        sd[t] = 300000;
+        stype[t] = 102;
+        sxtype[t] = 30;
+        sco++;
 
-	bco = 0;
-	t = bco;
-	ba[t] = 8 * 29 * 100 - 1400;
-	bb[t] = (2 * 29 - 12) * 100 + 500;
-	btype[t] = 86;
-	bxtype[t] = 0;
-	bco++;
-	t = bco;
-	ba[t] = 42 * 29 * 100 - 1400;
-	bb[t] = (-2 * 29 - 12) * 100 + 500;
-	btype[t] = 86;
-	bxtype[t] = 0;
-	bco++;
-	t = bco;
-	ba[t] = 29 * 29 * 100 + 1500;
-	bb[t] = (7 * 29 - 12) * 100 + 1500;
-	btype[t] = 87;
-	bxtype[t] = 105;
-	bco++;
-	t = bco;
-	ba[t] = 47 * 29 * 100 + 1500;
-	bb[t] = (9 * 29 - 12) * 100 + 1500;
-	btype[t] = 87;
-	bxtype[t] = 110;
-	bco++;
-	t = bco;
-	ba[t] = 70 * 29 * 100 + 1500;
-	bb[t] = (9 * 29 - 12) * 100 + 1500;
-	btype[t] = 87;
-	bxtype[t] = 105;
-	bco++;
-	t = bco;
-	ba[t] = 66 * 29 * 100 + 1501;
-	bb[t] = (4 * 29 - 12) * 100 + 1500;
-	btype[t] = 87;
-	bxtype[t] = 101;
-	bco++;
-	t = bco;
-	ba[t] = 85 * 29 * 100 + 1501;
-	bb[t] = (4 * 29 - 12) * 100 + 1500;
-	btype[t] = 87;
-	bxtype[t] = 105;
-	bco++;
+        //3連星
+        t = sco;
+        sa[t] = 100 * 29 * 100 + 1000;
+        sb[t] = -6000;
+        sc[t] = 3000;
+        sd[t] = 70000;
+        stype[t] = 102;
+        sxtype[t] = 12;
+        sco++;
 
-//ステルスうめぇ
-	t = bco;
-	ba[t] = 57 * 29 * 100;
-	bb[t] = (2 * 29 - 12 + 10) * 100 - 500;
-	btype[t] = 80;
-	bxtype[t] = 1;
-	bco++;
-//ブロックもどき
-	t = bco;
-	ba[t] = 77 * 29 * 100;
-	bb[t] = (5 * 29 - 12) * 100;
-	btype[t] = 82;
-	bxtype[t] = 2;
-	bco++;
-//ボス
-	t = bco;
-	ba[t] = 130 * 29 * 100;
-	bb[t] = (8 * 29 - 12) * 100;
-	btype[t] = 30;
-	bxtype[t] = 0;
-	bco++;
-//クックル
-	t = bco;
-	ba[t] = 142 * 29 * 100;
-	bb[t] = (10 * 29 - 12) * 100;
-	btype[t] = 31;
-	bxtype[t] = 0;
-	bco++;
+        //地面1
+        t = sco;
+        sa[t] = 0 * 29 * 100 - 0;
+        sb[t] = 9 * 29 * 100 + 1700;
+        sc[t] = 3000 * 7 - 1;
+        sd[t] = 3000 * 5 - 1;
+        stype[t] = 200;
+        sxtype[t] = 0;
+        sco++;
+        t = sco;
+        sa[t] = 11 * 29 * 100;
+        sb[t] = -1 * 29 * 100 + 1700;
+        sc[t] = 3000 * 8 - 1;
+        sd[t] = 3000 * 4 - 1;
+        stype[t] = 200;
+        sxtype[t] = 0;
+        sco++;
 
-    //マグマ
-	nco = 0;
-	na[nco] = 7 * 29 * 100 - 300;
-	nb[nco] = 14 * 29 * 100 - 1200;
-	ntype[nco] = 6;
-	nco++;
-	if (nco >= nmax)
-	    nco = 0;
-	na[nco] = 41 * 29 * 100 - 300;
-	nb[nco] = 14 * 29 * 100 - 1200;
-	ntype[nco] = 6;
-	nco++;
-	if (nco >= nmax)
-	    nco = 0;
-	na[nco] = 149 * 29 * 100 - 1100;
-	nb[nco] = 10 * 29 * 100 - 600;
-	ntype[nco] = 100;
-	nco++;
-	if (nco >= nmax)
-	    nco = 0;
+        bco = 0;
+        t = bco;
+        ba[t] = 8 * 29 * 100 - 1400;
+        bb[t] = (2 * 29 - 12) * 100 + 500;
+        btype[t] = 86;
+        bxtype[t] = 0;
+        bco++;
+        t = bco;
+        ba[t] = 42 * 29 * 100 - 1400;
+        bb[t] = (-2 * 29 - 12) * 100 + 500;
+        btype[t] = 86;
+        bxtype[t] = 0;
+        bco++;
+        t = bco;
+        ba[t] = 29 * 29 * 100 + 1500;
+        bb[t] = (7 * 29 - 12) * 100 + 1500;
+        btype[t] = 87;
+        bxtype[t] = 105;
+        bco++;
+        t = bco;
+        ba[t] = 47 * 29 * 100 + 1500;
+        bb[t] = (9 * 29 - 12) * 100 + 1500;
+        btype[t] = 87;
+        bxtype[t] = 110;
+        bco++;
+        t = bco;
+        ba[t] = 70 * 29 * 100 + 1500;
+        bb[t] = (9 * 29 - 12) * 100 + 1500;
+        btype[t] = 87;
+        bxtype[t] = 105;
+        bco++;
+        t = bco;
+        ba[t] = 66 * 29 * 100 + 1501;
+        bb[t] = (4 * 29 - 12) * 100 + 1500;
+        btype[t] = 87;
+        bxtype[t] = 101;
+        bco++;
+        t = bco;
+        ba[t] = 85 * 29 * 100 + 1501;
+        bb[t] = (4 * 29 - 12) * 100 + 1500;
+        btype[t] = 87;
+        bxtype[t] = 105;
+        bco++;
 
-	tco = 0;
-//ON-OFFブロック
-	txtype[tco] = 1;
-	tyobi(29 * 29, 3 * 29 - 12, 130);
-//1-2
-	tyobi(34 * 29, 9 * 29 - 12, 5);
-	tyobi(35 * 29, 9 * 29 - 12, 5);
-//隠し
-	tyobi(55 * 29 + 15, 6 * 29 - 12, 7);
-//tyobi(62*29,9*29-12,2);
-//隠しON-OFF
-	txtype[tco] = 10;
-	tyobi(50 * 29, 9 * 29 - 12, 114);
-//ヒント3
-	txtype[tco] = 5;
-	tyobi(1 * 29, 5 * 29 - 12, 300);
-//ファイア
-	txtype[tco] = 3;
-	tyobi(86 * 29, 9 * 29 - 12, 101);
-//キノコなし　普通
-//txtype[tco]=2;tyobi(81*29,1*29-12,5);
-//音符
-	txtype[tco] = 2;
-	tyobi(86 * 29, 6 * 29 - 12, 117);
+        //ステルスうめぇ
+        t = bco;
+        ba[t] = 57 * 29 * 100;
+        bb[t] = (2 * 29 - 12 + 10) * 100 - 500;
+        btype[t] = 80;
+        bxtype[t] = 1;
+        bco++;
+        //ブロックもどき
+        t = bco;
+        ba[t] = 77 * 29 * 100;
+        bb[t] = (5 * 29 - 12) * 100;
+        btype[t] = 82;
+        bxtype[t] = 2;
+        bco++;
+        //ボス
+        t = bco;
+        ba[t] = 130 * 29 * 100;
+        bb[t] = (8 * 29 - 12) * 100;
+        btype[t] = 30;
+        bxtype[t] = 0;
+        bco++;
+        //クックル
+        t = bco;
+        ba[t] = 142 * 29 * 100;
+        bb[t] = (10 * 29 - 12) * 100;
+        btype[t] = 31;
+        bxtype[t] = 0;
+        bco++;
 
-//もろいぶろっく×３
-	for (t = 0; t <= 2; t++) {
-	    txtype[tco] = 3;
-	    tyobi((79 + t) * 29, 13 * 29 - 12, 115);
-	}
+        //マグマ
+        nco = 0;
+        na[nco] = 7 * 29 * 100 - 300;
+        nb[nco] = 14 * 29 * 100 - 1200;
+        ntype[nco] = 6;
+        nco++;
+        if (nco >= nmax)
+            nco = 0;
+        na[nco] = 41 * 29 * 100 - 300;
+        nb[nco] = 14 * 29 * 100 - 1200;
+        ntype[nco] = 6;
+        nco++;
+        if (nco >= nmax)
+            nco = 0;
+        na[nco] = 149 * 29 * 100 - 1100;
+        nb[nco] = 10 * 29 * 100 - 600;
+        ntype[nco] = 100;
+        nco++;
+        if (nco >= nmax)
+            nco = 0;
 
-//ジャンプ
-	txtype[tco] = 3;
-	tyobi(105 * 29, 11 * 29 - 12, 120);
-//毒1
-	txtype[tco] = 3;
-	tyobi(109 * 29, 7 * 29 - 12, 102);
-//デフラグ
-	txtype[tco] = 4;
-	tyobi(111 * 29, 7 * 29 - 12, 101);
-//剣
-	tyobi(132 * 29, 8 * 29 - 12 - 3, 140);
-	tyobi(131 * 29, 9 * 29 - 12, 141);
-//メロン
-	tyobi(161 * 29, 12 * 29 - 12, 142);
-//ファイアバー強化
-	tyobi(66 * 29, 4 * 29 - 12, 124);
+        tco = 0;
+        //ON-OFFブロック
+        txtype[tco] = 1;
+        tyobi(29 * 29, 3 * 29 - 12, 130);
+        //1-2
+        tyobi(34 * 29, 9 * 29 - 12, 5);
+        tyobi(35 * 29, 9 * 29 - 12, 5);
+        //隠し
+        tyobi(55 * 29 + 15, 6 * 29 - 12, 7);
+        //tyobi(62*29,9*29-12,2);
+        //隠しON-OFF
+        txtype[tco] = 10;
+        tyobi(50 * 29, 9 * 29 - 12, 114);
+        //ヒント3
+        txtype[tco] = 5;
+        tyobi(1 * 29, 5 * 29 - 12, 300);
+        //ファイア
+        txtype[tco] = 3;
+        tyobi(86 * 29, 9 * 29 - 12, 101);
+        //キノコなし　普通
+        //txtype[tco]=2;tyobi(81*29,1*29-12,5);
+        //音符
+        txtype[tco] = 2;
+        tyobi(86 * 29, 6 * 29 - 12, 117);
 
-//リフト
-	srco = 0;
-	t = srco;
-	sra[t] = 93 * 29 * 100;
-	srb[t] = (10 * 29 - 12) * 100;
-	src[t] = 60 * 100;
-	srtype[t] = 0;
-	sracttype[t] = 1;
-	sre[t] = 0;
-	srco++;
-	t = 20;
-	sra[t] = 119 * 29 * 100 + 300;
-	srb[t] = (10 * 29 - 12) * 100;
-	src[t] = 12 * 30 * 100 + 1000;
-	srtype[t] = 0;
-	sracttype[t] = 0;
-	srsp[t] = 21;
-	sre[t] = 0;
-	srco++;
+        //もろいぶろっく×３
+        for (t = 0; t <= 2; t++) {
+            txtype[tco] = 3;
+            tyobi((79 + t) * 29, 13 * 29 - 12, 115);
+        }
 
-    conf->stage_info.sub_level = 0;
+        //ジャンプ
+        txtype[tco] = 3;
+        tyobi(105 * 29, 11 * 29 - 12, 120);
+        //毒1
+        txtype[tco] = 3;
+        tyobi(109 * 29, 7 * 29 - 12, 102);
+        //デフラグ
+        txtype[tco] = 4;
+        tyobi(111 * 29, 7 * 29 - 12, 101);
+        //剣
+        tyobi(132 * 29, 8 * 29 - 12 - 3, 140);
+        tyobi(131 * 29, 9 * 29 - 12, 141);
+        //メロン
+        tyobi(161 * 29, 12 * 29 - 12, 142);
+        //ファイアバー強化
+        tyobi(66 * 29, 4 * 29 - 12, 124);
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        //リフト
+        srco = 0;
+        t = srco;
+        sra[t] = 93 * 29 * 100;
+        srb[t] = (10 * 29 - 12) * 100;
+        src[t] = 60 * 100;
+        srtype[t] = 0;
+        sracttype[t] = 1;
+        sre[t] = 0;
+        srco++;
+        t = 20;
+        sra[t] = 119 * 29 * 100 + 300;
+        srb[t] = (10 * 29 - 12) * 100;
+        src[t] = 12 * 30 * 100 + 1000;
+        srtype[t] = 0;
+        sracttype[t] = 0;
+        srsp[t] = 21;
+        sre[t] = 0;
+        srco++;
 
-    }				//sta4
+        conf->stage_info.sub_level = 0;
+
+        for (tt = 0; tt <= 1000; tt++) {
+            for (t = 0; t <= 16; t++) {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
+
+    }  // stage 1-4-0
 
     // 2-1
     if (conf->stage_info.check(2, 1, 0))
