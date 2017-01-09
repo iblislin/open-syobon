@@ -6442,201 +6442,203 @@ void stagep(GameConfig* conf)
     // 2-2-1 (地下)
     if (conf->stage_info.check(2, 2, 1))
     {
-	chBgm(otom[BGM_DUNGEON], 40);
-	stagecolor = 2;
-	conf->player.loc.x = 7500;
-	conf->player.loc.y = 9000;
-	scrollx = 2900 * (137 - 19);
+        chBgm(otom[BGM_DUNGEON], 40);
+        stagecolor = 2;
+        conf->player.loc.x = 7500;
+        conf->player.loc.y = 9000;
+        scrollx = 2900 * (137 - 19);
 
-    auto stagedatex = conf->stage_info.get_map()->data;
+        auto stagedatex = conf->stage_info.get_map()->data;
 
-	bco = 0;
-	ba[bco] = 32 * 29 * 100 - 1400;
-	bb[bco] = (-2 * 29 - 12) * 100 + 500;
-	btype[bco] = 86;
-	bxtype[bco] = 0;
-	bco += 1;
+        bco = 0;
+        ba[bco] = 32 * 29 * 100 - 1400;
+        bb[bco] = (-2 * 29 - 12) * 100 + 500;
+        btype[bco] = 86;
+        bxtype[bco] = 0;
+        bco += 1;
 
-	ba[bco] = (31 * 29 - 12) * 100;
-	bb[bco] = (7 * 29 - 12) * 100;
-	btype[bco] = 7;
-	bxtype[bco] = 0;
-	bco += 1;
+        ba[bco] = (31 * 29 - 12) * 100;
+        bb[bco] = (7 * 29 - 12) * 100;
+        btype[bco] = 7;
+        bxtype[bco] = 0;
+        bco += 1;
 
-	ba[bco] = 38 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 87;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 38 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 87;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 38 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 88;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 38 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 88;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 42 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 87;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 42 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 87;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 42 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 88;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 42 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 88;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 46 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 87;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 46 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 87;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 46 * 29 * 100 + 1500;
-	bb[bco] = (6 * 29 - 12) * 100 + 1500;
-	btype[bco] = 88;
-	bxtype[bco] = 107;
-	bco += 1;
+        ba[bco] = 46 * 29 * 100 + 1500;
+        bb[bco] = (6 * 29 - 12) * 100 + 1500;
+        btype[bco] = 88;
+        bxtype[bco] = 107;
+        bco += 1;
 
-	ba[bco] = 58 * 29 * 100;
-	bb[bco] = (7 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 58 * 29 * 100;
+        bb[bco] = (7 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 66 * 29 * 100;
-	bb[bco] = (7 * 29 - 12) * 100;
-	btype[bco] = 82;
-	bxtype[bco] = 1;
-	bco += 1;
+        ba[bco] = 66 * 29 * 100;
+        bb[bco] = (7 * 29 - 12) * 100;
+        btype[bco] = 82;
+        bxtype[bco] = 1;
+        bco += 1;
 
-	ba[bco] = 76 * 29 * 100 - 1400;
-	bb[bco] = (-2 * 29 - 12) * 100 + 500;
-	btype[bco] = 86;
-	bxtype[bco] = 0;
-	bco += 1;
+        ba[bco] = 76 * 29 * 100 - 1400;
+        bb[bco] = (-2 * 29 - 12) * 100 + 500;
+        btype[bco] = 86;
+        bxtype[bco] = 0;
+        bco += 1;
 
-	sco = 0;
-	sa[sco] = 2 * 29 * 100;
-	sb[sco] = (13 * 29 - 12) * 100;
-	sc[sco] = 300000 - 6001;
-	sd[sco] = 3000;
-	stype[sco] = 52;
-	sxtype[sco] = 0;
-	sco += 1;
+        sco = 0;
+        sa[sco] = 2 * 29 * 100;
+        sb[sco] = (13 * 29 - 12) * 100;
+        sc[sco] = 300000 - 6001;
+        sd[sco] = 3000;
+        stype[sco] = 52;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 3 * 29 * 100;
-	sb[sco] = (7 * 29 - 12) * 100;
-	sc[sco] = 3000;
-	sd[sco] = 3000;
-	stype[sco] = 105;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 3 * 29 * 100;
+        sb[sco] = (7 * 29 - 12) * 100;
+        sc[sco] = 3000;
+        sd[sco] = 3000;
+        stype[sco] = 105;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 107 * 29 * 100;
-	sb[sco] = (9 * 29 - 12) * 100;
-	sc[sco] = 9000 - 1;
-	sd[sco] = 24000;
-	stype[sco] = 52;
-	sxtype[sco] = 1;
-	sco += 1;
+        sa[sco] = 107 * 29 * 100;
+        sb[sco] = (9 * 29 - 12) * 100;
+        sc[sco] = 9000 - 1;
+        sd[sco] = 24000;
+        stype[sco] = 52;
+        sxtype[sco] = 1;
+        sco += 1;
 
-	sa[sco] = 111 * 29 * 100;
-	sb[sco] = (7 * 29 - 12) * 100;
-	sc[sco] = 3000;
-	sd[sco] = 6000 - 200;
-	stype[sco] = 40;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 111 * 29 * 100;
+        sb[sco] = (7 * 29 - 12) * 100;
+        sc[sco] = 3000;
+        sd[sco] = 6000 - 200;
+        stype[sco] = 40;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 113 * 29 * 100 + 1100;
-	sb[sco] = (0 * 29 - 12) * 100;
-	sc[sco] = 4700;
-	sd[sco] = 27000 - 1000;
-	stype[sco] = 0;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 113 * 29 * 100 + 1100;
+        sb[sco] = (0 * 29 - 12) * 100;
+        sc[sco] = 4700;
+        sd[sco] = 27000 - 1000;
+        stype[sco] = 0;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	sa[sco] = 128 * 29 * 100;
-	sb[sco] = (9 * 29 - 12) * 100;
-	sc[sco] = 9000 - 1;
-	sd[sco] = 24000;
-	stype[sco] = 52;
-	sxtype[sco] = 1;
-	sco += 1;
+        sa[sco] = 128 * 29 * 100;
+        sb[sco] = (9 * 29 - 12) * 100;
+        sc[sco] = 9000 - 1;
+        sd[sco] = 24000;
+        stype[sco] = 52;
+        sxtype[sco] = 1;
+        sco += 1;
 
-	sa[sco] = 131 * 29 * 100;
-	sb[sco] = (9 * 29 - 12) * 100;
-	sc[sco] = 3000;
-	sd[sco] = 6000 - 200;
-	stype[sco] = 40;
-	sxtype[sco] = 2;
-	sco += 1;
+        sa[sco] = 131 * 29 * 100;
+        sb[sco] = (9 * 29 - 12) * 100;
+        sc[sco] = 3000;
+        sd[sco] = 6000 - 200;
+        stype[sco] = 40;
+        sxtype[sco] = 2;
+        sco += 1;
 
-	sa[sco] = 133 * 29 * 100 + 1100;
-	sb[sco] = (0 * 29 - 12) * 100;
-	sc[sco] = 4700;
-	sd[sco] = 32000;
-	stype[sco] = 0;
-	sxtype[sco] = 0;
-	sco += 1;
+        sa[sco] = 133 * 29 * 100 + 1100;
+        sb[sco] = (0 * 29 - 12) * 100;
+        sc[sco] = 4700;
+        sd[sco] = 32000;
+        stype[sco] = 0;
+        sxtype[sco] = 0;
+        sco += 1;
 
-	tco = 0;
-	txtype[tco] = 0;
-	tyobi(0 * 29, 0 * 29 - 12, 4);
-	tco = 1;
-	txtype[tco] = 0;
-	tyobi(2 * 29, 9 * 29 - 12, 4);
-	tco = 2;
-	txtype[tco] = 0;
-	tyobi(3 * 29, 9 * 29 - 12, 4);
-	tco += 1;
+        tco = 0;
+        txtype[tco] = 0;
+        tyobi(0 * 29, 0 * 29 - 12, 4);
+        tco = 1;
+        txtype[tco] = 0;
+        tyobi(2 * 29, 9 * 29 - 12, 4);
+        tco = 2;
+        txtype[tco] = 0;
+        tyobi(3 * 29, 9 * 29 - 12, 4);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(5 * 29, 9 * 29 - 12, 115);
-	tco += 1;
-	txtype[tco] = 1;
-	tyobi(6 * 29, 9 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(5 * 29, 9 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        tyobi(6 * 29, 9 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(5 * 29, 10 * 29 - 12, 115);
-	tco += 1;
-	txtype[tco] = 1;
-	tyobi(6 * 29, 10 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(5 * 29, 10 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        tyobi(6 * 29, 10 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(5 * 29, 11 * 29 - 12, 115);
-	tco += 1;
-	txtype[tco] = 1;
-	tyobi(6 * 29, 11 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(5 * 29, 11 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        tyobi(6 * 29, 11 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(5 * 29, 12 * 29 - 12, 115);
-	tco += 1;
-	txtype[tco] = 1;
-	tyobi(6 * 29, 12 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(5 * 29, 12 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        tyobi(6 * 29, 12 * 29 - 12, 115);
+        tco += 1;
 
-	txtype[tco] = 1;
-	tyobi(70 * 29, 7 * 29 - 12, 115);
-	tco += 1;
-	txtype[tco] = 1;
-	tyobi(71 * 29, 7 * 29 - 12, 115);
-	tco += 1;
+        txtype[tco] = 1;
+        tyobi(70 * 29, 7 * 29 - 12, 115);
+        tco += 1;
+        txtype[tco] = 1;
+        tyobi(71 * 29, 7 * 29 - 12, 115);
+        tco += 1;
 
-	for (tt = 0; tt <= 1000; tt++) {
-	    for (t = 0; t <= 16; t++) {
-		stagedate[t][tt] = 0;
-		stagedate[t][tt] = stagedatex[t][tt];
-	    }
-	}
+        for (tt = 0; tt <= 1000; tt++)
+        {
+            for (t = 0; t <= 16; t++)
+            {
+                stagedate[t][tt] = 0;
+                stagedate[t][tt] = stagedatex[t][tt];
+            }
+        }
     }  // stage 2-2-1
 
-    // 2-2 地上
+    // 2-2-2 地上
     if (conf->stage_info.check(2, 2, 2))
     {
 
@@ -6645,169 +6647,89 @@ void stagep(GameConfig* conf)
 	scrollx = 2900 * (36 - 19);
 	conf->player.loc.x = 7500;
 	conf->player.loc.y = 3000 * 9;
-//
-	byte stagedatex[17][1001] = {
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	     0, 0, 0,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 82, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	     0, 0,
-	     0, 0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	     0, 0, 0,
-	     0, 0,
-	     0, 0, 0, 0, 99, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	     0, 0, 0,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50,
-	     51, 0,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4,
-	     4, 4, 4,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4,
-	     4, 4, 4,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4,
-	     4, 4, 4,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 50, 4, 4, 4, 4, 4,
-	     4, 4,
-	     4, 0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4,
-	     4, 4, 4,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4,
-	     4, 4, 4,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 40, 0, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4,
-	     4, 4,
-	     4, 0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	    ,
-	    {0, 0, 41, 0, 0, 0, 0, 0, 0, 4, 4, 4, 4, 4, 4, 4, 4, 4,
-	     4, 4,
-	     4, 0, 0,
-	     0, 0, 0, 0, 4, 0, 0, 0, 0, 0, 54, 0, 0}
-	    ,
-	    {5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5,
-	     5, 5, 5,
-	     0, 0,
-	     0, 0, 0, 0, 5, 5, 5, 5, 5, 5, 5, 5, 5}
-	    ,
-	    {6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6,
-	     6, 6, 6,
-	     0, 0,
-	     0, 0, 0, 0, 6, 6, 6, 6, 6, 6, 6, 6, 6}
-	    ,
-	    {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-	     0, 0, 0,
-	     0, 0,
-	     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}
-	};
-	//
+
+        auto stagedatex = conf->stage_info.get_map()->data;
+
 	bco = 0;
 	ba[bco] = 9 * 29 * 100;
 	bb[bco] = (12 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 10 * 29 * 100;
 	bb[bco] = (11 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 11 * 29 * 100;
 	bb[bco] = (10 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 12 * 29 * 100;
 	bb[bco] = (9 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 13 * 29 * 100;
 	bb[bco] = (8 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 14 * 29 * 100;
 	bb[bco] = (7 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 15 * 29 * 100;
 	bb[bco] = (6 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 16 * 29 * 100;
 	bb[bco] = (5 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 17 * 29 * 100;
 	bb[bco] = (5 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 18 * 29 * 100;
 	bb[bco] = (5 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 19 * 29 * 100;
 	bb[bco] = (5 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	ba[bco] = 20 * 29 * 100;
 	bb[bco] = (5 * 29 - 12) * 100;
 	btype[bco] = 82;
 	bxtype[bco] = 1;
 	bco += 1;
-	//
+
 	for (tt = 0; tt <= 1000; tt++) {
 	    for (t = 0; t <= 16; t++) {
 		stagedate[t][tt] = 0;
 		stagedate[t][tt] = stagedatex[t][tt];
 	    }
 	}
-    }
+    }  // stage 2-2-2
 
     // 2-3
     if (conf->stage_info.check(2, 3, 0))
