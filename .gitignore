@@ -1,3 +1,9 @@
 SyobonAction
 *.o
 .DS_Store
+*.core
+cscope.out
+*.so
+*.beam
+
+src/tests/Main

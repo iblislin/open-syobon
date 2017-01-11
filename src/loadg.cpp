@@ -2,264 +2,205 @@
 
 extern int ma, t, tt;
 extern SDL_Surface *grap[161][8];
-extern SDL_Surface *mgrap[51];
+extern SDL_Surface *titleGraph;
 int x1;
 extern Mix_Music *otom[6];
 extern Mix_Chunk *oto[19];
 
-extern int anx[160], any[160];
-extern int ne[40], nf[40];
+extern int anx[160], any[160];  /* x, y of enemy on graph */
+extern int ne[40], nf[40]; /* x, y of background */
 
-void loadg(void)
+void loadSound(GameConfig* conf);
+
+int loadg(GameConfig* conf)  /* load graph from res/ */
 {
+    std::map<std::string, SDL_Surface*> srcGraph;
+    //プレイヤー
+    srcGraph["player"] = LoadGraph("res/player.png");
+    //ブロック
+    srcGraph["block"] = LoadGraph("res/brock.png");
+    //アイテム
+    srcGraph["item"] = LoadGraph("res/item.png");
+    //敵
+    srcGraph["teki"] = LoadGraph("res/teki.png");
+    //背景 background
+    srcGraph["haikei"] = LoadGraph("res/haikei.png");
+    //ブロック2
+    srcGraph["block2"] = LoadGraph("res/brock2.png");
+    //おまけ
+    srcGraph["omake"] = LoadGraph("res/omake.png");
+    //おまけ2
+    srcGraph["omake2"] = LoadGraph("res/omake2.png");
 
-    for (t = 0; t < 51; t++) {
-	mgrap[t] = 0;
+    for (auto i=srcGraph.begin(); i!=srcGraph.end(); ++i)
+        if (!(*i).second)
+            return -1;  // graph failed to load
+
+    //タイトル
+    ::titleGraph  = LoadGraph("res/title.png");
+    if (!titleGraph)
+        return -1;
+
+    //プレイヤー読み込み
+    // player
+    grap[40][0] = DerivationGraph(0, 0, 30, 36, srcGraph["player"]);
+    grap[0][0]  = DerivationGraph(31 * 4, 0, 30, 36, srcGraph["player"]);
+    grap[1][0]  = DerivationGraph(31 * 1, 0, 30, 36, srcGraph["player"]);
+    grap[2][0]  = DerivationGraph(31 * 2, 0, 30, 36, srcGraph["player"]);
+    grap[3][0]  = DerivationGraph(31 * 3, 0, 30, 36, srcGraph["player"]);
+    grap[41][0] = DerivationGraph(50, 0, 51, 73, srcGraph["omake"]);
+
+    // block
+    //ブロック読み込み
+    for (auto i=0; i<=6; i++)
+    {
+        grap[i][1]      = DerivationGraph(33 * i,  0, 30, 30, srcGraph["block"]);
+        grap[i + 30][1] = DerivationGraph(33 * i, 33, 30, 30, srcGraph["block"]);
+        grap[i + 60][1] = DerivationGraph(33 * i, 66, 30, 30, srcGraph["block"]);
+        grap[i + 90][1] = DerivationGraph(33 * i, 99, 30, 30, srcGraph["block"]);
     }
-    for (int i = 0; i < 161; i++)
-	for (int j = 0; j < 8; j++)
-	    grap[i][j] = NULL;
+    grap[8]  [1] = DerivationGraph(33 * 7,  0, 30, 30, srcGraph["block"]);
+    grap[16] [1] = DerivationGraph(33 * 6,  0, 24, 27, srcGraph["item"]);
+    grap[10] [1] = DerivationGraph(33 * 9,  0, 30, 30, srcGraph["block"]);
+    grap[40] [1] = DerivationGraph(33 * 9, 33, 30, 30, srcGraph["block"]);
+    grap[70] [1] = DerivationGraph(33 * 9, 66, 30, 30, srcGraph["block"]);
+    grap[100][1] = DerivationGraph(33 * 9, 99, 30, 30, srcGraph["block"]);
 
-/*
-for (t=0;t<161;t++){
-for (tt=0;tt<8;tt++){
-grap[t][tt]=0;
-}}
-*/
+    // block2
+    //ブロック読み込み2
+    for (auto i=0; i<=6; i++)
+        grap[i][5] = DerivationGraph(33 * i, 0, 30, 30, srcGraph["block2"]);
 
-//ma-=100;//mb==5000;
-//end();
+    grap[10][5] = DerivationGraph(33 * 1, 33, 30, 30, srcGraph["block2"]);
+    grap[11][5] = DerivationGraph(33 * 2, 33, 30, 30, srcGraph["block2"]);
+    grap[12][5] = DerivationGraph(33 * 0, 66, 30, 30, srcGraph["block2"]);
+    grap[13][5] = DerivationGraph(33 * 1, 66, 30, 30, srcGraph["block2"]);
+    grap[14][5] = DerivationGraph(33 * 2, 66, 30, 30, srcGraph["block2"]);
 
+    // item
+    //アイテム読み込み
+    for (auto i= 0; i<= 5; i++)
+        grap[i][2] = DerivationGraph(33 * i, 0, 30, 30, srcGraph["item"]);
 
-//画像読み込み
+    // teki
+    //敵キャラ読み込み
+    grap[0]  [3] = DerivationGraph(33 * 0, 0, 30, 30, srcGraph["teki"]);
+    grap[1]  [3] = DerivationGraph(33 * 1, 0, 30, 43, srcGraph["teki"]);
+    grap[2]  [3] = DerivationGraph(33 * 2, 0, 30, 30, srcGraph["teki"]);
+    grap[3]  [3] = DerivationGraph(33 * 3, 0, 30, 44, srcGraph["teki"]);
+    grap[4]  [3] = DerivationGraph(33 * 4, 0, 33, 35, srcGraph["teki"]);
+    grap[5]  [3] = DerivationGraph(0, 0, 37, 55, srcGraph["omake2"]);
+    grap[6]  [3] = DerivationGraph(38 * 2, 0, 36, 50, srcGraph["omake2"]);
+    grap[150][3] = DerivationGraph(38 * 2 + 37 * 2, 0, 36, 50, srcGraph["omake2"]);
+    grap[7]  [3] = DerivationGraph(33 * 6 + 1, 0, 32, 32, srcGraph["teki"]);
+    grap[8]  [3] = DerivationGraph(38 * 2 + 37 * 3, 0, 37, 47, srcGraph["omake2"]);
+    grap[151][3] = DerivationGraph(38 * 3 + 37 * 3, 0, 37, 47, srcGraph["omake2"]);
+    grap[9]  [3] = DerivationGraph(33 * 7 + 1, 0, 26, 30, srcGraph["teki"]);
+    grap[10] [3] = DerivationGraph(214, 0, 46, 16, srcGraph["omake"]);
 
-// 透過色を変更
-//SetTransColor( 9*16+9 , 255 , 255 ) ;
+    //モララー
+    grap[30][3] = DerivationGraph(0, 56, 30, 36, srcGraph["omake2"]);
+    grap[155][3] = DerivationGraph(31 * 3, 56, 30, 36, srcGraph["omake2"]);
+    grap[31][3] = DerivationGraph(50, 74, 49, 79, srcGraph["omake"]);
 
-//プレイヤー
-    mgrap[0] = LoadGraph("res/player.PNG");
-//ブロック
-    mgrap[1] = LoadGraph("res/brock.PNG");
-//アイテム
-    mgrap[2] = LoadGraph("res/item.PNG");
-//敵
-    mgrap[3] = LoadGraph("res/teki.PNG");
-//背景
-    mgrap[4] = LoadGraph("res/haikei.PNG");
-//ブロック2
-    mgrap[5] = LoadGraph("res/brock2.PNG");
-//おまけ
-    mgrap[6] = LoadGraph("res/omake.PNG");
-//おまけ2
-    mgrap[7] = LoadGraph("res/omake2.PNG");
-//タイトル
-    mgrap[30] = LoadGraph("res/syobon3.PNG");
+    grap[80][3] = DerivationGraph(151, 31, 70, 40, srcGraph["haikei"]);
+    grap[81][3] = DerivationGraph(151, 72, 70, 40, srcGraph["haikei"]);
+    grap[130][3] = DerivationGraph(151 + 71, 72, 70, 40, srcGraph["haikei"]);
+    grap[82][3] = DerivationGraph(33 * 1, 0, 30, 30, srcGraph["block2"]);
+    grap[83][3] = DerivationGraph(0, 0, 49, 48, srcGraph["omake"]);
+    grap[84][3] = DerivationGraph(33 * 5 + 1, 0, 30, 30, srcGraph["teki"]);
+    grap[86][3] = DerivationGraph(102, 66, 49, 59, srcGraph["omake"]);
+    grap[152][3] = DerivationGraph(152, 66, 49, 59, srcGraph["omake"]);
 
+    grap[90][3] = DerivationGraph(102, 0, 64, 63, srcGraph["omake"]);
 
-//プレイヤー読み込み
-    grap[40][0] = DerivationGraph(0, 0, 30, 36, mgrap[0]);
-    grap[0][0] = DerivationGraph(31 * 4, 0, 30, 36, mgrap[0]);
-    grap[1][0] = DerivationGraph(31 * 1, 0, 30, 36, mgrap[0]);
-    grap[2][0] = DerivationGraph(31 * 2, 0, 30, 36, mgrap[0]);
-    grap[3][0] = DerivationGraph(31 * 3, 0, 30, 36, mgrap[0]);
-    grap[41][0] = DerivationGraph(50, 0, 51, 73, mgrap[6]);
+    grap[100][3] = DerivationGraph(33 * 1, 0, 30, 30, srcGraph["item"]);
+    grap[101][3] = DerivationGraph(33 * 7, 0, 30, 30, srcGraph["item"]);
+    grap[102][3] = DerivationGraph(33 * 3, 0, 30, 30, srcGraph["item"]);
 
-    x1 = 1;
-//ブロック読み込み
-    for (t = 0; t <= 6; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
-	grap[t + 30][x1] = DerivationGraph(33 * t, 33, 30, 30, mgrap[x1]);
-	grap[t + 60][x1] = DerivationGraph(33 * t, 66, 30, 30, mgrap[x1]);
-	grap[t + 90][x1] = DerivationGraph(33 * t, 99, 30, 30, mgrap[x1]);
-    }
-    grap[8][x1] = DerivationGraph(33 * 7, 0, 30, 30, mgrap[x1]);
-    grap[16][x1] = DerivationGraph(33 * 6, 0, 24, 27, mgrap[2]);
-    grap[10][x1] = DerivationGraph(33 * 9, 0, 30, 30, mgrap[x1]);
-    grap[40][x1] = DerivationGraph(33 * 9, 33, 30, 30, mgrap[x1]);
-    grap[70][x1] = DerivationGraph(33 * 9, 66, 30, 30, mgrap[x1]);
-    grap[100][x1] = DerivationGraph(33 * 9, 99, 30, 30, mgrap[x1]);
-//ブロック読み込み2
-    x1 = 5;
-    for (t = 0; t <= 6; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
-    }
-    grap[10][5] = DerivationGraph(33 * 1, 33, 30, 30, mgrap[x1]);
-    grap[11][5] = DerivationGraph(33 * 2, 33, 30, 30, mgrap[x1]);
-    grap[12][5] = DerivationGraph(33 * 0, 66, 30, 30, mgrap[x1]);
-    grap[13][5] = DerivationGraph(33 * 1, 66, 30, 30, mgrap[x1]);
-    grap[14][5] = DerivationGraph(33 * 2, 66, 30, 30, mgrap[x1]);
-
-//アイテム読み込み
-    x1 = 2;
-    for (t = 0; t <= 5; t++) {
-	grap[t][x1] = DerivationGraph(33 * t, 0, 30, 30, mgrap[x1]);
-    }
-
-//敵キャラ読み込み
-    x1 = 3;
-    grap[0][x1] = DerivationGraph(33 * 0, 0, 30, 30, mgrap[x1]);
-    grap[1][x1] = DerivationGraph(33 * 1, 0, 30, 43, mgrap[x1]);
-    grap[2][x1] = DerivationGraph(33 * 2, 0, 30, 30, mgrap[x1]);
-    grap[3][x1] = DerivationGraph(33 * 3, 0, 30, 44, mgrap[x1]);
-    grap[4][x1] = DerivationGraph(33 * 4, 0, 33, 35, mgrap[x1]);
-    grap[5][x1] = DerivationGraph(0, 0, 37, 55, mgrap[7]);
-    grap[6][x1] = DerivationGraph(38 * 2, 0, 36, 50, mgrap[7]);
-    grap[150][x1] = DerivationGraph(38 * 2 + 37 * 2, 0, 36, 50, mgrap[7]);
-    grap[7][x1] = DerivationGraph(33 * 6 + 1, 0, 32, 32, mgrap[x1]);
-    grap[8][x1] = DerivationGraph(38 * 2 + 37 * 3, 0, 37, 47, mgrap[7]);
-    grap[151][x1] = DerivationGraph(38 * 3 + 37 * 3, 0, 37, 47, mgrap[7]);
-    grap[9][x1] = DerivationGraph(33 * 7 + 1, 0, 26, 30, mgrap[x1]);
-    grap[10][x1] = DerivationGraph(214, 0, 46, 16, mgrap[6]);
-
-//モララー
-    grap[30][x1] = DerivationGraph(0, 56, 30, 36, mgrap[7]);
-    grap[155][x1] = DerivationGraph(31 * 3, 56, 30, 36, mgrap[7]);
-    grap[31][x1] = DerivationGraph(50, 74, 49, 79, mgrap[6]);
+    grap[105][3] = DerivationGraph(33 * 5, 0, 30, 30, srcGraph["item"]);
+    grap[110][3] = DerivationGraph(33 * 4, 0, 30, 30, srcGraph["item"]);
 
 
-    grap[80][x1] = DerivationGraph(151, 31, 70, 40, mgrap[4]);
-    grap[81][x1] = DerivationGraph(151, 72, 70, 40, mgrap[4]);
-    grap[130][x1] = DerivationGraph(151 + 71, 72, 70, 40, mgrap[4]);
-    grap[82][x1] = DerivationGraph(33 * 1, 0, 30, 30, mgrap[5]);
-    grap[83][x1] = DerivationGraph(0, 0, 49, 48, mgrap[6]);
-    grap[84][x1] = DerivationGraph(33 * 5 + 1, 0, 30, 30, mgrap[x1]);
-    grap[86][x1] = DerivationGraph(102, 66, 49, 59, mgrap[6]);
-    grap[152][x1] = DerivationGraph(152, 66, 49, 59, mgrap[6]);
+    //背景読み込み
+    grap[0][4] = DerivationGraph(0, 0, 150, 90, srcGraph["haikei"]);
+    grap[1][4] = DerivationGraph(151, 0, 65, 29, srcGraph["haikei"]);
+    grap[2][4] = DerivationGraph(151, 31, 70, 40, srcGraph["haikei"]);
+    grap[3][4] = DerivationGraph(0, 91, 100, 90, srcGraph["haikei"]);
+    grap[4][4] = DerivationGraph(151, 113, 51, 29, srcGraph["haikei"]);
+    grap[5][4] = DerivationGraph(222, 0, 28, 60, srcGraph["haikei"]);
+    grap[6][4] = DerivationGraph(151, 143, 90, 40, srcGraph["haikei"]);
+    grap[30][4] = DerivationGraph(293, 0, 149, 90, srcGraph["haikei"]);
+    grap[31][4] = DerivationGraph(293, 92, 64, 29, srcGraph["haikei"]);
 
-    grap[90][x1] = DerivationGraph(102, 0, 64, 63, mgrap[6]);
+    //中間フラグ
+    grap[20][4] = DerivationGraph(40, 182, 40, 60, srcGraph["haikei"]);
 
-    grap[100][x1] = DerivationGraph(33 * 1, 0, 30, 30, mgrap[2]);
-    grap[101][x1] = DerivationGraph(33 * 7, 0, 30, 30, mgrap[2]);
-    grap[102][x1] = DerivationGraph(33 * 3, 0, 30, 30, mgrap[2]);
+    //グラ
+    grap[0][5] = DerivationGraph(167, 0, 45, 45, srcGraph["omake"]);
 
-//grap[104][x1] = DerivationGraph( 33*2, 0, 30, 30, mgrap[5]) ;
-    grap[105][x1] = DerivationGraph(33 * 5, 0, 30, 30, mgrap[2]);
-    grap[110][x1] = DerivationGraph(33 * 4, 0, 30, 30, mgrap[2]);
-
-
-//背景読み込み
-    x1 = 4;
-    grap[0][x1] = DerivationGraph(0, 0, 150, 90, mgrap[x1]);
-    grap[1][x1] = DerivationGraph(151, 0, 65, 29, mgrap[x1]);
-    grap[2][x1] = DerivationGraph(151, 31, 70, 40, mgrap[x1]);
-    grap[3][x1] = DerivationGraph(0, 91, 100, 90, mgrap[x1]);
-    grap[4][x1] = DerivationGraph(151, 113, 51, 29, mgrap[x1]);
-    grap[5][x1] = DerivationGraph(222, 0, 28, 60, mgrap[x1]);
-    grap[6][x1] = DerivationGraph(151, 143, 90, 40, mgrap[x1]);
-    grap[30][x1] = DerivationGraph(293, 0, 149, 90, mgrap[x1]);
-    grap[31][x1] = DerivationGraph(293, 92, 64, 29, mgrap[x1]);
-
-//中間フラグ
-    grap[20][x1] = DerivationGraph(40, 182, 40, 60, mgrap[x1]);
+    // release srcGraph
+    for (auto i=srcGraph.begin(); i!=srcGraph.end(); ++i)
+        SDL_FreeSurface((*i).second);
 
 
-//グラ
-    x1 = 5;
-    grap[0][x1] = DerivationGraph(167, 0, 45, 45, mgrap[6]);
+    //敵サイズ収得
+    for (auto i=0; i<=140; i++) {
+        if (!grap[i][3])
+            continue;
 
-
-
-
-
-
-
-
-
-//敵サイズ収得
-//int GrHandle=0;
-    x1 = 3;
-    for (t = 0; t <= 140; t++) {
-	if (grap[t][x1]) {
-	    anx[t] = grap[t][x1]->w;
-	    any[t] = grap[t][x1]->h;
-//GetGraphSize(grap[t][x1] ,&anx[t] ,&any[t]);
-	    anx[t] *= 100;
-	    any[t] *= 100;
-	} else {
-	    anx[t] = 0;
-	    any[t] = 0;
-	}
+        anx[i] = grap[i][3]->w;
+        any[i] = grap[i][3]->h;
+        anx[i] *= 100;
+        any[i] *= 100;
     }
     anx[79] = 120 * 100;
     any[79] = 15 * 100;
     anx[85] = 25 * 100;
     any[85] = 30 * 10 * 100;
 
-//背景サイズ収得
-    x1 = 4;
-    for (t = 0; t < 40; t++) {
-	if (grap[t][x1]) {
-	    ne[t] = grap[t][x1]->w;
-	    nf[t] = grap[t][x1]->h;
-//GetGraphSize(grap[t][x1] ,&ne[t] ,&nf[t]);
-//ne[t]*=100;nf[t]*=100;
-	} else {
-	    ne[t] = 0;
-	    nf[t] = 0;
-	}
+    //背景サイズ収得
+    for (auto t=0; t<40; t++) {
+        if (!grap[t][4])
+            continue;
+
+        ne[t] = grap[t][4]->w;
+        nf[t] = grap[t][4]->h;
     }
 
-/*
-anx[0]=30;any[0]=30;
-anx[1]=30;any[1]=43;
-anx[2]=30;any[2]=30;
-anx[3]=30;any[3]=44;
-*/
+    loadSound(conf);
 
-
-
-
-
-
-
-
-
-//ogg読み込み
-//try{
-//oto[2] = LoadSoundMem( "SE/1.mp3" ) ;
-    otom[1] = LoadMusicMem("BGM/field.ogg"); //50
-    otom[2] = LoadMusicMem("BGM/dungeon.ogg"); //40
-    otom[3] = LoadMusicMem("BGM/star4.ogg"); //50
-    otom[4] = LoadMusicMem("BGM/castle.ogg"); //50
-    otom[5] = LoadMusicMem("BGM/puyo.ogg"); //50
-//otom[6]=LoadMusicMem( "BGM/last.ogg");
-//ChangeVolumeSoundMem(50, otom[6]);
-
-    oto[1] = LoadSoundMem("SE/jump.ogg");
-//oto[2] = LoadSoundMem("SE/brockcoin.ogg");
-    oto[3] = LoadSoundMem("SE/brockbreak.ogg");
-    oto[4] = LoadSoundMem("SE/coin.ogg");
-    oto[5] = LoadSoundMem("SE/humi.ogg");
-    oto[6] = LoadSoundMem("SE/koura.ogg");
-    oto[7] = LoadSoundMem("SE/dokan.ogg");
-    oto[8] = LoadSoundMem("SE/brockkinoko.ogg");
-    oto[9] = LoadSoundMem("SE/powerup.ogg");
-    oto[10] = LoadSoundMem("SE/kirra.ogg");
-    oto[11] = LoadSoundMem("SE/goal.ogg");
-    oto[12] = LoadSoundMem("SE/death.ogg");
-    oto[13] = LoadSoundMem("SE/Pswitch.ogg");
-    oto[14] = LoadSoundMem("SE/jumpBlock.ogg");
-    oto[15] = LoadSoundMem("SE/hintBlock.ogg");
-    oto[16] = LoadSoundMem("SE/4-clear.ogg");
-    oto[17] = LoadSoundMem("SE/allclear.ogg");
-    oto[18] = LoadSoundMem("SE/tekifire.ogg");
-
-//}catch( int num){end();}
-
-
-//ループ設定-20000-20秒
-//SetLoopPosSoundMem( 1,oto[104]) ;
-//SetLoopSamplePosSoundMem(44100,oto[104]);
-//SetLoopSamplePosSoundMem(22050,oto[104]);
-
+    return 0;
 }
 
-extern bool sound;
-void parseArgs(int argc, char* argv[])
+void loadSound(GameConfig* conf)
 {
-    if(argc <= 1) return;
-    for(int i = 0; i < argc; i++)
-    {
-        if(!strcasecmp(argv[i], "-nosound")) sound = false;
-    }
+    if (!conf->sound)
+        return;
+
+    //ogg読み込み
+    otom[BGM_FIELD]   = LoadMusicMem("bgm/field.ogg"); // volume: 50%
+    otom[BGM_DUNGEON] = LoadMusicMem("bgm/dungeon.ogg"); // volume: 40%
+    otom[BGM_STAR4]   = LoadMusicMem("bgm/star4.ogg"); // volume: 50%
+    otom[BGM_CASTLE]  = LoadMusicMem("bgm/castle.ogg"); // volume: 50%
+    otom[BGM_PUYO]    = LoadMusicMem("bgm/puyo.ogg"); // volume: 50%
+
+    oto[1]  = LoadSoundMem("se/jump.ogg");
+    oto[2]  = LoadSoundMem("se/brockcoin.ogg");
+    oto[3]  = LoadSoundMem("se/brockbreak.ogg");
+    oto[4]  = LoadSoundMem("se/coin.ogg");
+    oto[5]  = LoadSoundMem("se/humi.ogg");
+    oto[6]  = LoadSoundMem("se/koura.ogg");
+    oto[7]  = LoadSoundMem("se/dokan.ogg");
+    oto[8]  = LoadSoundMem("se/brockkinoko.ogg");
+    oto[9]  = LoadSoundMem("se/powerup.ogg");
+    oto[10] = LoadSoundMem("se/kirra.ogg");
+    oto[11] = LoadSoundMem("se/goal.ogg");
+    oto[12] = LoadSoundMem("se/death.ogg");
+    oto[13] = LoadSoundMem("se/Pswitch.ogg");
+    oto[14] = LoadSoundMem("se/jumpBlock.ogg");
+    oto[15] = LoadSoundMem("se/hintBlock.ogg");
+    oto[16] = LoadSoundMem("se/4-clear.ogg");
+    oto[17] = LoadSoundMem("se/allclear.ogg");
+    oto[18] = LoadSoundMem("se/tekifire.ogg");
 }

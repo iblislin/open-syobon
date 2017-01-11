@@ -1,12 +1,12 @@
+#include "GameConfig.h"
 #include "DxLib.h"
+#include "erl_ai.h"
+
 using namespace std;
 
-#define SHORT
 
-void loadg();
-void parseArgs(int argc, char* argv[]);
-
-//String 使用
+int loadg(GameConfig* conf);
+void parseArgs(int argc, char* argv[], GameConfig* conf);
 
 //プログラム中
 //main-10
@@ -15,13 +15,13 @@ void parseArgs(int argc, char* argv[]);
 //: This is unexcusable. How could someone in their right mind define
 //: a variable called 'main'!?
 //: The new define is after the main method
-int mainZ = 100, maintm = 0;
+int maintm = 0;
 
 //ステージ
 int stagecolor = 1;
-int sta = 1, stb = 4, stc = 0;
 
-//クイック
+// クイック
+// quick
 int fast = 1;
 
 //トラップ表示
@@ -31,29 +31,32 @@ int trap = 1;
 int tyuukan = 0;
 
 
-//スタッフロール
-int ending = 0;
-
-
 //ステージ読み込みループ(いじらない)
 int stagerr, stagepoint;
-//オーバーフローさせる
-int over = 0;
 
 //ステージスイッチ
 int stageonoff = 0;
 
 
 //メインプログラム
-void Mainprogram();
-void rpaint();
-int maint;
+void Mainprogram(GameConfig* conf);
+void renderMain(GameConfig* conf);
+
+void renderLivePanel(GameConfig* conf);
+void renderStaffRoll(GameConfig* conf);
+void renderStage(GameConfig* conf);
+void renderStageBackground(GameConfig* conf);
+void renderTitle(GameConfig* conf);
+void renderBlocks(GameConfig* conf);
+
+
+// helper functions
+int get_fps();
 
 
 //サブクラス
 //(ウエイト系
-#define wait(i) SDL_Delay(i)
-void wait2(long stime, long etime, int FLAME_TIME);
+void wait(Uint32 stime, Uint32 etime, int frame_time);
 int rand(int Rand);
 #define end() exit(0)
 
@@ -71,47 +74,34 @@ void fillrect(int a, int b, int c, int d);
 void drawarc(int a, int b, int c, int d);
 void fillarc(int a, int b, int c, int d);
 void FillScreen();
-SDL_Surface *grap[161][8];
-SDL_Surface *mgrap[51];
-SDL_Surface *loadimage(string b);
-SDL_Surface *loadimage(int a, int x, int y, int r, int z);
+SDL_Surface *grap[161][8] = {};
+SDL_Surface *titleGraph;
 int mirror;
 void drawimage(SDL_Surface * mx, int a, int b);
 void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f);
 void setre();
 void setre2();
 void setno();
-Mix_Music *otom[6];
-Mix_Chunk *oto[19];
-void ot(Mix_Chunk * x);
-void bgmchange(Mix_Music * x);
+Mix_Music *otom[6] = {};
+Mix_Chunk *oto[19] = {};
+void ot(Mix_Chunk * x, bool enableFlag);
+void chBgm(Mix_Music* music, int volume=50);
 
 //文字
 void str(string c, int a, int b);
 
 
-//)
-
-void stagecls();
-void stage();
-void stagep();
-
-
-
-
-
-//1-ステージ
-//10-ステージ前
-//
-
+void stagecls(GameConfig* conf);
+void stage(GameConfig* conf);
+void stagep(GameConfig* conf);
+void enterLivePanel(GameConfig* conf);
+void enterStaffRoll(GameConfig* conf);
+void enterStage(GameConfig* conf);
+void enterTitle(GameConfig* conf);
 
 
 //ループ
 int t, tt, t1, t2, t3, t4;
-
-
-//初期化
-int zxon, zzxon;
 
 //キーコンフィグ
 int key, keytm;
@@ -131,15 +121,14 @@ int sgtype[smax];
 
 //プレイヤー
 int mainmsgtype;
-int ma, mb, mnobia, mnobib, mhp;
-int mc, md, macttype, atkon, atktm, mactsok, msstar, nokori =
-    3, mactp, mact;
+int mnobia, mnobib;
+int macttype, atkon, atktm, mactsok, msstar, mactp, mact;
 
 int mtype, mxtype, mtm, mzz;
 int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
 int mmutekitm, mmutekion;
 int mztm, mztype;
-int actaon[7];
+int actaon[7];  // action ?
 //メッセージ
 int mmsgtm, mmsgtype;
 
@@ -149,6 +138,7 @@ int mascrollmax = 21000;	//9000
 
 
 //ブロック
+// block
 void tyobi(int x, int y, int type);
 void brockbreak(int t);
 #define tmax 641
@@ -174,16 +164,16 @@ int egtype[emax];
 
 
 //敵キャラ
-void ayobi(int xa, int xb, int xc, int xd, int xnotm, int xtype,
+void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
 	   int xxtype);
-void tekizimen();
+void tekizimen(GameConfig*);
 #define amax 24
 int aco;
 int aa[amax], ab[amax], anobia[amax], anobib[amax], ac[amax], ad[amax];
 int ae[amax], af[amax], abrocktm[amax];
 int aacta[amax], aactb[amax], azimentype[amax], axzimen[amax];
 int atype[amax], axtype[amax], amuki[amax], ahp[amax];
-int anotm[amax], anx[160], any[160];
+int anotm[amax], anx[160] = {} /* enemy x on graph */, any[160] = {};
 int atm[amax], a2tm[amax];
 int amsgtm[amax], amsgtype[amax];
 
@@ -198,7 +188,9 @@ int btype[bmax], bxtype[bmax], bz[bmax];
 #define nmax 41
 int nxxmax, nco;
 int na[nmax], nb[nmax], nc[nmax], nd[nmax], ntype[nmax];
-int ne[nmax], nf[nmax], ng[nmax], nx[nmax];
+int ne[nmax] = {},
+    nf[nmax] = {},
+    ng[nmax], nx[nmax];
 
 
 //リフト
@@ -224,7 +216,7 @@ int fmaZ = 0, fmb = 0;
 //強制スクロール
 int kscroll = 0;
 //画面サイズ(ファミコンサイズ×2)(256-224)
-int fxmax = 48000, fymax = 42000;
+int fxmax = SCREEN_WIDTH * 100, fymax = SCREEN_HEIGHT * 100;
 
 
 
@@ -242,7 +234,9 @@ double xd[11];
 string xs[31];
 
 
-//タイマー測定
-//: Do with this what we did with fma
-long stimeZ;
-#define stime stimeZ
+// function prototypes
+void deinit();
+
+#ifdef DEBUG
+void debug_screen(GameConfig*);
+#endif

@@ -2,25 +2,32 @@
 //Syobon Action uses it. Minor functions are just replaced with SDL
 //counterparts.
 #include <SDL/SDL.h>
-#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_image.h>
 #include <SDL/SDL_mixer.h>
+#include <SDL/SDL_rotozoom.h>
 #include <SDL/SDL_ttf.h>
-#include <time.h>
-#include <stdio.h>
-#include <math.h>
-#include <string>
-#include <locale.h>
 
+#include <clocale>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <ctime>
+#include <iostream>
+#include <map>
+#include <string>
+
+#include "GameConfig.h"
 #include "joyconfig.h"
+
+#ifndef DXLIB_HEADER
+#define DXLIB_HEADER
 
 #define TRUE 1
 #define FALSE 0
 #define byte unsigned char
 
 #define ScreenFlip() SDL_Flip(screen)
-#define GetNowCount() SDL_GetTicks()
 
 //UNIMPLEMENTED - macro substitution
 #define SetFontThickness(f);
@@ -28,17 +35,21 @@
 #define ChangeVolumeSoundMem(s, v);
 
 //Sound
-#define DX_PLAYTYPE_LOOP -1
+#define AUDIO_CHANNELS 4
 #define DX_PLAYTYPE_BACK 0
+#define DX_PLAYTYPE_LOOP -1
 void PlaySoundMem(Mix_Chunk* s, int l);
 Mix_Chunk* LoadSoundMem(const char* f);
 Mix_Music* LoadMusicMem(const char* f);
-#define CheckSoundMem(s) !s
 
-int DxLib_Init();
+int DxLib_Init(GameConfig*);
 
-//Main screen
+// Main screen
+#define SCREEN_WIDTH  480
+#define SCREEN_HEIGHT 420
 extern SDL_Surface *screen;
+
+// Audio
 
 //Fonts
 #define FONT_MAX 64
@@ -50,7 +61,7 @@ extern TTF_Font *font[FONT_MAX];
 void SetFontSize(byte size);
 void ChangeFontType(byte type);
 void DrawString(int a, int b, const char *x, Uint32 c);
-void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
+void DrawFormatString(int a, int b, Uint32 color, const char* str, ...);
 
 //Key Aliases
 #define KEY_INPUT_ESCAPE SDLK_ESCAPE
@@ -77,7 +88,6 @@ void DrawFormatString(int a, int b, Uint32 color, const char *str, ...);
 extern SDL_Joystick* joystick;
 
 void UpdateKeys();
-byte ProcessMessage();
 byte CheckHitKey(int key);
 byte WaitKey();
 
@@ -99,3 +109,5 @@ SDL_Surface *DerivationGraph(int srcx, int srcy, int width, int height,
 
 //Noticably different than the original
 SDL_Surface *LoadGraph(const char *filename);
+
+#endif  // DXLIB_HEADER
