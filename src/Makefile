@@ -1,8 +1,9 @@
 .SUFFIXES: .erl .beam
 
 
-CXXFLAGS+=	-std=c++11 -I/usr/local/include
+CXXFLAGS+=	-std=c++11 -I/usr/local/include -I/opt/local/include/
 LDFLAGS+=	-L/usr/local/lib \
+		-L/opt/local/lib/ \
 		-lpthread -lm \
 		`sdl-config --libs` \
 		-lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
