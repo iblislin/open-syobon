@@ -6,7 +6,7 @@
 
 
 init() ->
-  erlang:load_nif("./syobon_nif", 0).
+  erlang:load_nif("../../src/syobon_nif", 0).
 
 
 syobon_main() ->

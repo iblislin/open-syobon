@@ -18,7 +18,7 @@ loop(A=#actuator{cortex=Cortex}) ->
 
     {Cortex, terminate} ->
       error_logger:info_msg("actuator stop signal"),
-      ok.
+      ok
   end.
 
 

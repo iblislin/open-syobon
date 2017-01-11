@@ -1,7 +1,8 @@
 .SUFFIXES: .erl .beam
 
 
-CXXFLAGS+=	-std=c++11 -I/usr/local/include -I/opt/local/include/
+CXXFLAGS+=	-std=c++11 -I/usr/local/include -I/opt/local/include/ \
+		-DDEBUG
 LDFLAGS+=	-L/usr/local/lib \
 		-L/opt/local/lib/ \
 		-lpthread -lm \
@@ -47,10 +48,10 @@ tests/Main: ${TESTS_OBJS}
 test: tests/Main
 	./tests/Main
 
-syobon_nif.so: main.cpp loadg.cpp DxLib.cpp
+syobon_nif.so: ${OBJS}
 	${CXX} ${CXXFLAGS} -o syobon_nif.so -fPIC -shared main.cpp \
-	    loadg.cpp DxLib.cpp \
-	    -DPP \
-	    -I /usr/lib/erlang/erts-8.1.1/include/ \
+	    loadg.cpp DxLib.cpp Stage.cpp json/jsoncpp.cpp  \
+	    -DERL_AI \
+	    -I /usr/local/lib/erlang/erts-8.2/include/ \
 	    -lm -lpthread -lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
 	    `sdl-config --libs`

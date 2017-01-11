@@ -1,7 +1,8 @@
 #include "GameConfig.h"
 #include "DxLib.h"
-#include "erl_ai.h"
 
+#ifndef MAIN_H
+#define MAIN_H value
 using namespace std;
 
 
@@ -240,3 +241,7 @@ void deinit();
 #ifdef DEBUG
 void debug_screen(GameConfig*);
 #endif
+
+#include "erl_ai.h"
+
+#endif  // ifndef MAIN_H

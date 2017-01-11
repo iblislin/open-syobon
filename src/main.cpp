@@ -17,7 +17,8 @@ int main(int argc, char *argv[])
         return 1;
 
     //ループ
-    while (true) {
+    while (true)
+    {
         UpdateKeys();
         Mainprogram(&conf);
 
@@ -101,10 +102,10 @@ void debug_screen(GameConfig* conf)
     setcolor(0, 0, 0);
     char c[100];
 
-    sprintf(c, "conf->player.acce.x: %ld", conf->player.acce.x);
+    sprintf(c, "time: %d", SDL_GetTicks());
     str(c, 10, 10);
 
-    sprintf(c, "conf->player.acce.y: %d", conf->player.acce.y);
+    sprintf(c, "fitness: %d", fx);
     str(c, 10, 10 + 15);
 }
 
@@ -1568,7 +1569,7 @@ void enterStage(GameConfig* conf)
         ot(oto[12], conf->sound);
         StopSoundMem(oto[16]);
 #ifdef ERL_AI
-        conf.endFlag = true;  // end game
+        conf->endFlag = true;  // end game
 #endif
     }
 

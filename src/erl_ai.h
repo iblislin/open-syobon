@@ -14,6 +14,7 @@
 
 int run_state = 0;
 Uint32 last_time = 0;
+GameConfig conf;
 
 struct worker_args {
     ErlNifPid* caller;
@@ -23,7 +24,7 @@ void debug_screen() {
     setcolor(0, 0, 0);
     char c[100];
 
-    sprintf(c, "time: %ld", stime - last_time);
+    sprintf(c, "time: %ld", SDL_GetTicks() - last_time);
     str(c, 10, 10);
 
     sprintf(c, "fitness: %d", fx);
@@ -34,13 +35,12 @@ void* worker(void* args) {
     ErlNifEnv* worker_env = enif_alloc_env();
 
     run_state = 1; // start the game
-    zxon = 0;  // make game reinit
+    conf.init_stage = true;  // make game reinit
     // main window
-    while (!CheckHitKey(KEY_INPUT_ESCAPE))
+    while (true)
     {
         UpdateKeys();
-        maint = 0;
-        Mainprogram();
+        Mainprogram(&conf);
 
         if(run_state) {
             ERL_NIF_TERM msg = enif_make_atom(worker_env, "game_start");
@@ -49,7 +49,7 @@ void* worker(void* args) {
         }
 
         // timeout rules
-        Uint32 time_delta = stime - last_time;
+        Uint32 time_delta = SDL_GetTicks() - last_time;
         if (fx <= 34301 && time_delta >= 20000)
             break;
         else if (fx <= 163400 && time_delta >= 40000)
@@ -57,10 +57,13 @@ void* worker(void* args) {
         else if (time_delta >= 70000) // global timeout
             break;
 
-        if (maint == 3)
+        if (conf.endFlag)
+            break;
+        else if (CheckHitKey(KEY_INPUT_ESCAPE))
             break;
     }
-    last_time = stime;
+
+    last_time = SDL_GetTicks();
     run_state = 0;
 
     ERL_NIF_TERM msg = enif_make_atom(worker_env, "game_end");
@@ -74,8 +77,8 @@ void* worker(void* args) {
 static ERL_NIF_TERM
 syobon_init(ErlNifEnv* env, int argc, const ERL_NIF_TERM argv[])
 {
-    DxLib_Init();
-    loadg();
+    DxLib_Init(&conf);
+    loadg(&conf);
     SetFontSize(16);
     return enif_make_int(env, 0);
 }
@@ -123,7 +126,7 @@ void _hit_key(SDLKey k){
 
     SDL_PushEvent(&sdlevent);
 
-    usleep(100000);
+    usleep(20000);
 
     sdlevent.type = SDL_KEYUP;
     sdlevent.key.keysym.sym = k;
