@@ -1139,12 +1139,12 @@ void renderBlocks(GameConfig* conf)
 {
     for (auto i=0; i<tmax; i++)
     {
-        xx[0] = ta[i] - fx;
+        int x = ta[i] - fx;
         xx[1] = tb[i] - fy;
         xx[2] = 32;
         xx[3] = xx[2];
 
-        if (!(xx[0] + xx[2] * 100 >= -10 && xx[1] <= fxmax))
+        if (!(x + xx[2] * 100 >= -10 && xx[1] <= fxmax))
             continue;
 
         xx[9] = 0;
@@ -1158,7 +1158,7 @@ void renderBlocks(GameConfig* conf)
         if (ttype[i] < 100)
         {
             xx[6] = ttype[i] + xx[9];
-            drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[xx[6]][1], x / 100, xx[1] / 100);
         }
 
         if (txtype[i] != 10)
@@ -1173,7 +1173,7 @@ void renderBlocks(GameConfig* conf)
             {
                 xx[6] = 2 + xx[9];
                 drawimage(grap[xx[6]][1],
-                        xx[0] / 100, xx[1] / 100);
+                        x / 100, xx[1] / 100);
             }
 
             if (ttype[i] == 112 || ttype[i] == 104
@@ -1182,7 +1182,7 @@ void renderBlocks(GameConfig* conf)
             {
                 xx[6] = 1 + xx[9];
                 drawimage(grap[xx[6]][1],
-                        xx[0] / 100, xx[1] / 100);
+                        x / 100, xx[1] / 100);
             }
 
             if (ttype[i] == 111 || ttype[i] == 113
@@ -1191,58 +1191,58 @@ void renderBlocks(GameConfig* conf)
             {
                 xx[6] = 3 + xx[9];
                 drawimage(grap[xx[6]][1],
-                        xx[0] / 100, xx[1] / 100);
+                        x / 100, xx[1] / 100);
             }
 
         }
 
         if (ttype[i] == 117 && txtype[i] == 1)
         {
-            drawimage(grap[4][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[4][5], x / 100, xx[1] / 100);
         }
 
         if (ttype[i] == 117 && txtype[i] >= 3)
         {
-            drawimage(grap[3][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[3][5], x / 100, xx[1] / 100);
         }
 
         if (ttype[i] == 115 && txtype[i] == 3)
         {
             xx[6] = 1 + xx[9];
-            drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[xx[6]][1], x / 100, xx[1] / 100);
         }
 
         //ジャンプ台
         if (ttype[i] == 120 && txtype[i] != 1)
         {
-            drawimage(grap[16][1], xx[0] / 100 + 3,
+            drawimage(grap[16][1], x / 100 + 3,
                     xx[1] / 100 + 2);
         }
         //ON-OFF
         if (ttype[i] == 130)
-            drawimage(grap[10][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[10][5], x / 100, xx[1] / 100);
         if (ttype[i] == 131)
-            drawimage(grap[11][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[11][5], x / 100, xx[1] / 100);
 
         if (ttype[i] == 140)
-            drawimage(grap[12][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[12][5], x / 100, xx[1] / 100);
         if (ttype[i] == 141)
-            drawimage(grap[13][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[13][5], x / 100, xx[1] / 100);
         if (ttype[i] == 142)
-            drawimage(grap[14][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[14][5], x / 100, xx[1] / 100);
 
         if (ttype[i] == 300 || ttype[i] == 301)
-            drawimage(grap[1][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[1][5], x / 100, xx[1] / 100);
 
         //Pスイッチ
         if (ttype[i] == 400)
-            drawimage(grap[2][5], xx[0] / 100, xx[1] / 100);
+            drawimage(grap[2][5], x / 100, xx[1] / 100);
 
         //コイン
         if (ttype[i] == 800)
-            drawimage(grap[0][2], xx[0] / 100 + 2, xx[1] / 100 + 1);
+            drawimage(grap[0][2], x / 100 + 2, xx[1] / 100 + 1);
     }
-}
+}  // renderBlocks
 
 
 void initStage(GameConfig* conf)
