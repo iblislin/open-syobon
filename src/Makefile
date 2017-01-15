@@ -8,7 +8,7 @@ LDFLAGS+=	-L/usr/local/lib \
 		-lpthread -lm \
 		`sdl-config --libs` \
 		-lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
-		-lUnitTest++
+		`pkg-config --libs UnitTest++`
 
 ERLCFLAGS=	+native
 
@@ -50,8 +50,8 @@ test: tests/Main
 
 syobon_nif.so: ${OBJS}
 	${CXX} ${CXXFLAGS} -o syobon_nif.so -fPIC -shared main.cpp \
-	    loadg.cpp DxLib.cpp Stage.cpp json/jsoncpp.cpp  \
-	    -DERL_AI \
-	    -I /usr/local/lib/erlang/erts-8.2/include/ \
-	    -lm -lpthread -lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
-	    `sdl-config --libs`
+		loadg.cpp DxLib.cpp Stage.cpp json/jsoncpp.cpp  \
+		-DERL_AI \
+		-I /usr/local/lib/erlang/erts-8.2/include/ \
+		lm -lpthread -lSDL_gfx -lSDL_image -lSDL_mixer -lSDL_ttf \
+		`sdl-config --libs`
