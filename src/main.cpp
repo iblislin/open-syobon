@@ -1141,10 +1141,9 @@ void renderBlocks(GameConfig* conf)
     {
         int x = ta[i] - fx;
         int y = tb[i] - fy;
-        xx[2] = 32;
-        xx[3] = xx[2];
 
-        if (!(x + xx[2] * 100 >= -10 && y <= fxmax))
+        /* still no idea what '32' is */
+        if (!(x + 32 * 100 >= -10 && y <= fxmax))
             continue;
 
         xx[9] = 0;
