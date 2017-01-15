@@ -49,18 +49,18 @@ void parseArgs(int argc, char* argv[], GameConfig* conf)
 void renderMain(GameConfig* conf)
 {
     int *scene = &conf->cur_scene;
-
+    unsigned int theme = conf->stage_info.theme;
     //ダブルバッファリング
     setcolor(0, 0, 0);
 
-    if (stagecolor == 1)
+    if (theme == THEME_FIELD)
         setcolor(160, 180, 250);
-    else if (stagecolor == 2)
+    else if (theme == THEME_DUNGEON)
         setcolor(10, 10, 10);
-    else if (stagecolor == 4)
+    else if (theme == THEME_CASTLE)
         setcolor(10, 10, 10);
 
-    if (stagecolor == 5)
+    if (theme == THEME_SNOW)
     {
         setcolor(160, 180, 250);
         mrzimen = 1;
@@ -109,6 +109,8 @@ void debug_screen(GameConfig* conf)
 
 void renderStageBackground(GameConfig* conf)
 {
+    unsigned int theme = conf->stage_info.theme;
+
     for (auto t=0; t<nmax; t++)
     {
         const int x = na[t] - fx;
@@ -130,7 +132,7 @@ void renderStageBackground(GameConfig* conf)
         {
             if (ntype[t] != 3) {
                 if ((ntype[t] == 1 || ntype[t] == 2)
-                        && stagecolor == 5)
+                        && theme == THEME_SNOW)
                 {
                     drawimage(grap[ntype[t] + 30][4], xx[0] / 100, xx[1] / 100);
                 }
@@ -168,6 +170,9 @@ void renderStageBackground(GameConfig* conf)
 
 void renderStage(GameConfig* conf)
 {
+    StageInfo *stage = &conf->stage_info;
+    unsigned int theme = conf->stage_info.theme;
+
     renderStageBackground(conf);
 
     //グラ
@@ -187,12 +192,13 @@ void renderStage(GameConfig* conf)
                 drawimage(grap[0][2], xx[0] / 100, xx[1] / 100);
 
             //ブロックの破片
-            if (egtype[t] == 1) {
-                if (stagecolor == 1 || stagecolor == 5)
+            if (egtype[t] == 1)
+            {
+                if (theme == THEME_FIELD || theme == THEME_SNOW)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
-                if (stagecolor == 2)
+                if (theme == THEME_DUNGEON)
                     setcolor(0, 120, 160);
-                if (stagecolor == 4)
+                if (theme == THEME_CASTLE)
                     setcolor(192, 192, 192);
 
                 fillarc(xx[0] / 100, xx[1] / 100, 7, 7);
@@ -408,32 +414,14 @@ void renderStage(GameConfig* conf)
             if (atype[t] == 82) {
 
                 if (axtype[t] == 0) {
-                    xx[9] = 0;
-                    if (stagecolor == 2) {
-                        xx[9] = 30;
-                    }
-                    if (stagecolor == 4) {
-                        xx[9] = 60;
-                    }
-                    if (stagecolor == 5) {
-                        xx[9] = 90;
-                    }
+                    xx[9] = stage->theme_offset();
                     xx[6] = 5 + xx[9];
                     drawimage(grap[xx[6]][1],
                             xx[0] / 100, xx[1] / 100);
                 }
 
                 if (axtype[t] == 1) {
-                    xx[9] = 0;
-                    if (stagecolor == 2) {
-                        xx[9] = 30;
-                    }
-                    if (stagecolor == 4) {
-                        xx[9] = 60;
-                    }
-                    if (stagecolor == 5) {
-                        xx[9] = 90;
-                    }
+                    xx[9] = stage->theme_offset();
                     xx[6] = 4 + xx[9];
                     drawimage(grap[xx[6]][1],
                             xx[0] / 100, xx[1] / 100);
@@ -447,32 +435,14 @@ void renderStage(GameConfig* conf)
             if (atype[t] == 83) {
 
                 if (axtype[t] == 0) {
-                    xx[9] = 0;
-                    if (stagecolor == 2) {
-                        xx[9] = 30;
-                    }
-                    if (stagecolor == 4) {
-                        xx[9] = 60;
-                    }
-                    if (stagecolor == 5) {
-                        xx[9] = 90;
-                    }
+                    xx[9] = stage->theme_offset();
                     xx[6] = 5 + xx[9];
                     drawimage(grap[xx[6]][1],
                             xx[0] / 100 + 10, xx[1] / 100 + 9);
                 }
 
                 if (axtype[t] == 1) {
-                    xx[9] = 0;
-                    if (stagecolor == 2) {
-                        xx[9] = 30;
-                    }
-                    if (stagecolor == 4) {
-                        xx[9] = 60;
-                    }
-                    if (stagecolor == 5) {
-                        xx[9] = 90;
-                    }
+                    xx[9] = stage->theme_offset();
                     xx[6] = 4 + xx[9];
                     drawimage(grap[xx[6]][1],
                             xx[0] / 100 + 10, xx[1] / 100 + 9);
@@ -624,16 +594,7 @@ void renderStage(GameConfig* conf)
 
             //落ちるやつ
             if (stype[t] == 52) {
-                xx[29] = 0;
-                if (stagecolor == 2) {
-                    xx[29] = 30;
-                }
-                if (stagecolor == 4) {
-                    xx[29] = 60;
-                }
-                if (stagecolor == 5) {
-                    xx[29] = 90;
-                }
+                xx[29] = stage->theme_offset();
 
                 for (t3 = 0; t3 <= sc[t] / 3000; t3++) {
                     if (sxtype[t] == 0) {
@@ -644,7 +605,7 @@ void renderStage(GameConfig* conf)
                                  fx) / 100 +
                                 fma + 29 * t3,
                                 (sb[t] - fy) / 100 + fmb);
-                        if (stagecolor != 4) {
+                        if (theme != THEME_CASTLE) {
                             drawimage(grap[6 + xx[29]]
                                     [1], (sa[t]
                                         -
@@ -695,9 +656,9 @@ void renderStage(GameConfig* conf)
             //ステージトラップ
             if (trap == 1) {
                 if (stype[t] >= 100 && stype[t] <= 299) {
-                    if (stagecolor == 1 || stagecolor == 5)
+                    if (theme == THEME_FIELD || theme == THEME_SNOW)
                         setc0();
-                    else if (stagecolor == 2 || stagecolor == 4)
+                    else if (theme == THEME_DUNGEON || theme == THEME_CASTLE)
                         setc1();
                     drawrect((sa[t] - fx) / 100 +
                             fma,
@@ -1142,17 +1103,11 @@ void renderBlocks(GameConfig* conf)
         if (!(x + 32 * 100 >= -10 && y <= fxmax))
             continue;
 
-        xx[9] = 0;
-        if (stagecolor == 2)
-            xx[9] = 30;
-        else if (stagecolor == 4)
-            xx[9] = 60;
-        else if (stagecolor == 5)
-            xx[9] = 90;
+        int offset = conf->stage_info.theme_offset();
 
         if (ttype[i] < 100)
         {
-            xx[6] = ttype[i] + xx[9];
+            xx[6] = ttype[i] + offset;
             drawimage(grap[xx[6]][1], x / 100, y / 100);
         }
 
@@ -1166,7 +1121,7 @@ void renderBlocks(GameConfig* conf)
                     || ttype[i] == 114 && txtype[i] == 1
                     || ttype[i] == 116)
             {
-                xx[6] = 2 + xx[9];
+                xx[6] = 2 + offset;
                 drawimage(grap[xx[6]][1],
                         x / 100, y / 100);
             }
@@ -1175,7 +1130,7 @@ void renderBlocks(GameConfig* conf)
                     && txtype[i] == 0 || ttype[i] == 115
                     && txtype[i] == 1)
             {
-                xx[6] = 1 + xx[9];
+                xx[6] = 1 + offset;
                 drawimage(grap[xx[6]][1],
                         x / 100, y / 100);
             }
@@ -1184,7 +1139,7 @@ void renderBlocks(GameConfig* conf)
                     || ttype[i] == 115 && txtype[i] == 0
                     || ttype[i] == 124)
             {
-                xx[6] = 3 + xx[9];
+                xx[6] = 3 + offset;
                 drawimage(grap[xx[6]][1],
                         x / 100, y / 100);
             }
@@ -1203,7 +1158,7 @@ void renderBlocks(GameConfig* conf)
 
         if (ttype[i] == 115 && txtype[i] == 3)
         {
-            xx[6] = 1 + xx[9];
+            xx[6] = 1 + offset;
             drawimage(grap[xx[6]][1], x / 100, y / 100);
         }
 
@@ -1246,14 +1201,15 @@ void initStage(GameConfig* conf)
         return;
 
     Player* player = &conf->player;
+    StageInfo *_stage = &conf->stage_info;
 
     conf->init_stage = false;
 
     mainmsgtype = 0;
 
-    stagecolor = 1;
+    _stage->theme = THEME_FIELD;
     player->loc.x = 5600;
-    conf->player.loc.y = 32000;
+    player->loc.y = 32000;
     mmuki = 1;
     player->hp = 1;
     player->acce.set(0, 0);
@@ -1311,7 +1267,7 @@ void initStage(GameConfig* conf)
         srco++;
 
         if (rand(4) == 0)
-            stagecolor = rand(5);
+            _stage->theme = rand(THEME_SNOW + 1);
     }
 }  // initStage
 
@@ -1348,6 +1304,7 @@ void enterStage(GameConfig* conf)
 {
     int *scene = &conf->cur_scene;
     Player* player = &conf->player;
+    StageInfo *stage = &conf->stage_info;
 
     // init stage if need
     // it depends on conf->init_stage
@@ -1963,7 +1920,7 @@ void enterStage(GameConfig* conf)
             conf->player.acce.x = 0;
         }
     }
-    if (player->loc.y >= 38000 && player->hp >= 0 && stagecolor == 4)
+    if (player->loc.y >= 38000 && player->hp >= 0 && stage->theme == THEME_CASTLE)
     {
         player->hp = -2;
         mmsgtm = 30;
@@ -5280,6 +5237,8 @@ void stage(GameConfig* conf)
 
 void stagep(GameConfig* conf)
 {
+    StageInfo *stage = &conf->stage_info;
+
     //ステージロード
 
     scrollx = 3600 * 100;
@@ -5453,7 +5412,7 @@ void stagep(GameConfig* conf)
         scrollx = 4080 * 100;
         conf->player.loc.x = 6000;
         conf->player.loc.y = 3000;
-        stagecolor = 2;
+        stage->theme = THEME_DUNGEON;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
@@ -5957,7 +5916,7 @@ void stagep(GameConfig* conf)
         scrollx = 0 * 100;
         conf->player.loc.x = 6000;
         conf->player.loc.y = 6000;
-        stagecolor = 2;
+        stage->theme = THEME_DUNGEON;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
@@ -5977,7 +5936,7 @@ void stagep(GameConfig* conf)
     // 1-3-5 (空中)
     if (conf->stage_info.check(1, 3, 5))
     {
-        stagecolor = 1;
+        stage->theme = THEME_FIELD;
         chBgm(otom[BGM_STAR4]);
 
         scrollx = 0 * 100;
@@ -6022,7 +5981,7 @@ void stagep(GameConfig* conf)
         scrollx = 4400 * 100;
         conf->player.loc.x = 12000;
         conf->player.loc.y = 6000;
-        stagecolor = 4;
+        stage->theme = THEME_CASTLE;
 
         auto stagedatex = conf->stage_info.get_map()->data;
 
@@ -6285,7 +6244,7 @@ void stagep(GameConfig* conf)
         conf->player.loc.x = 5600;
         conf->player.loc.y = 32000;
         chBgm(otom[BGM_FIELD]);
-        stagecolor = 1;
+        stage->theme = THEME_FIELD;
         scrollx = 2900 * (113 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
@@ -6404,7 +6363,7 @@ void stagep(GameConfig* conf)
     if (conf->stage_info.check(2, 2, 0))
     {
         chBgm(otom[BGM_FIELD]);
-        stagecolor = 1;
+        stage->theme = THEME_FIELD;
         scrollx = 2900 * (19 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
@@ -6453,7 +6412,7 @@ void stagep(GameConfig* conf)
     if (conf->stage_info.check(2, 2, 1))
     {
         chBgm(otom[BGM_DUNGEON], 40);
-        stagecolor = 2;
+        stage->theme = THEME_DUNGEON;
         conf->player.loc.x = 7500;
         conf->player.loc.y = 9000;
         scrollx = 2900 * (137 - 19);
@@ -6652,7 +6611,7 @@ void stagep(GameConfig* conf)
     if (conf->stage_info.check(2, 2, 2))
     {
         chBgm(otom[BGM_FIELD]);
-        stagecolor = 1;
+        stage->theme = THEME_FIELD;
         scrollx = 2900 * (36 - 19);
         conf->player.loc.x = 7500;
         conf->player.loc.y = 3000 * 9;
@@ -6746,7 +6705,7 @@ void stagep(GameConfig* conf)
         conf->player.loc.x = 7500;
         conf->player.loc.y = 3000 * 8;
         chBgm(otom[BGM_FIELD]);
-        stagecolor = 1;
+        stage->theme = THEME_FIELD;
         scrollx = 2900 * (126 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
@@ -6860,7 +6819,7 @@ void stagep(GameConfig* conf)
         }
 
         chBgm(otom[BGM_CASTLE]);
-        stagecolor = 4;
+        stage->theme = THEME_CASTLE;
         scrollx = 2900 * (40 - 19);
 
         auto stagedatex = conf->stage_info.get_map(std::make_tuple(2, 4, 0))->data;
@@ -6940,7 +6899,7 @@ void stagep(GameConfig* conf)
         conf->player.loc.x = 4500;
         conf->player.loc.y = 3000 * 11;
         chBgm(otom[BGM_CASTLE]);
-        stagecolor = 4;
+        stage->theme = THEME_CASTLE;
         scrollx = 2900 * (21 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
@@ -7007,7 +6966,7 @@ void stagep(GameConfig* conf)
         conf->player.loc.x = 4500;
         conf->player.loc.y = 3000 * 11;
         chBgm(otom[BGM_PUYO]);
-        stagecolor = 4;
+        stage->theme = THEME_CASTLE;
         scrollx = 2900 * (128 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;
@@ -7240,7 +7199,7 @@ void stagep(GameConfig* conf)
         conf->player.loc.x = 5600;
         conf->player.loc.y = 32000;
         chBgm(otom[BGM_FIELD]);
-        stagecolor = 5;
+        stage->theme = THEME_SNOW;
         scrollx = 2900 * (112 - 19);
 
         auto stagedatex = conf->stage_info.get_map()->data;

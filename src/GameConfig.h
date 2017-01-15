@@ -11,7 +11,6 @@
 #define BGM_CASTLE   4
 #define BGM_PUYO     5
 
-
 // scene
 #define SCENE_TITLE       1
 #define SCENE_STAGE       2

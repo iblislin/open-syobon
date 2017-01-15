@@ -100,6 +100,12 @@ void StageInfo::init_map()
 }
 
 
+unsigned int StageInfo::theme_offset() const
+{
+    return this->theme * 30;
+}
+
+
 /**********************************************
  *  StageMap
  **********************************************/

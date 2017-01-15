@@ -18,9 +18,6 @@ void parseArgs(int argc, char* argv[], GameConfig* conf);
 //: The new define is after the main method
 int maintm = 0;
 
-//ステージ
-int stagecolor = 1;
-
 // クイック
 // quick
 int fast = 1;
