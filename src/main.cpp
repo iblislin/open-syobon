@@ -57,8 +57,6 @@ void renderMain(GameConfig* conf)
         setcolor(160, 180, 250);
     else if (stagecolor == 2)
         setcolor(10, 10, 10);
-    else if (stagecolor == 3)
-        setcolor(160, 180, 250);
     else if (stagecolor == 4)
         setcolor(10, 10, 10);
 
@@ -190,8 +188,7 @@ void renderStage(GameConfig* conf)
 
             //ブロックの破片
             if (egtype[t] == 1) {
-                if (stagecolor == 1 || stagecolor == 3
-                        || stagecolor == 5)
+                if (stagecolor == 1 || stagecolor == 5)
                     setcolor(9 * 16, 6 * 16, 3 * 16);
                 if (stagecolor == 2)
                     setcolor(0, 120, 160);
@@ -698,10 +695,9 @@ void renderStage(GameConfig* conf)
             //ステージトラップ
             if (trap == 1) {
                 if (stype[t] >= 100 && stype[t] <= 299) {
-                    if (stagecolor == 1
-                            || stagecolor == 3 || stagecolor == 5)
+                    if (stagecolor == 1 || stagecolor == 5)
                         setc0();
-                    if (stagecolor == 2 || stagecolor == 4)
+                    else if (stagecolor == 2 || stagecolor == 4)
                         setc1();
                     drawrect((sa[t] - fx) / 100 +
                             fma,
@@ -5981,7 +5977,7 @@ void stagep(GameConfig* conf)
     // 1-3-5 (空中)
     if (conf->stage_info.check(1, 3, 5))
     {
-        stagecolor = 3;
+        stagecolor = 1;
         chBgm(otom[BGM_STAR4]);
 
         scrollx = 0 * 100;
