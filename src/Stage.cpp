@@ -125,7 +125,7 @@ StageMap::StageMap(std::string path)
             *j = 0;
 
     if (!f.is_open())
-        throw std::ios::failure("Unabel to read stage file: " + path);
+        throw std::ios::failure("Unable to read stage file: " + path);
 
     f >> root;
     for (auto i=0; i<root["map"].size(); ++i)
