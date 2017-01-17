@@ -11,7 +11,7 @@ StageInfo::StageInfo()
      * (0, 0, 0) -> a random generated stage
      */
 
-    this->init_map();
+    this->init_maps();
 }
 
 
@@ -70,33 +70,61 @@ StageMap* StageInfo::get_map(std::tuple<int, int, int> key)
 }
 
 
-void StageInfo::init_map()
+void StageInfo::init_maps()
 {
-	this->maps[std::make_tuple(1, 1, 0)] = new StageMap("stage/1-1-0.json");
+    std::vector<std::tuple<int, int, int>> stage_list =
+    {
+        std::make_tuple(1, 1, 0),
 
-    this->maps[std::make_tuple(1, 2, 0)] = new StageMap("stage/1-2-0.json");
-	this->maps[std::make_tuple(1, 2, 1)] = new StageMap("stage/1-2-1.json");
-	this->maps[std::make_tuple(1, 2, 2)] = new StageMap("stage/1-2-2.json");
+        std::make_tuple(1, 2, 0),
+        std::make_tuple(1, 2, 2),
 
-    this->maps[std::make_tuple(1, 3, 0)] = new StageMap("stage/1-3-0.json");
-	this->maps[std::make_tuple(1, 3, 1)] = new StageMap("stage/1-3-1.json");
-	this->maps[std::make_tuple(1, 3, 5)] = new StageMap("stage/1-3-5.json");
+        std::make_tuple(1, 3, 0),
+        std::make_tuple(1, 3, 1),
+        std::make_tuple(1, 3, 5),
 
-    this->maps[std::make_tuple(1, 4, 0)] = new StageMap("stage/1-4-0.json");
+        std::make_tuple(1, 4, 0),
 
-    this->maps[std::make_tuple(2, 1, 0)] = new StageMap("stage/2-1-0.json");
+        std::make_tuple(2, 1, 0),
 
-    this->maps[std::make_tuple(2, 2, 0)] = new StageMap("stage/2-2-0.json");
-    this->maps[std::make_tuple(2, 2, 1)] = new StageMap("stage/2-2-1.json");
-    this->maps[std::make_tuple(2, 2, 2)] = new StageMap("stage/2-2-2.json");
+        std::make_tuple(2, 2, 0),
+        std::make_tuple(2, 2, 1),
+        std::make_tuple(2, 2, 2),
 
-    this->maps[std::make_tuple(2, 3, 0)] = new StageMap("stage/2-3-0.json");
+        std::make_tuple(2, 3, 0),
 
-    this->maps[std::make_tuple(2, 4, 0)] = new StageMap("stage/2-4-0.json");
-    this->maps[std::make_tuple(2, 4, 1)] = new StageMap("stage/2-4-1.json");
-    this->maps[std::make_tuple(2, 4, 2)] = new StageMap("stage/2-4-2.json");
+        std::make_tuple(2, 4, 0),
+        std::make_tuple(2, 4, 1),
+        std::make_tuple(2, 4, 2),
 
-    this->maps[std::make_tuple(3, 1, 0)] = new StageMap("stage/3-1-0.json");
+        std::make_tuple(3, 1, 0),
+    };
+
+    auto get_path = [](std::tuple<int, int, int> tuple) -> std::string
+    {
+        return "stage/" +
+            std::to_string(std::get<0>(tuple)) + "-" +
+            std::to_string(std::get<1>(tuple)) + "-" +
+            std::to_string(std::get<2>(tuple)) + ".json";
+    };
+
+    Json::Value json;
+    for (auto i=stage_list.begin(); i!=stage_list.end(); ++i)
+    {
+        load_stage_metadata(get_path(*i), &json);
+        this->maps[*i] = new StageMap(&json);
+    }
+}
+
+
+void StageInfo::load_stage_metadata(std::string path, Json::Value *ret)
+{
+    std::ifstream f(path);
+    if (!f.is_open())
+        throw std::ios::failure("Unable to read stage file: " + path);
+
+    f >> *ret;
+    f.close();
 }
 
 
@@ -110,27 +138,14 @@ unsigned int StageInfo::theme_offset() const
  *  StageMap
  **********************************************/
 
-StageMap::StageMap(std::string path)
+StageMap::StageMap(Json::Value *json)
 {
-    /*
-     * path: file path to load
-     */
-
-    std::ifstream f(path);
-    Json::Value root;
-
     /* init the 2d std::array */
     for (auto i=this->data.begin(); i!=this->data.end(); ++i)
         for (auto j=i->begin(); j<i->end(); ++j)
             *j = 0;
 
-    if (!f.is_open())
-        throw std::ios::failure("Unable to read stage file: " + path);
-
-    f >> root;
-    for (auto i=0; i<root["map"].size(); ++i)
-        for (auto j=0; j<root["map"][i].size(); ++j)
-            this->data[i][j] = root["map"][i][j].asInt();
-
-    f.close();
+    for (auto i=0; i<(*json)["map"].size(); ++i)
+        for (auto j=0; j<(*json)["map"][i].size(); ++j)
+            this->data[i][j] = (*json)["map"][i][j].asInt();
 }

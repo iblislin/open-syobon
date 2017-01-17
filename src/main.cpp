@@ -1114,12 +1114,13 @@ void renderBlocks(GameConfig* conf)
         if (txtype[i] != 10)
         {
 
-            if (ttype[i] == 100 || ttype[i] == 101
-                    || ttype[i] == 102
-                    || ttype[i] == 103
-                    || ttype[i] == 104 && txtype[i] == 1
-                    || ttype[i] == 114 && txtype[i] == 1
-                    || ttype[i] == 116)
+            if (ttype[i] == 100
+                || ttype[i] == 101
+                || ttype[i] == 102
+                || ttype[i] == 103
+                || (ttype[i] == 104 && txtype[i] == 1)
+                || (ttype[i] == 114 && txtype[i] == 1)
+                || ttype[i] == 116)
             {
                 xx[6] = 2 + offset;
                 drawimage(grap[xx[6]][1],
@@ -4806,7 +4807,7 @@ void wait(Uint32 stime, Uint32 etime, int frame_time)
 //乱数作成
 int rand(int Rand)
 {
-    return rand() % Rand;
+    return rand() % Rand; // TODO std::rand
 }
 
 //終了

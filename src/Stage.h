@@ -4,6 +4,7 @@
 #include <map>
 #include <string>
 #include <tuple>
+#include <vector>
 
 #include "json/json.h"
 
@@ -23,7 +24,7 @@
 class StageMap
 {
 public:
-    StageMap(std::string path);
+    StageMap(Json::Value *json);
 
     std::array<std::array<unsigned int, STAGE_MAP_X>, STAGE_MAP_Y> data;
 };
@@ -56,7 +57,8 @@ public:
     unsigned int theme_offset() const;
 
 private:
-    void init_map();
+    void init_maps();
+    void load_stage_metadata(std::string path, Json::Value *ret);
 };
 
 #endif  /* ifndef STAGE_H */
