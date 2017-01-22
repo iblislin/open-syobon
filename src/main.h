@@ -5,6 +5,9 @@
 #define MAIN_H value
 using namespace std;
 
+/* The block on screen is square, size is 29x29 */
+#define BLOCK_SIZE 29
+
 
 int loadg(GameConfig* conf);
 void parseArgs(int argc, char* argv[], GameConfig* conf);

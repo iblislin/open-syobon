@@ -1106,14 +1106,12 @@ void renderBlocks(GameConfig* conf)
         int offset = conf->stage_info.theme_offset();
 
         if (ttype[i] < 100)
-        {
-            xx[6] = ttype[i] + offset;
-            drawimage(grap[xx[6]][1], x / 100, y / 100);
-        }
+            drawimage(grap[ttype[i] + offset][1], x / 100, y / 100);
 
         if (txtype[i] != 10)
         {
 
+            /* the question mark box */
             if (ttype[i] == 100
                 || ttype[i] == 101
                 || ttype[i] == 102
@@ -1123,26 +1121,25 @@ void renderBlocks(GameConfig* conf)
                 || ttype[i] == 116)
             {
                 xx[6] = 2 + offset;
-                drawimage(grap[xx[6]][1],
-                        x / 100, y / 100);
+                drawimage(grap[xx[6]][1], x / 100, y / 100);
             }
 
-            if (ttype[i] == 112 || ttype[i] == 104
-                    && txtype[i] == 0 || ttype[i] == 115
-                    && txtype[i] == 1)
+            if (ttype[i] == 112
+                || (ttype[i] == 104 && txtype[i] == 0)
+                || (ttype[i] == 115 && txtype[i] == 1))
             {
                 xx[6] = 1 + offset;
-                drawimage(grap[xx[6]][1],
-                        x / 100, y / 100);
+                drawimage(grap[xx[6]][1], x / 100, y / 100);
             }
 
-            if (ttype[i] == 111 || ttype[i] == 113
-                    || ttype[i] == 115 && txtype[i] == 0
-                    || ttype[i] == 124)
+            /* the empty question mark box */
+            if (ttype[i] == 111
+                || ttype[i] == 113
+                || (ttype[i] == 115 && txtype[i] == 0)
+                || ttype[i] == 124)
             {
                 xx[6] = 3 + offset;
-                drawimage(grap[xx[6]][1],
-                        x / 100, y / 100);
+                drawimage(grap[xx[6]][1], x / 100, y / 100);
             }
 
         }
@@ -5252,15 +5249,18 @@ void stagep(GameConfig* conf)
         auto stagedatex = conf->stage_info.get_map()->data;
 
         //追加情報
-        tyobi(8 * 29, 9 * 29 - 12, 100);
+        tyobi(8 * BLOCK_SIZE, 9 * BLOCK_SIZE - 12, 100);
+
         txtype[tco] = 2;
-        tyobi(13 * 29, 9 * 29 - 12, 102);
+        tyobi(13 * BLOCK_SIZE, 9 * BLOCK_SIZE - 12, 102);
+
         txtype[tco] = 0;
-        tyobi(14 * 29, 5 * 29 - 12, 101);
-        tyobi(35 * 29, 8 * 29 - 12, 110);
-        tyobi(47 * 29, 9 * 29 - 12, 103);
-        tyobi(59 * 29, 9 * 29 - 12, 112);
-        tyobi(67 * 29, 9 * 29 - 12, 104);
+        tyobi(14 * BLOCK_SIZE, 5 * BLOCK_SIZE - 12, 101);
+
+        tyobi(35 * BLOCK_SIZE, 8 * BLOCK_SIZE - 12, 110);
+        tyobi(47 * BLOCK_SIZE, 9 * BLOCK_SIZE - 12, 103);
+        tyobi(59 * BLOCK_SIZE, 9 * BLOCK_SIZE - 12, 112);
+        tyobi(67 * BLOCK_SIZE, 9 * BLOCK_SIZE - 12, 104);
 
         sco = 0;
         t = sco;
