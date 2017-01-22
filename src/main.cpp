@@ -105,6 +105,12 @@ void debug_screen(GameConfig* conf)
 
     sprintf(c, "fitness: %d", fx);
     str(c, 10, 10 + 15);
+
+    sprintf(c, "conf->player.acce.x: %d", conf->player.acce.x);
+    str(c, 10, 10 + 2 * 15);
+
+    sprintf(c, "player->move_trace: %d", conf->player.move_trace);
+    str(c, 10, 10 + 3 * 15);
 }
 
 
@@ -1064,18 +1070,11 @@ void renderPlayer(GameConfig* conf)
 {
     int x = conf->player.loc.x / 100;
     int y = conf->player.loc.y / 100;
+    int *pose = &(conf->player.pose);
 
     setcolor(0, 0, 250);  // ?
 
-    if (mactp >= 2000)
-    {
-        mactp -= 2000;
-
-        if (mact == 0)
-            mact = 1;
-        else
-            mact = 0;
-    }
+    conf->player.flip_pose();
 
     if (mmuki == 0)
         mirror = 1;
@@ -1083,13 +1082,8 @@ void renderPlayer(GameConfig* conf)
     if (mtype != 200 || mtype != 1)
     {
         if (mzimen == 1)
-        {
             // 読みこんだグラフィックを拡大描画
-            if (mact == 0)
-                drawimage(grap[0][0], x, y);
-            else if (mact == 1)
-                drawimage(grap[1][0], x, y);
-        }
+            drawimage(grap[*pose][0], x, y);
         else if (mzimen == 0)
             drawimage(grap[2][0], x, y);
     }
@@ -1812,10 +1806,8 @@ void enterStage(GameConfig* conf)
     }
     player->loc.x += conf->player.acce.x;
     player->loc.y += conf->player.acce.y;
-    if (conf->player.acce.x < 0)
-        mactp += (-conf->player.acce.x);
-    if (conf->player.acce.x >= 0)
-        mactp += conf->player.acce.x;
+
+    player->move_trace += abs(conf->player.acce.x);
 
     if (mtype <= 9 || mtype == 200 || mtype == 300 || mtype == 301
         || mtype == 302)

@@ -61,8 +61,14 @@ class Player
 public:
     int lives = 2; // nokori ?
     int hp = 1; // health point, hp > 0 denote alive
+
     Location loc;
     Acce acce;
+
+    int pose = 0; // for walking animation, value should be 0 or 1
+    unsigned int pose_interval = 2000;  // the pose changing interval
+    /* the acumulative movement counter, for changing pose */
+    unsigned int move_trace = 0;
 
     Player() {}
 
@@ -76,6 +82,14 @@ public:
         if (this->hp > 0)
             return true;
         return false;
+    }
+
+    void flip_pose()
+    {
+        if (this->move_trace < this->pose_interval)
+            return;
+        this->move_trace -= this->pose_interval;
+        this->pose = !(this->pose);
     }
 };
 
