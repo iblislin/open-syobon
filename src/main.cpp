@@ -1065,7 +1065,7 @@ void renderPlayer(GameConfig* conf)
     int x = conf->player.loc.x / 100;
     int y = conf->player.loc.y / 100;
 
-    setcolor(0, 0, 250);
+    setcolor(0, 0, 250);  // ?
 
     if (mactp >= 2000)
     {
@@ -1105,17 +1105,17 @@ void renderBlocks(GameConfig* conf)
 {
     for (auto i=0; i<tmax; i++)
     {
-        int x = ta[i] - fx;
-        int y = tb[i] - fy;
+        int x = (ta[i] - fx) / 100;
+        int y = (tb[i] - fy) / 100;
 
         /* still no idea what '32' is */
-        if (!(x + 32 * 100 >= -10 && y <= fxmax))
+        if (!(x * 100 + 32 * 100 >= -10 && y * 100 <= fxmax))
             continue;
 
         int offset = conf->stage_info.theme_offset();
 
         if (ttype[i] < 100)
-            drawimage(grap[ttype[i] + offset][1], x / 100, y / 100);
+            drawimage(grap[ttype[i] + offset][1], x, y);
 
         if (txtype[i] != 10)
         {
@@ -1128,58 +1128,58 @@ void renderBlocks(GameConfig* conf)
                 || (ttype[i] == 104 && txtype[i] == 1)
                 || (ttype[i] == 114 && txtype[i] == 1)
                 || ttype[i] == 116)
-                drawimage(grap[2 + offset][1], x / 100, y / 100);
+                drawimage(grap[2 + offset][1], x, y);
 
             if (ttype[i] == 112
                 || (ttype[i] == 104 && txtype[i] == 0)
                 || (ttype[i] == 115 && txtype[i] == 1))
-                drawimage(grap[1 + offset][1], x / 100, y / 100);
+                drawimage(grap[1 + offset][1], x, y);
 
             /* the empty question mark box */
             if (ttype[i] == 111
                 || ttype[i] == 113
                 || (ttype[i] == 115 && txtype[i] == 0)
                 || ttype[i] == 124)
-                drawimage(grap[3 + offset][1], x / 100, y / 100);
+                drawimage(grap[3 + offset][1], x, y);
 
         }
 
         if (ttype[i] == 117 && txtype[i] == 1)
-            drawimage(grap[4][5], x / 100, y / 100);
+            drawimage(grap[4][5], x, y);
 
         else if (ttype[i] == 117 && txtype[i] >= 3)
-            drawimage(grap[3][5], x / 100, y / 100);
+            drawimage(grap[3][5], x, y);
 
         if (ttype[i] == 115 && txtype[i] == 3)
-            drawimage(grap[1 + offset][1], x / 100, y / 100);
+            drawimage(grap[1 + offset][1], x, y);
 
         //ジャンプ台
         if (ttype[i] == 120 && txtype[i] != 1)
-            drawimage(grap[16][1], x / 100 + 3, y / 100 + 2);
+            drawimage(grap[16][1], x + 3, y + 2);
 
         //ON-OFF
         if (ttype[i] == 130)
-            drawimage(grap[10][5], x / 100, y / 100);
+            drawimage(grap[10][5], x, y);
         else if (ttype[i] == 131)
-            drawimage(grap[11][5], x / 100, y / 100);
+            drawimage(grap[11][5], x, y);
 
         if (ttype[i] == 140)
-            drawimage(grap[12][5], x / 100, y / 100);
+            drawimage(grap[12][5], x, y);
         else if (ttype[i] == 141)
-            drawimage(grap[13][5], x / 100, y / 100);
+            drawimage(grap[13][5], x, y);
         else if (ttype[i] == 142)
-            drawimage(grap[14][5], x / 100, y / 100);
+            drawimage(grap[14][5], x, y);
 
         if (ttype[i] == 300 || ttype[i] == 301)
-            drawimage(grap[1][5], x / 100, y / 100);
+            drawimage(grap[1][5], x, y);
 
         //Pスイッチ
         if (ttype[i] == 400)
-            drawimage(grap[2][5], x / 100, y / 100);
+            drawimage(grap[2][5], x, y);
 
         //コイン
         if (ttype[i] == 800)
-            drawimage(grap[0][2], x / 100 + 2, y / 100 + 1);
+            drawimage(grap[0][2], x + 2, y + 1);
     }
 }  // renderBlocks
 
