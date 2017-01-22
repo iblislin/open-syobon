@@ -49,6 +49,7 @@ void renderStage(GameConfig* conf);
 void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
 void renderBlocks(GameConfig* conf);
+void renderPlayer(GameConfig* conf);
 
 
 // helper functions

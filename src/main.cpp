@@ -107,6 +107,7 @@ void debug_screen(GameConfig* conf)
     str(c, 10, 10 + 15);
 }
 
+
 void renderStageBackground(GameConfig* conf)
 {
     unsigned int theme = conf->stage_info.theme;
@@ -166,7 +167,8 @@ void renderStageBackground(GameConfig* conf)
 
         }
     }
-}
+}  // renderStageBackground
+
 
 void renderStage(GameConfig* conf)
 {
@@ -304,41 +306,7 @@ void renderStage(GameConfig* conf)
     }  //t
 
     //プレイヤー描画
-    setcolor(0, 0, 255);
-
-    if (mactp >= 2000) {
-        mactp -= 2000;
-        if (mact == 0) {
-            mact = 1;
-        } else {
-            mact = 0;
-        }
-    }
-    if (mmuki == 0)
-        mirror = 1;
-
-    if (mtype != 200 && mtype != 1)
-    {
-        if (mzimen == 1)
-        {
-            // 読みこんだグラフィックを拡大描画
-            if (mact == 0)
-                drawimage(grap[0][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-            if (mact == 1)
-                drawimage(grap[1][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-        }
-        if (mzimen == 0) {
-            drawimage(grap[2][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-        }
-    }
-    //巨大化
-    else if (mtype == 1) {
-        drawimage(grap[41][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-    }
-
-    else if (mtype == 200) {
-        drawimage(grap[3][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-    }
+    renderPlayer(conf);
 
     mirror = 0;
 
@@ -1090,6 +1058,48 @@ void renderLivePanel(GameConfig* conf)
     DrawFormatString(230, 200, GetColor(255, 255, 255), " × %d",
                      conf->player.lives);
 }  // renderLivePanel
+
+
+void renderPlayer(GameConfig* conf)
+{
+    setcolor(0, 0, 250);
+
+    if (mactp >= 2000)
+    {
+        mactp -= 2000;
+
+        if (mact == 0)
+            mact = 1;
+        else
+            mact = 0;
+    }
+
+    if (mmuki == 0)
+        mirror = 1;
+
+    if (mtype != 200 && mtype != 1)
+    {
+        if (mzimen == 1)
+        {
+            // 読みこんだグラフィックを拡大描画
+            if (mact == 0)
+                drawimage(grap[0][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+            if (mact == 1)
+                drawimage(grap[1][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+        }
+        if (mzimen == 0) {
+            drawimage(grap[2][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+        }
+    }
+    //巨大化
+    else if (mtype == 1) {
+        drawimage(grap[41][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+    }
+
+    else if (mtype == 200) {
+        drawimage(grap[3][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+    }
+}  // renderPlayer
 
 
 void renderBlocks(GameConfig* conf)
