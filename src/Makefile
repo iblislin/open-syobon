@@ -15,7 +15,8 @@ ERLCFLAGS=	+native
 OBJS=		main.o loadg.o DxLib.o Stage.o Player.o json/jsoncpp.o
 TESTS_OBJS=	tests/Main.o tests/TestGameConfig.o \
 		json/jsoncpp.o \
-		tests/TestStage.o Stage.o
+		tests/TestStage.o Stage.o \
+		tests/TestPlayer.o Player.o
 
 all: SyobonAction
 
