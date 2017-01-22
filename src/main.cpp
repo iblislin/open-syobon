@@ -1119,64 +1119,46 @@ void renderBlocks(GameConfig* conf)
                 || (ttype[i] == 104 && txtype[i] == 1)
                 || (ttype[i] == 114 && txtype[i] == 1)
                 || ttype[i] == 116)
-            {
-                xx[6] = 2 + offset;
-                drawimage(grap[xx[6]][1], x / 100, y / 100);
-            }
+                drawimage(grap[2 + offset][1], x / 100, y / 100);
 
             if (ttype[i] == 112
                 || (ttype[i] == 104 && txtype[i] == 0)
                 || (ttype[i] == 115 && txtype[i] == 1))
-            {
-                xx[6] = 1 + offset;
-                drawimage(grap[xx[6]][1], x / 100, y / 100);
-            }
+                drawimage(grap[1 + offset][1], x / 100, y / 100);
 
             /* the empty question mark box */
             if (ttype[i] == 111
                 || ttype[i] == 113
                 || (ttype[i] == 115 && txtype[i] == 0)
                 || ttype[i] == 124)
-            {
-                xx[6] = 3 + offset;
-                drawimage(grap[xx[6]][1], x / 100, y / 100);
-            }
+                drawimage(grap[3 + offset][1], x / 100, y / 100);
 
         }
 
         if (ttype[i] == 117 && txtype[i] == 1)
-        {
             drawimage(grap[4][5], x / 100, y / 100);
-        }
 
-        if (ttype[i] == 117 && txtype[i] >= 3)
-        {
+        else if (ttype[i] == 117 && txtype[i] >= 3)
             drawimage(grap[3][5], x / 100, y / 100);
-        }
 
         if (ttype[i] == 115 && txtype[i] == 3)
-        {
-            xx[6] = 1 + offset;
-            drawimage(grap[xx[6]][1], x / 100, y / 100);
-        }
+            drawimage(grap[1 + offset][1], x / 100, y / 100);
 
         //ジャンプ台
         if (ttype[i] == 120 && txtype[i] != 1)
-        {
-            drawimage(grap[16][1], x / 100 + 3,
-                    y / 100 + 2);
-        }
+            drawimage(grap[16][1], x / 100 + 3, y / 100 + 2);
+
         //ON-OFF
         if (ttype[i] == 130)
             drawimage(grap[10][5], x / 100, y / 100);
-        if (ttype[i] == 131)
+        else if (ttype[i] == 131)
             drawimage(grap[11][5], x / 100, y / 100);
 
         if (ttype[i] == 140)
             drawimage(grap[12][5], x / 100, y / 100);
-        if (ttype[i] == 141)
+        else if (ttype[i] == 141)
             drawimage(grap[13][5], x / 100, y / 100);
-        if (ttype[i] == 142)
+        else if (ttype[i] == 142)
             drawimage(grap[14][5], x / 100, y / 100);
 
         if (ttype[i] == 300 || ttype[i] == 301)
