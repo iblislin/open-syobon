@@ -721,7 +721,8 @@ void renderStage(GameConfig* conf)
     }			//t
 
     //ファイアバー
-    for (t = 0; t < amax; t++) {
+    for (t = 0; t < amax; t++)
+    {
 
         xx[0] = aa[t] - fx;
         xx[1] = ab[t] - fy;
@@ -764,41 +765,7 @@ void renderStage(GameConfig* conf)
     }
 
     //プレイヤーのメッセージ
-    setc0();
-    if (mmsgtm >= 1) {
-        mmsgtm--;
-        xs[0] = "";
-
-        if (mmsgtype == 1)
-            xs[0] = "お、おいしい!!";
-        if (mmsgtype == 2)
-            xs[0] = "毒は無いが……";
-        if (mmsgtype == 3)
-            xs[0] = "刺さった!!";
-        if (mmsgtype == 10)
-            xs[0] = "食べるべきではなかった!!";
-        if (mmsgtype == 11)
-            xs[0] = "俺は燃える男だ!!";
-        if (mmsgtype == 50)
-            xs[0] = "体が……焼ける……";
-        if (mmsgtype == 51)
-            xs[0] = "たーまやー!!";
-        if (mmsgtype == 52)
-            xs[0] = "見事にオワタ";
-        if (mmsgtype == 53)
-            xs[0] = "足が、足がぁ!!";
-        if (mmsgtype == 54)
-            xs[0] = "流石は摂氏800度!!";
-        if (mmsgtype == 55)
-            xs[0] = "溶岩と合体したい……";
-
-        setc0();
-        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100 - 1, conf->player.loc.y / 100 - 1);
-        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100 + 1, conf->player.loc.y / 100 + 1);
-        setc1();
-        str(xs[0], (conf->player.loc.x + mnobia + 300) / 100, conf->player.loc.y / 100);
-
-    }  // mmsgtm >= 1
+    renderPlayerMsg(conf);
 
     //敵キャラのメッセージ
     setc0();
@@ -1093,6 +1060,49 @@ void renderPlayer(GameConfig* conf)
     else if (mtype == 200)
         drawimage(grap[3][0], x, y);
 }  // renderPlayer
+
+
+void renderPlayerMsg(GameConfig* conf)
+{
+    if (mmsgtm < 1)
+        return;
+
+    std::string msg;
+    int x = conf->player.loc.x / 100;
+    int y = conf->player.loc.y / 100;
+
+    mmsgtm--;
+
+    if (mmsgtype == 1)
+        msg = "お、おいしい!!";
+    else if (mmsgtype == 2)
+        msg = "毒は無いが……";
+    else if (mmsgtype == 3)
+        msg = "刺さった!!";
+    else if (mmsgtype == 10)
+        msg = "食べるべきではなかった!!";
+    else if (mmsgtype == 11)
+        msg = "俺は燃える男だ!!";
+    else if (mmsgtype == 50)
+        msg = "体が……焼ける……";
+    else if (mmsgtype == 51)
+        msg = "たーまやー!!";
+    else if (mmsgtype == 52)
+        msg = "見事にオワタ";
+    else if (mmsgtype == 53)
+        msg = "足が、足がぁ!!";
+    else if (mmsgtype == 54)
+        msg = "流石は摂氏800度!!";
+    else if (mmsgtype == 55)
+        msg = "溶岩と合体したい……";
+
+    setc0();
+    str(msg, x + BLOCK_SIZE - 1, y - 1);
+    str(msg, x + BLOCK_SIZE + 1, y + 1);
+
+    setc1();
+    str(msg, x + BLOCK_SIZE, y);
+}  // renderPlayerMsg
 
 
 void renderBlocks(GameConfig* conf)

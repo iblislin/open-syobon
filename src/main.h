@@ -50,6 +50,7 @@ void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
 void renderBlocks(GameConfig* conf);
 void renderPlayer(GameConfig* conf);
+void renderPlayerMsg(GameConfig* conf);
 
 
 // helper functions
