@@ -1062,6 +1062,9 @@ void renderLivePanel(GameConfig* conf)
 
 void renderPlayer(GameConfig* conf)
 {
+    int x = conf->player.loc.x / 100;
+    int y = conf->player.loc.y / 100;
+
     setcolor(0, 0, 250);
 
     if (mactp >= 2000)
@@ -1077,28 +1080,24 @@ void renderPlayer(GameConfig* conf)
     if (mmuki == 0)
         mirror = 1;
 
-    if (mtype != 200 && mtype != 1)
+    if (mtype != 200 || mtype != 1)
     {
         if (mzimen == 1)
         {
             // 読みこんだグラフィックを拡大描画
             if (mact == 0)
-                drawimage(grap[0][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-            if (mact == 1)
-                drawimage(grap[1][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
+                drawimage(grap[0][0], x, y);
+            else if (mact == 1)
+                drawimage(grap[1][0], x, y);
         }
-        if (mzimen == 0) {
-            drawimage(grap[2][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-        }
+        else if (mzimen == 0)
+            drawimage(grap[2][0], x, y);
     }
     //巨大化
-    else if (mtype == 1) {
-        drawimage(grap[41][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-    }
-
-    else if (mtype == 200) {
-        drawimage(grap[3][0], conf->player.loc.x / 100, conf->player.loc.y / 100);
-    }
+    else if (mtype == 1)
+        drawimage(grap[41][0], x, y);
+    else if (mtype == 200)
+        drawimage(grap[3][0], x, y);
 }  // renderPlayer
 
 
