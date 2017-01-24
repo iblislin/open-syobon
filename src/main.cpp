@@ -106,7 +106,7 @@ void debug_screen(GameConfig* conf)
     sprintf(c, "fitness: %d", fx);
     str(c, 10, 10 + 15);
 
-    sprintf(c, "conf->player.acce.x: %d", conf->player.acce.x);
+    sprintf(c, "conf->player.loc.y: %d", conf->player.acce.y);
     str(c, 10, 10 + 2 * 15);
 
     sprintf(c, "player->move_trace: %d", conf->player.move_trace);
@@ -764,7 +764,8 @@ void renderStage(GameConfig* conf)
         }
     }
 
-    //プレイヤーのメッセージ
+    // プレイヤーのメッセージ
+    // player message
     renderPlayerMsg(conf);
 
     //敵キャラのメッセージ
@@ -1035,9 +1036,10 @@ void renderLivePanel(GameConfig* conf)
 
 void renderPlayer(GameConfig* conf)
 {
-    int x = conf->player.loc.x / 100;
-    int y = conf->player.loc.y / 100;
-    int *pose = &(conf->player.pose);
+    auto player = &(conf->player);
+    int x = player->loc.x / 100;
+    int y = player->loc.y / 100;
+    int *pose = &(player->pose);
 
     setcolor(0, 0, 250);  // ?
 
@@ -1295,9 +1297,9 @@ void Mainprogram(GameConfig* conf)
 
 void enterStage(GameConfig* conf)
 {
-    int *scene = &conf->cur_scene;
-    Player* player = &conf->player;
-    StageInfo *stage = &conf->stage_info;
+    int *scene = &(conf->cur_scene);
+    auto player = &(conf->player);
+    auto stage = &(conf->stage_info);
 
     // init stage if need
     // it depends on conf->init_stage
@@ -1337,17 +1339,18 @@ void enterStage(GameConfig* conf)
         if (player->is_alive())
             player->hp = 0;
 
-        if (conf->stage_info.sub_level >= 5)
+        if (stage->sub_level >= 5)
         {
-            conf->stage_info.sub_level = 0;
+            stage->sub_level = 0;
             stagepoint = 0;
         }
     }
 
     if (mkeytm <= 0)
     {
-        if (CheckHitKey(KEY_INPUT_Z) == 1 || CheckHitKey(KEY_INPUT_UP) == 1
-                || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP))
+        if (CheckHitKey(KEY_INPUT_Z) == 1
+            || CheckHitKey(KEY_INPUT_UP) == 1
+            || SDL_JoystickGetButton(joystick, JOYSTICK_JUMP))
         {
             if (actaon[1] == 10)
             {
@@ -1368,15 +1371,11 @@ void enterStage(GameConfig* conf)
             // ダッシュ中
             // dashing
             xx[22] = 200;
-            if (conf->player.acce.x >= xx[22] || conf->player.acce.x <= -xx[22])
-            {
-                conf->player.acce.y = -1400;
-            }
+            if (player->acce.x >= xx[22] || player->acce.x <= -xx[22])
+                player->acce.y = -1400;
             xx[22] = 600;
-            if (conf->player.acce.x >= xx[22] || conf->player.acce.x <= -xx[22])
-            {
-                conf->player.acce.y = -1500;
-            }
+            if (player->acce.x >= xx[22] || player->acce.x <= -xx[22])
+                player->acce.y = -1500;
         }
 
         if (xx[0] == 0)
@@ -1392,13 +1391,14 @@ void enterStage(GameConfig* conf)
     xx[13] = 2;
 
     //すべり補正
+    // slipping correction
     if (mrzimen == 1)
     {
         xx[0] = 20;
         xx[12] = 9;
         xx[13] = 10;
     }
-    //if (mzimen==0){xx[0]-=15;}
+
     if (actaon[0] == -1)
     {
         if (!(mzimen == 0 && conf->player.acce.x < -xx[8]))
@@ -1483,7 +1483,7 @@ void enterStage(GameConfig* conf)
         mjumptm--;
     if (actaon[1] == 1 && mzimen == 1) {
         player->loc.y -= 400;
-        conf->player.acce.y = -1200;
+        player->acce.y = -1200;
         mjumptm = 10;
 
         ot(oto[1], conf->sound);
@@ -1962,7 +1962,7 @@ void enterStage(GameConfig* conf)
                                         && ttype[t] != 120)
                                 {
                                     player->loc.y = xx[9] - mnobib + 100;
-                                    conf->player.acce.y = 0;
+                                    player->acce.y = 0;
                                     mzimen = 1;
                                     xx[16] = 1;
                                 }
@@ -4621,7 +4621,6 @@ void tekizimen(GameConfig* conf)
 		aa[t] = xx[8] + sc[tt] + xx[0] + fx;
 		amuki[t] = 1;
 	    }
-//if (aa[t]+anobia[t]-fx>xx[8]+xx[0] && aa[t]-fx<xx[8]+sc[tt]-xx[0] && ab[t]+anobib[t]-fy>xx[9] && ab[t]+anobib[t]-fy<xx[9]+xx[1] && ad[t]>=-100){ab[t]=sb[tt]-fy-anobib[t]+100+fy;ad[t]=0;}//mzimen=1;}
 	    if (aa[t] + anobia[t] - fx > xx[8] + xx[0]
 		&& aa[t] - fx < xx[8] + sc[tt] - xx[0]
 		&& ab[t] + anobib[t] - fy > xx[9]
