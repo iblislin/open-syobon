@@ -43,14 +43,15 @@ int stageonoff = 0;
 void Mainprogram(GameConfig* conf);
 void renderMain(GameConfig* conf);
 
+void renderBlocks(GameConfig* conf);
+void renderEnemy(GameConfig* conf);
 void renderLivePanel(GameConfig* conf);
+void renderPlayer(GameConfig* conf);
+void renderPlayerMsg(GameConfig* conf);
 void renderStaffRoll(GameConfig* conf);
 void renderStage(GameConfig* conf);
 void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
-void renderBlocks(GameConfig* conf);
-void renderPlayer(GameConfig* conf);
-void renderPlayerMsg(GameConfig* conf);
 
 
 // helper functions
