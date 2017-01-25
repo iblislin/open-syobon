@@ -97,7 +97,8 @@ void renderMain(GameConfig* conf)
 
 void debug_screen(GameConfig* conf)
 {
-    setcolor(0, 0, 0);
+    setcolor(255, 255, 255);
+    // setcolor(0, 0, 0);  // black
     char c[100];
 
     sprintf(c, "time: %d", SDL_GetTicks());
@@ -109,7 +110,7 @@ void debug_screen(GameConfig* conf)
     sprintf(c, "conf->player.loc.y: %d", conf->player.acce.y);
     str(c, 10, 10 + 2 * 15);
 
-    sprintf(c, "player->move_trace: %d", conf->player.move_trace);
+    sprintf(c, "mtype %d", mtype);
     str(c, 10, 10 + 3 * 15);
 }
 
@@ -973,7 +974,7 @@ void renderPlayerMsg(GameConfig* conf)
 
 void renderEnemy(GameConfig* conf)
 {
-    auto palyer = &(conf->player);
+    auto player = &(conf->player);
     auto stage = &(conf->stage_info);
 
     for (auto i=0; i<amax; i++)
@@ -991,127 +992,128 @@ void renderEnemy(GameConfig* conf)
               && xx[3] <= fymax))
             continue;
 
-        if (amuki[i] == 1) {
+        if (amuki[i] == 1)
             mirror = 1;
-        }
-        if (atype[i] == 3 && axtype[i] == 1) {
+
+        if (atype[i] == 3 && axtype[i] == 1)
+        {
             DrawVertTurnGraph(xx[0] / 100 + 13,
-                    xx[1] / 100 + 15, grap[atype[i]][3]);
+                              xx[1] / 100 + 15, grap[atype[i]][3]);
             xx[16] = 1;
         }
-        if (atype[i] == 9 && ad[i] >= 1) {
+        else if (atype[i] == 9 && ad[i] >= 1)
+        {
             DrawVertTurnGraph(xx[0] / 100 + 13,
-                    xx[1] / 100 + 15, grap[atype[i]][3]);
+                              xx[1] / 100 + 15, grap[atype[i]][3]);
             xx[16] = 1;
         }
-        if (atype[i] >= 100 && amuki[i] == 1)
+        else if (atype[i] >= 100 && amuki[i] == 1)
             mirror = 0;
 
         //メイン
         if (atype[i] < 200 && xx[16] == 0
-                && atype[i] != 6 && atype[i] != 79
-                && atype[i] != 86 && atype[i] != 30) {
+            && atype[i] != 6 && atype[i] != 79
+            && atype[i] != 86 && atype[i] != 30)
+        {
             if (!((atype[i] == 80 || atype[i] == 81)
-                        && axtype[i] == 1)) {
-                drawimage(grap[atype[i]][3],
-                        xx[0] / 100, xx[1] / 100);
-            }
+                  && axtype[i] == 1))
+                drawimage(grap[atype[i]][3], xx[0] / 100, xx[1] / 100);
         }
         //デフラグさん
         if (atype[i] == 6)
         {
-            if (atm[i] >= 10 && atm[i] <= 19
-                    || atm[i] >= 100 && atm[i] <= 119
-                    || atm[i] >= 200) {
+            if ((atm[i] >= 10 && atm[i] <= 19)
+                || (atm[i] >= 100 && atm[i] <= 119)
+                || atm[i] >= 200)
                 drawimage(grap[150][3], xx[0] / 100, xx[1] / 100);
-            } else {
+            else
                 drawimage(grap[6][3], xx[0] / 100, xx[1] / 100);
-            }
         }
         //モララー
-        if (atype[i] == 30) {
+        if (atype[i] == 30)
+        {
             if (axtype[i] == 0)
                 drawimage(grap[30][3], xx[0] / 100, xx[1] / 100);
-            if (axtype[i] == 1)
+            else if (axtype[i] == 1)
                 drawimage(grap[155][3], xx[0] / 100, xx[1] / 100);
         }
         //ステルス雲
-        if ((atype[i] == 81) && axtype[i] == 1) {
+        if (atype[i] == 81 && axtype[i] == 1)
             drawimage(grap[130][3], xx[0] / 100, xx[1] / 100);
-        }
 
-        if (atype[i] == 79) {
+        if (atype[i] == 79)
+        {
             setcolor(250, 250, 0);
             fillrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
             setc0();
             drawrect(xx[0] / 100, xx[1] / 100, xx[2], xx[3]);
         }
 
-        if (atype[i] == 82) {
-
-            if (axtype[i] == 0) {
+        if (atype[i] == 82)
+        {
+            if (axtype[i] == 0)
+            {
                 xx[9] = stage->theme_offset();
                 xx[6] = 5 + xx[9];
-                drawimage(grap[xx[6]][1],
-                        xx[0] / 100, xx[1] / 100);
+                drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
 
-            if (axtype[i] == 1) {
+            if (axtype[i] == 1)
+            {
                 xx[9] = stage->theme_offset();
                 xx[6] = 4 + xx[9];
-                drawimage(grap[xx[6]][1],
-                        xx[0] / 100, xx[1] / 100);
+                drawimage(grap[xx[6]][1], xx[0] / 100, xx[1] / 100);
             }
 
-            if (axtype[i] == 2) {
+            if (axtype[i] == 2)
                 drawimage(grap[1][5], xx[0] / 100, xx[1] / 100);
-            }
-
         }
-        if (atype[i] == 83) {
-
-            if (axtype[i] == 0) {
+        if (atype[i] == 83)
+        {
+            if (axtype[i] == 0)
+            {
                 xx[9] = stage->theme_offset();
                 xx[6] = 5 + xx[9];
-                drawimage(grap[xx[6]][1],
-                        xx[0] / 100 + 10, xx[1] / 100 + 9);
+                drawimage(grap[xx[6]][1], xx[0] / 100 + 10, xx[1] / 100 + 9);
             }
 
-            if (axtype[i] == 1) {
+            if (axtype[i] == 1)
+            {
                 xx[9] = stage->theme_offset();
                 xx[6] = 4 + xx[9];
-                drawimage(grap[xx[6]][1],
-                        xx[0] / 100 + 10, xx[1] / 100 + 9);
+                drawimage(grap[xx[6]][1], xx[0] / 100 + 10, xx[1] / 100 + 9);
             }
-
         }
         //偽ポール
-        if (atype[i] == 85) {
+        if (atype[i] == 85)
+        {
             setc1();
             fillrect((xx[0]) / 100 + 10, (xx[1]) / 100, 10, xx[3]);
+
             setc0();
             drawrect((xx[0]) / 100 + 10, (xx[1]) / 100, 10, xx[3]);
+
             setcolor(0, 250, 200);
             fillarc((xx[0]) / 100 + 15 - 1, (xx[1]) / 100, 10, 10);
+
             setc0();
             drawarc((xx[0]) / 100 + 15 - 1, (xx[1]) / 100, 10, 10);
-
-        }		//85
+        }  // 85
 
         //ニャッスン
-        if (atype[i] == 86) {
-            if (conf->player.loc.x >= aa[i] - fx - mnobia - 4000
-                    && conf->player.loc.x <= aa[i] - fx + anobia[i] + 4000) {
+        if (atype[i] == 86)
+        {
+            if (player->loc.x >= aa[i] - fx - mnobia - 4000
+                && player->loc.x <= aa[i] - fx + anobia[i] + 4000)
                 drawimage(grap[152][3], xx[0] / 100, xx[1] / 100);
-            } else {
+            else
                 drawimage(grap[86][3], xx[0] / 100, xx[1] / 100);
-            }
         }
 
         if (atype[i] == 200)
             drawimage(grap[0][3], xx[0] / 100, xx[1] / 100);
 
-        mirror = 0;
+        // mirror = 0;  //WTF?
     }
 }  // renderEnemy
 
