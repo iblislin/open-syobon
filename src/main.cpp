@@ -1202,8 +1202,7 @@ void initStage(GameConfig* conf)
     mainmsgtype = 0;
 
     _stage->theme = THEME_FIELD;
-    player->loc.x = 5600;
-    player->loc.y = 32000;
+    player->loc.set(5600, 32000);
     mmuki = 1;
     player->hp = 1;
     player->acce.set(0, 0);
@@ -1228,24 +1227,26 @@ void initStage(GameConfig* conf)
     // create a random generated level
     if (conf->stage_info.is_random())
     {
-        for (t = 0; t < tmax; t++) {
-            if (rand(3) <= 1) {
+        for (auto t = 0; t < tmax; t++)
+        {
+            if (rand(3) <= 1)
+            {
                 ta[t] = (rand(500) - 1) * 29 * 100;
                 tb[t] = rand(14) * 100 * 29 - 1200;
                 ttype[t] = rand(142);
-                if (ttype[t] >= 9 && ttype[t] <= 99) {
+                if (ttype[t] >= 9 && ttype[t] <= 99)
                     ttype[t] = rand(8);
-                }
                 txtype[t] = rand(4);
             }
         }
-        for (t = 0; t < bmax; t++) {
-            if (rand(2) <= 1) {
+        for (auto t = 0; t < bmax; t++)
+        {
+            if (rand(2) <= 1)
+            {
                 ba[t] = (rand(500) - 1) * 29 * 100;
                 bb[t] = rand(15) * 100 * 29 - 1200 - 3000;
-                if (rand(6) == 0) {
+                if (rand(6) == 0)
                     btype[t] = rand(9);
-                }
             }
         }
 

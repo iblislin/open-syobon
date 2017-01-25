@@ -200,7 +200,7 @@ void DrawGraphZ(int x, int y, SDL_Surface * surface)
 
 void DrawTurnGraphZ(int a, int b, SDL_Surface * mx)
 {
-    if (!mx)
+    if (NULL == mx)
         return;
 
     SDL_Rect offset;
