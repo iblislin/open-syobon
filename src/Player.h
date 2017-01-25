@@ -55,6 +55,9 @@ public:
     /* the acumulative movement counter, for changing pose */
     unsigned int move_trace = 0;
 
+    /* is the player on the ground ? */
+    bool ground = false;
+
     Player() {}
 
     void reset_lives();

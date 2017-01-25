@@ -1043,17 +1043,16 @@ void renderPlayer(GameConfig* conf)
 
     setcolor(0, 0, 250);  // ?
 
-    conf->player.flip_pose();
+    player->flip_pose();
 
     if (mmuki == 0)
         mirror = 1;
 
     if (mtype != 200 || mtype != 1)
     {
-        if (mzimen == 1)
-            // 読みこんだグラフィックを拡大描画
+        if (player->ground) // 読みこんだグラフィックを拡大描画
             drawimage(grap[*pose][0], x, y);
-        else if (mzimen == 0)
+        else
             drawimage(grap[2][0], x, y);
     }
     //巨大化
@@ -1401,7 +1400,7 @@ void enterStage(GameConfig* conf)
 
     if (actaon[0] == -1)
     {
-        if (!(mzimen == 0 && conf->player.acce.x < -xx[8]))
+        if (!(!(player->ground) && player->acce.x < -xx[8]))
         {
             if (conf->player.acce.x >= -xx[9])
             {
@@ -1416,18 +1415,11 @@ void enterStage(GameConfig* conf)
         }
         if (mrzimen != 1)
         {
-            if (conf->player.acce.x > 100 && mzimen == 0)
-            {
-                conf->player.acce.x -= xx[0] * 2 / 3;
-            }
-            if (conf->player.acce.x > 100 && mzimen == 1)
-            {
-                conf->player.acce.x -= xx[0];
-                if (mzimen == 1)
-                {
-                    conf->player.acce.x -= xx[0] * 1 / 2;
-                }
-            }
+            if (player->acce.x > 100 && !(player->ground))
+                player->acce.x -= xx[0] * 2 / 3;
+            else if (player->acce.x > 100 && player->ground)
+                player->acce.x -= xx[0] * 3 / 2;
+
             actaon[0] = 3;
             mkasok += 1;
         }
@@ -1435,7 +1427,7 @@ void enterStage(GameConfig* conf)
 
     if (actaon[0] == 1)
     {
-        if (!(mzimen == 0 && conf->player.acce.x > xx[8]))
+        if (!(!(player->ground) && player->acce.x > xx[8]))
         {
             if (conf->player.acce.x <= xx[9])
             {
@@ -1450,18 +1442,11 @@ void enterStage(GameConfig* conf)
         }
         if (mrzimen != 1)
         {
-            if (conf->player.acce.x < -100 && mzimen == 0)
-            {
+            if (conf->player.acce.x < -100 && !(player->ground))
                 conf->player.acce.x += xx[0] * 2 / 3;
-            }
-            if (conf->player.acce.x < -100 && mzimen == 1)
-            {
-                conf->player.acce.x += xx[0];
-                if (mzimen == 1)
-                {
-                    conf->player.acce.x += xx[0] * 1 / 2;
-                }
-            }
+            else if (conf->player.acce.x < -100 && player->ground)
+                conf->player.acce.x += xx[0] * 3 / 2;
+
             actaon[0] = 3;
             mkasok += 1;
         }
@@ -1475,21 +1460,21 @@ void enterStage(GameConfig* conf)
         mkasok = 8;
     }
     //すべり補正初期化
-    if (mzimen != 1)
+    if (!(player->ground))
         mrzimen = 0;
 
     //ジャンプ
     if (mjumptm >= 0)
         mjumptm--;
-    if (actaon[1] == 1 && mzimen == 1) {
+    if (actaon[1] == 1 && player->ground)
+    {
         player->loc.y -= 400;
         player->acce.y = -1200;
         mjumptm = 10;
 
         ot(oto[1], conf->sound);
 
-        mzimen = 0;
-
+        player->ground = false;
     }
     if (actaon[1] <= 9)
         actaon[1] = 0;
@@ -1849,9 +1834,9 @@ void enterStage(GameConfig* conf)
             conf->player.acce.y = xx[1];
         }
     }
-    //プレイヤー
-    //地面の摩擦
-    if (mzimen == 1 && actaon[0] != 3)
+    // プレイヤー
+    // 地面の摩擦
+    if (player->ground && actaon[0] != 3)
     {
         if ((mtype <= 9) || mtype == 300 || mtype == 301
                 || mtype == 302)
@@ -1895,7 +1880,7 @@ void enterStage(GameConfig* conf)
         }
     }
     //地面判定初期化
-    mzimen = 0;
+    player->ground = false;
 
     //場外
     if (mtype <= 9 && player->is_alive())
@@ -1963,7 +1948,7 @@ void enterStage(GameConfig* conf)
                                 {
                                     player->loc.y = xx[9] - mnobib + 100;
                                     player->acce.y = 0;
-                                    mzimen = 1;
+                                    player->ground = 1;
                                     xx[16] = 1;
                                 }
                                 else if (ttype[t] == 115)
@@ -2029,7 +2014,7 @@ void enterStage(GameConfig* conf)
                     {
                         xx[21] = 0;
                         xx[22] = 1;
-                        if (mzimen == 1 || mjumptm >= 10)
+                        if (player->ground || mjumptm >= 10)
                         {
                             xx[21] = 3;
                             xx[22] = 0;
@@ -2055,7 +2040,7 @@ void enterStage(GameConfig* conf)
                                     }
 
                                     //壊れる
-                                    if (ttype[t] == 1 && mzimen == 0)
+                                    if (ttype[t] == 1 && !(player->ground))
                                     {
                                         ot(oto[3], conf->sound);
                                         eyobi(ta[t] + 1200, tb[t] + 1200, 300, -1000, 0,
@@ -2069,7 +2054,7 @@ void enterStage(GameConfig* conf)
                                         brockbreak(t);
                                     }
                                     //コイン
-                                    if (ttype[t] == 2 && mzimen == 0)
+                                    if (ttype[t] == 2 && !(player->ground))
                                     {
                                         ot(oto[4], conf->sound);
                                         eyobi(ta[t] + 10, tb [t], 0, -800, 0,
@@ -2680,7 +2665,7 @@ void enterStage(GameConfig* conf)
                     {
                         player->loc.y = sb[t] - fy - mnobib + 100;
                         conf->player.acce.y = 0;
-                        mzimen = 1;
+                        player->ground = 1;
                     }
                     if (player->loc.x + mnobia > xx[8] - xx[0]
                             && player->loc.x < xx[8] + xx[2]
@@ -2724,7 +2709,7 @@ void enterStage(GameConfig* conf)
                             xx[9] - 1000
                             && player->loc.y + mnobib <
                             xx[9] + xx[1] + 3000
-                            && mzimen == 1
+                            && player->ground
                             && actaon[3] == 1 && mtype == 0)
                     {
                         //飛び出し
@@ -2776,7 +2761,9 @@ void enterStage(GameConfig* conf)
                             && player->loc.x < xx[8] + sc[t] - 1000
                             && player->loc.y > xx[9] + 1000
                             && player->loc.y + mnobib < xx[9] + xx[1] + 4000
-                            && mzimen == 1 && actaon[4] == 1 && mtype == 0)
+                            && player->ground
+                            && actaon[4] == 1
+                            && mtype == 0)
                     {
                         //飛び出し
                         if (sxtype[t] == 0)
@@ -2956,7 +2943,7 @@ void enterStage(GameConfig* conf)
                         }
                     }
 
-                    if (stype[t] == 105 && mzimen == 0 && conf->player.acce.y >= 0)
+                    if (stype[t] == 105 && !(player->ground) && conf->player.acce.y >= 0)
                     {
                         ta[1] -= 1000;
                         ta[2] += 1000;
@@ -3094,8 +3081,8 @@ void enterStage(GameConfig* conf)
 
                     if (srsp[t] != 12)
                     {
-                        mzimen = 1;
-                        conf->player.acce.y = 0;
+                        player->ground = 1;
+                        player->acce.y = 0;
                     }
                     else
                     {
@@ -3427,7 +3414,7 @@ void enterStage(GameConfig* conf)
                             && abs(player->loc.x < xx[8] - anobia[t] + xx[0] * 2) < 3000
                             && conf->player.acce.y <= -600 && atm[t] <= 0)
                     {
-                        if (axtype[t] == 1 && mzimen == 0 && axzimen[t] == 1)
+                        if (axtype[t] == 1 && !(player->ground) && axzimen[t] == 1)
                         {
                             ad[t] = -1600;
                             atm[t] = 40;
@@ -4042,8 +4029,12 @@ void enterStage(GameConfig* conf)
                     && (mmutekitm <= 0 || conf->player.acce.y >= 100)
                     && abrocktm[t] <= 0)
             {
-                if (atype[t] != 4 && atype[t] != 9 && atype[t] != 10 &&
-                        (atype[t] <= 78 || atype[t] == 85) && mzimen != 1 && mtype != 200)
+                if (atype[t] != 4
+                    && atype[t] != 9
+                    && atype[t] != 10
+                    && (atype[t] <= 78 || atype[t] == 85)
+                    && !(player->ground)
+                    && mtype != 200)
                 {
 
                     if (atype[t] == 0)

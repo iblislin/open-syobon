@@ -128,7 +128,7 @@ int mnobia, mnobib;
 int macttype, atkon, atktm, mactsok, msstar;
 
 int mtype, mxtype, mtm, mzz;
-int mzimen, mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+int mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
 int mmutekitm, mmutekion;
 int mztm, mztype;
 int actaon[7];  // action ?
