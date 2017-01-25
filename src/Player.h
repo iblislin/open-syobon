@@ -1,6 +1,9 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#define ORIE_LEFT  0
+#define ORIE_RIGHT 1
+
 
 class Pair
 {
@@ -58,6 +61,9 @@ public:
     /* is the player on the ground ? */
     bool ground = false;
 
+    /* orientation: ORIE_LEFT or ORIE_RIGHT */
+    unsigned short int orie = ORIE_RIGHT;
+
     Player() {}
 
     void reset_lives();
@@ -65,5 +71,7 @@ public:
     bool is_alive() const;
 
     void flip_pose();
+
+    void render();
 };
 #endif  /* ifndef PLAYER_H */

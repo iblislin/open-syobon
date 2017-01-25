@@ -130,7 +130,7 @@ int mnobia, mnobib;
 int macttype, atkon, atktm, mactsok, msstar;
 
 int mtype, mxtype, mtm, mzz;
-int mrzimen, mkasok, mmuki, mmukitm, mjumptm, mkeytm, mcleartm;
+int mrzimen, mkasok, mmukitm, mjumptm, mkeytm, mcleartm;
 int mmutekitm, mmutekion;
 int mztm, mztype;
 int actaon[7];  // action ?
@@ -205,8 +205,6 @@ int sra[srmax], srb[srmax], src[srmax], srd[srmax], sre[srmax], srf[srmax];
 int srtype[srmax], srgtype[srmax], sracttype[srmax], srsp[srmax];
 int srmuki[srmax], sron[srmax], sree[srmax];
 int srsok[srmax], srmovep[srmax], srmove[srmax];
-
-
 
 
 

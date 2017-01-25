@@ -911,7 +911,7 @@ void renderPlayer(GameConfig* conf)
 
     player->flip_pose();
 
-    if (mmuki == 0)
+    if (player->orie == ORIE_LEFT)
         mirror = 1;
 
     if ((mtype != 200) && (mtype != 1))
@@ -1206,8 +1206,8 @@ void initStage(GameConfig* conf)
     if (!conf->init_stage)
         return;
 
-    Player* player = &conf->player;
-    StageInfo *_stage = &conf->stage_info;
+    Player* player = &(conf->player);
+    StageInfo *_stage = &(conf->stage_info);
 
     conf->init_stage = false;
 
@@ -1215,7 +1215,7 @@ void initStage(GameConfig* conf)
 
     _stage->theme = THEME_FIELD;
     player->loc.set(5600, 32000);
-    mmuki = 1;
+    player->orie = ORIE_RIGHT;
     player->hp = 1;
     player->acce.set(0, 0);
 
@@ -1327,13 +1327,13 @@ void enterStage(GameConfig* conf)
         if (CheckHitKey(KEY_INPUT_LEFT) && keytm <= 0)
         {
             actaon[0] = -1;
-            mmuki = 0;
+            player->orie = ORIE_LEFT;
             actaon[4] = -1;
         }
         if (CheckHitKey(KEY_INPUT_RIGHT) && keytm <= 0)
         {
             actaon[0] = 1;
-            mmuki = 1;
+            player->orie = ORIE_RIGHT;
             actaon[4] = 1;
         }
         if (CheckHitKey(KEY_INPUT_DOWN))
@@ -1649,7 +1649,7 @@ void enterStage(GameConfig* conf)
 
                 if (mtm >= 24) {
                     player->loc.x -= 2000;
-                    mmuki = 0;
+                    player->orie = ORIE_LEFT;
                 }
                 if (mtm >= 48) {
                     mtype = 0;
@@ -1702,14 +1702,11 @@ void enterStage(GameConfig* conf)
         {
             mkeytm = 3;
             if (mtm <= 1)
-            {
-                conf->player.acce.x = 0;
-                conf->player.acce.y = 0;
-            }
+                player->acce.set(0, 0);
             if (mtm >= 2 && mtm <= 42)
             {
                 conf->player.acce.y = 600;
-                mmuki = 1;
+                player->orie = ORIE_RIGHT;
             }
             if (mtm > 43 && mtm <= 108)
             {
@@ -1735,24 +1732,26 @@ void enterStage(GameConfig* conf)
         {
             mkeytm = 3;
 
-            if (mtm <= 1) {
-                conf->player.acce.x = 0;
-                conf->player.acce.y = 0;
-            }
+            if (mtm <= 1)
+                player->acce.set(0, 0);
 
             if (mtm >= 2
-                    && (mtype == 301 && mtm <= 102
-                        || mtype == 302 && mtm <= 60)) {
+                && (
+                    (mtype == 301 && mtm <= 102)
+                    || (mtype == 302 && mtm <= 60)))
+            {
                 xx[5] = 500;
                 player->loc.x -= xx[5];
                 fx += xx[5];
                 fzx += xx[5];
             }
 
-            if ((mtype == 301 || mtype == 302) && mtm >= 2
-                    && mtm <= 100) {
-                conf->player.acce.x = 250;
-                mmuki = 1;
+            if ((mtype == 301 || mtype == 302)
+                && mtm >= 2
+                && mtm <= 100)
+            {
+                player->acce.x = 250;
+                player->orie = ORIE_RIGHT;
             }
 
             if (mtm == 200) {
@@ -1793,9 +1792,9 @@ void enterStage(GameConfig* conf)
                     *scene = SCENE_STAFF_ROLL;
                 else
                 {
-                    conf->stage_info.series++;
-                    conf->stage_info.level = 1;
-                    conf->stage_info.sub_level = 0;
+                    stage->series++;
+                    stage->level = 1;
+                    stage->sub_level = 0;
                     conf->init_stage = true;
                     tyuukan = 0;
                     *scene = SCENE_LIVE_PANEL;
