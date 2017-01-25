@@ -77,6 +77,7 @@ void StageInfo::init_maps()
         std::make_tuple(1, 1, 0),
 
         std::make_tuple(1, 2, 0),
+        std::make_tuple(1, 2, 1),
         std::make_tuple(1, 2, 2),
 
         std::make_tuple(1, 3, 0),
