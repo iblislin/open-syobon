@@ -200,18 +200,18 @@ void DrawGraphZ(int x, int y, SDL_Surface * surface)
 
 void DrawTurnGraphZ(int a, int b, SDL_Surface * mx)
 {
-    if(mx)
-    {
-        SDL_Rect offset;
-        offset.x = a;
-        offset.y = b;
+    if (!mx)
+        return;
 
-        SDL_Surface *flipped = zoomSurface(mx, -1, 1, 0);
-        SDL_SetColorKey(flipped, SDL_SRCCOLORKEY,
-                SDL_MapRGB(flipped->format, 9 * 16 + 9, 255, 255));
-        SDL_BlitSurface(flipped, NULL, screen, &offset);
-        SDL_FreeSurface(flipped);
-    }
+    SDL_Rect offset;
+    offset.x = a;
+    offset.y = b;
+
+    SDL_Surface *flipped = zoomSurface(mx, -1, 1, 0);
+    SDL_SetColorKey(flipped, SDL_SRCCOLORKEY,
+                    SDL_MapRGB(flipped->format, 9 * 16 + 9, 255, 255));
+    SDL_BlitSurface(flipped, NULL, screen, &offset);
+    SDL_FreeSurface(flipped);
 }
 
 void DrawVertTurnGraph(int a, int b, SDL_Surface * mx)
