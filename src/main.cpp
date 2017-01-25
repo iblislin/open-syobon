@@ -921,210 +921,212 @@ void renderWalls(GameConfig* conf)
     StageInfo *stage = &(conf->stage_info);
     unsigned int theme = conf->stage_info.theme;
 
-    for (auto i = 0; i < smax; i++)
+    for (auto i=0; i<smax; i++)
     {
-        if (sa[i] - fx + sc[i] >= -10 && sa[i] - fx <= fxmax + 1100) {
+        if (!(sa[i] - fx + sc[i] >= -10 && sa[i] - fx <= fxmax + 1100))
+            continue;
 
-            if (stype[i] == 0) {
-                setcolor(40, 200, 40);
-                fillrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        sc[i] / 100, sd[i] / 100);
-                drawrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        sc[i] / 100, sd[i] / 100);
-            }
-            //土管
-            if (stype[i] == 1) {
-                setcolor(0, 230, 0);
-                fillrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        sc[i] / 100, sd[i] / 100);
-                setc0();
-                drawrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        sc[i] / 100, sd[i] / 100);
-            }
-            //土管(下)
-            if (stype[i] == 2) {
-                setcolor(0, 230, 0);
-                fillrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb + 1,
-                        sc[i] / 100, sd[i] / 100);
-                setc0();
-                drawline((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        (sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb + sd[i] / 100);
-                drawline((sa[i] - fx) / 100 + fma +
-                        sc[i] / 100,
-                        (sb[i] - fy) / 100 + fmb,
-                        (sa[i] - fx) / 100 + fma +
-                        sc[i] / 100,
-                        (sb[i] - fy) / 100 + fmb + sd[i] / 100);
-            }
-            //土管(横)
-            if (stype[i] == 5) {
-                setcolor(0, 230, 0);
-                fillrect((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb + 1,
-                        sc[i] / 100, sd[i] / 100);
-                setc0();
-                drawline((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb,
-                        (sa[i] - fx) / 100 + fma +
-                        sc[i] / 100, (sb[i] - fy) / 100 + fmb);
-                drawline((sa[i] - fx) / 100 + fma,
-                        (sb[i] - fy) / 100 + fmb +
-                        sd[i] / 100,
-                        (sa[i] - fx) / 100 + fma +
-                        sc[i] / 100,
-                        (sb[i] - fy) / 100 + fmb + sd[i] / 100);
-            }
-            //落ちてくるブロック
-            if (stype[i] == 51) {
-                if (sxtype[i] == 0) {
-                    for (t3 = 0; t3 <= sc[i] / 3000; t3++) {
-                        drawimage(grap[1][1],
-                                (sa[i] -
-                                 fx) / 100 +
-                                fma + 29 * t3,
-                                (sb[i] - fy) / 100 + fmb);
-                    }
-                }
-                if (sxtype[i] == 1 || sxtype[i] == 2) {
-                    for (t3 = 0; t3 <= sc[i] / 3000; t3++) {
-                        drawimage(grap[31][1],
-                                (sa[i] -
-                                 fx) / 100 +
-                                fma + 29 * t3,
-                                (sb[i] - fy) / 100 + fmb);
-                    }
-                }
-                if (sxtype[i] == 3 || sxtype[i] == 4) {
-                    for (t3 = 0; t3 <= sc[i] / 3000; t3++) {
-                        for (t2 = 0; t2 <= sd[i] / 3000; t2++) {
-                            drawimage(grap[65]
-                                    [1], (sa[i]
-                                        -
-                                        fx) /
-                                    100 + fma + 29 * t3, (sb[i]
-                                        -
-                                        fy) /
-                                    100 + 29 * t2 + fmb);
-                        }
-                    }
-                }
-
-                if (sxtype[i] == 10) {
-                    for (t3 = 0; t3 <= sc[i] / 3000; t3++) {
-                        drawimage(grap[65][1],
-                                (sa[i] -
-                                 fx) / 100 +
-                                fma + 29 * t3,
-                                (sb[i] - fy) / 100 + fmb);
-                    }
-                }
-
-            }		//51
-
-            //落ちるやつ
-            if (stype[i] == 52) {
-                xx[29] = stage->theme_offset();
-
-                for (t3 = 0; t3 <= sc[i] / 3000; t3++) {
-                    if (sxtype[i] == 0) {
-                        drawimage(grap
-                                [5 +
-                                xx[29]][1],
-                                (sa[i] -
-                                 fx) / 100 +
-                                fma + 29 * t3,
-                                (sb[i] - fy) / 100 + fmb);
-                        if (theme != THEME_CASTLE) {
-                            drawimage(grap[6 + xx[29]]
-                                    [1], (sa[i]
-                                        -
-                                        fx) /
-                                    100 + fma + 29 * t3, (sb[i]
-                                        -
-                                        fy) /
-                                    100 + fmb + 29);
-                        } else {
-                            drawimage(grap[5 + xx[29]]
-                                    [1], (sa[i]
-                                        -
-                                        fx) /
-                                    100 + fma + 29 * t3, (sb[i]
-                                        -
-                                        fy) /
-                                    100 + fmb + 29);
-                        }
-                    }
-                    if (sxtype[i] == 1) {
-                        for (t2 = 0; t2 <= sd[i] / 3000; t2++) {
-                            drawimage(grap[1 + xx[29]]
-                                    [1], (sa[i]
-                                        -
-                                        fx) /
-                                    100 + fma + 29 * t3, (sb[i]
-                                        -
-                                        fy) /
-                                    100 + fmb + 29 * t2);
-                        }
-                    }
-
-                    if (sxtype[i] == 2) {
-                        for (t2 = 0; t2 <= sd[i] / 3000; t2++) {
-                            drawimage(grap[5 + xx[29]]
-                                    [1], (sa[i]
-                                        -
-                                        fx) /
-                                    100 + fma + 29 * t3, (sb[i]
-                                        -
-                                        fy) /
-                                    100 + fmb + 29 * t2);
-                        }
-                    }
-
+        if (stype[i] == 0)
+        {
+            setcolor(40, 200, 40);
+            fillrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     sc[i] / 100, sd[i] / 100);
+            drawrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     sc[i] / 100, sd[i] / 100);
+        }
+        //土管
+        if (stype[i] == 1)
+        {
+            setcolor(0, 230, 0);
+            fillrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     sc[i] / 100, sd[i] / 100);
+            setc0();
+            drawrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     sc[i] / 100, sd[i] / 100);
+        }
+        //土管(下)
+        if (stype[i] == 2)
+        {
+            setcolor(0, 230, 0);
+            fillrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb + 1,
+                     sc[i] / 100, sd[i] / 100);
+            setc0();
+            drawline((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     (sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb + sd[i] / 100);
+            drawline((sa[i] - fx) / 100 + fma +
+                     sc[i] / 100,
+                     (sb[i] - fy) / 100 + fmb,
+                     (sa[i] - fx) / 100 + fma +
+                     sc[i] / 100,
+                     (sb[i] - fy) / 100 + fmb + sd[i] / 100);
+        }
+        //土管(横)
+        if (stype[i] == 5)
+        {
+            setcolor(0, 230, 0);
+            fillrect((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb + 1,
+                     sc[i] / 100, sd[i] / 100);
+            setc0();
+            drawline((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb,
+                     (sa[i] - fx) / 100 + fma +
+                     sc[i] / 100, (sb[i] - fy) / 100 + fmb);
+            drawline((sa[i] - fx) / 100 + fma,
+                     (sb[i] - fy) / 100 + fmb +
+                     sd[i] / 100,
+                     (sa[i] - fx) / 100 + fma +
+                     sc[i] / 100,
+                     (sb[i] - fy) / 100 + fmb + sd[i] / 100);
+        }
+        //落ちてくるブロック
+        if (stype[i] == 51)
+        {
+            if (sxtype[i] == 0)
+            {
+                for (t3 = 0; t3 <= sc[i] / 3000; t3++)
+                {
+                    drawimage(grap[1][1],
+                              (sa[i] - fx) / 100 + fma + 29 * t3,
+                              (sb[i] - fy) / 100 + fmb);
                 }
             }
-            //ステージトラップ
-            if (trap == 1) {
-                if (stype[i] >= 100 && stype[i] <= 299) {
-                    if (theme == THEME_FIELD || theme == THEME_SNOW)
-                        setc0();
-                    else if (theme == THEME_DUNGEON || theme == THEME_CASTLE)
-                        setc1();
-                    drawrect((sa[i] - fx) / 100 +
-                            fma,
-                            (sb[i] - fy) / 100 +
-                            fmb, sc[i] / 100, sd[i] / 100);
+            if (sxtype[i] == 1 || sxtype[i] == 2)
+            {
+                for (t3 = 0; t3 <= sc[i] / 3000; t3++)
+                {
+                    drawimage(grap[31][1],
+                              (sa[i] - fx) / 100 + fma + 29 * t3,
+                              (sb[i] - fy) / 100 + fmb);
                 }
             }
-            // ゴール
-            // goal
-            if (stype[i] == 300) {
-                setc1();
-                fillrect((sa[i] - fx) / 100 + 10,
-                        (sb[i] - fy) / 100, 10, sd[i] / 100 - 8);
-                setc0();
-                drawrect((sa[i] - fx) / 100 + 10,
-                        (sb[i] - fy) / 100, 10, sd[i] / 100 - 8);
-                setcolor(250, 250, 0);
-                fillarc((sa[i] - fx) / 100 + 15 - 1,
-                        (sb[i] - fy) / 100, 10, 10);
-                setc0();
-                drawarc((sa[i] - fx) / 100 + 15 - 1,
-                        (sb[i] - fy) / 100, 10, 10);
+            if (sxtype[i] == 3 || sxtype[i] == 4)
+            {
+                for (t3 = 0; t3 <= sc[i] / 3000; t3++)
+                {
+                    for (t2 = 0; t2 <= sd[i] / 3000; t2++)
+                    {
+                        drawimage(grap[65] [1],
+                                  (sa[i] - fx) / 100 + fma + 29 * t3,
+                                  (sb[i] - fy) / 100 + 29 * t2 + fmb);
+                    }
+                }
             }
-            // 中間
-            // saving point
-            if (stype[i] == 500) {
-                drawimage(grap[20][4],
-                        (sa[i] - fx) / 100, (sb[i] - fy) / 100);
+
+            if (sxtype[i] == 10)
+            {
+                for (t3 = 0; t3 <= sc[i] / 3000; t3++)
+                {
+                    drawimage(grap[65][1],
+                              (sa[i] - fx) / 100 + fma + 29 * t3,
+                              (sb[i] - fy) / 100 + fmb);
+                }
+            }
+        }		//51
+
+        //落ちるやつ
+        if (stype[i] == 52)
+        {
+            xx[29] = stage->theme_offset();
+
+            for (t3 = 0; t3 <= sc[i] / 3000; t3++)
+            {
+                if (sxtype[i] == 0)
+                {
+                    drawimage(grap [5 + xx[29]][1],
+                              (sa[i] - fx) / 100 + fma + 29 * t3,
+                              (sb[i] - fy) / 100 + fmb);
+
+                    if (theme != THEME_CASTLE)
+                    {
+                        drawimage(grap[6 + xx[29]] [1],
+                                  (sa[i] - fx) / 100 + fma + 29 * t3,
+                                  (sb[i] - fy) / 100 + fmb + 29);
+                    }
+                    else
+                    {
+                        drawimage(grap[5 + xx[29]][1],
+                                  (sa[i] - fx) / 100 + fma + 29 * t3,
+                                  (sb[i] - fy) / 100 + fmb + 29);
+                    }
+                }
+
+                if (sxtype[i] == 1)
+                {
+                    for (t2 = 0; t2 <= sd[i] / 3000; t2++)
+                    {
+                        drawimage(grap[1 + xx[29]][1],
+                                  (sa[i] - fx) / 100 + fma + 29 * t3,
+                                  (sb[i] - fy) / 100 + fmb + 29 * t2);
+                    }
+                }
+                if (sxtype[i] == 2)
+                {
+                    for (t2 = 0; t2 <= sd[i] / 3000; t2++)
+                    {
+                        drawimage(grap[5 + xx[29]][1],
+                                  (sa[i] - fx) / 100 + fma + 29 * t3,
+                                  (sb[i] - fy) / 100 + fmb + 29 * t2);
+                    }
+                }
             }
         }
+        //ステージトラップ
+        if (trap == 1)
+        {
+            if (stype[i] >= 100 && stype[i] <= 299)
+            {
+                if (theme == THEME_FIELD || theme == THEME_SNOW)
+                    setc0();
+                else if (theme == THEME_DUNGEON || theme == THEME_CASTLE)
+                    setc1();
+
+                drawrect((sa[i] - fx) / 100 + fma,
+                         (sb[i] - fy) / 100 + fmb,
+                         sc[i] / 100,
+                         sd[i] / 100);
+            }
+        }
+        // ゴール
+        // goal
+        if (stype[i] == 300)
+        {
+            setc1();
+            fillrect((sa[i] - fx) / 100 + 10,
+                     (sb[i] - fy) / 100,
+                     10,
+                     sd[i] / 100 - 8);
+
+            setc0();
+            drawrect((sa[i] - fx) / 100 + 10,
+                     (sb[i] - fy) / 100,
+                     10,
+                     sd[i] / 100 - 8);
+
+            setcolor(250, 250, 0);
+            fillarc((sa[i] - fx) / 100 + 15 - 1,
+                    (sb[i] - fy) / 100,
+                    10,
+                    10);
+
+            setc0();
+            drawarc((sa[i] - fx) / 100 + 15 - 1,
+                    (sb[i] - fy) / 100,
+                    10,
+                    10);
+        }
+
+        // 中間
+        // saving point
+        if (stype[i] == 500)
+            drawimage(grap[20][4], (sa[i] - fx) / 100, (sb[i] - fy) / 100);
     }
 }  // renderWalls
 
