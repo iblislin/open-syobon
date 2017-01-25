@@ -1817,7 +1817,7 @@ void enterStage(GameConfig* conf)
 
         }			//mtype==301
 
-    }			//mtype>=100
+    }  // mtype >= 100
 
     //移動
     if (mkeytm >= 1)
@@ -1829,7 +1829,10 @@ void enterStage(GameConfig* conf)
 
     player->move_trace += abs(conf->player.acce.x);
 
-    if (mtype <= 9 || mtype == 200 || mtype == 300 || mtype == 301
+    if (mtype <= 9
+        || mtype == 200
+        || mtype == 300
+        || mtype == 301
         || mtype == 302)
         conf->player.acce.y += 100;
 
@@ -1863,8 +1866,10 @@ void enterStage(GameConfig* conf)
     // 地面の摩擦
     if (player->ground && actaon[0] != 3)
     {
-        if ((mtype <= 9) || mtype == 300 || mtype == 301
-                || mtype == 302)
+        if (mtype <= 9
+            || mtype == 300
+            || mtype == 301
+            || mtype == 302)
         {
             if (mrzimen == 0)
             {
