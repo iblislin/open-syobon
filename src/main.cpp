@@ -4891,9 +4891,9 @@ void FillScreen()
 void drawimage(SDL_Surface * mx, int a, int b)
 {
     if (mirror == 0)
-	DrawGraph(a, b, mx, TRUE);
-    if (mirror == 1)
-	DrawTurnGraph(a, b, mx, TRUE);
+        DrawGraph(a, b, mx, TRUE);
+    else
+        DrawTurnGraph(a, b, mx, TRUE);
 }
 
 void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f)
