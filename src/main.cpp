@@ -4887,6 +4887,7 @@ void FillScreen()
     SDL_FillRect(screen, 0, color);
 }
 
+
 //画像表示
 void drawimage(SDL_Surface * mx, int a, int b)
 {
@@ -4896,24 +4897,20 @@ void drawimage(SDL_Surface * mx, int a, int b)
         DrawTurnGraph(a, b, mx, TRUE);
 }
 
+
 void drawimage(SDL_Surface * mx, int a, int b, int c, int d, int e, int f)
 {
     SDL_Surface *m;
     m = DerivationGraph(c, d, e, f, mx);
+
     if (mirror == 0)
-	DrawGraph(a, b, m, TRUE);
-    if (mirror == 1)
-	DrawTurnGraph(a, b, m, TRUE);
+        DrawGraph(a, b, m, TRUE);
+    else
+        DrawTurnGraph(a, b, m, TRUE);
+
     SDL_FreeSurface(m);
 }
 
-/*
-//文字
-void str(char d[],int a,int b){
-//char d[]=c;
-DrawString(a,b,d,color);
-}
-*/
 
 //文字
 void str(string x, int a, int b)
