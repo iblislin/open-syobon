@@ -1,8 +1,9 @@
+#ifndef MAIN_H
+#define MAIN_H value
+
 #include "GameConfig.h"
 #include "DxLib.h"
 
-#ifndef MAIN_H
-#define MAIN_H value
 using namespace std;
 
 /* The block on screen is square, size is 29x29 */

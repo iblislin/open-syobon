@@ -1,3 +1,6 @@
+#ifndef STAGE_H
+#define STAGE_H
+
 #include <array>
 #include <fstream>
 #include <iostream>
@@ -7,9 +10,6 @@
 #include <vector>
 
 #include "json/json.h"
-
-#ifndef STAGE_H
-#define STAGE_H
 
 #define STAGE_MAP_X 1001
 #define STAGE_MAP_Y 17

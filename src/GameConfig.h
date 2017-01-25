@@ -1,9 +1,8 @@
-#include "Player.h"
-#include "Stage.h"
-
-
 #ifndef GameConfig_H
 #define GameConfig_H
+
+#include "Player.h"
+#include "Stage.h"
 
 // BGM
 #define BGM_FIELD    1

@@ -1,6 +1,9 @@
 //This file is a reverse engineered "DxLib.h" to the extent that
 //Syobon Action uses it. Minor functions are just replaced with SDL
 //counterparts.
+#ifndef DXLIB_HEADER
+#define DXLIB_HEADER
+
 #include <SDL/SDL.h>
 #include <SDL/SDL_gfxPrimitives.h>
 #include <SDL/SDL_image.h>
@@ -20,8 +23,6 @@
 #include "GameConfig.h"
 #include "joyconfig.h"
 
-#ifndef DXLIB_HEADER
-#define DXLIB_HEADER
 
 #define TRUE 1
 #define FALSE 0
