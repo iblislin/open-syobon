@@ -53,6 +53,7 @@ void renderStaffRoll(GameConfig* conf);
 void renderStage(GameConfig* conf);
 void renderStageBackground(GameConfig* conf);
 void renderTitle(GameConfig* conf);
+void renderWalls(GameConfig* conf);
 
 
 // helper functions
