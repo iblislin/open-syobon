@@ -913,7 +913,7 @@ void renderPlayer(GameConfig* conf)
     if (mmuki == 0)
         mirror = 1;
 
-    if (mtype != 200 || mtype != 1)
+    if ((mtype != 200) && (mtype != 1))
     {
         if (player->ground) // 読みこんだグラフィックを拡大描画
             drawimage(grap[*pose][0], x, y);
