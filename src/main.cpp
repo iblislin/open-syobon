@@ -7445,11 +7445,9 @@ void setfont(int x, int y)
 }
 
 //グラ作成
-void
-eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
-      int xnobib, int xgtype, int xtm)
+void eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
+           int xnobib, int xgtype, int xtm)
 {
-
     ea[eco] = xa;
     eb[eco] = xb;
     ec[eco] = xc;
@@ -7463,9 +7461,9 @@ eyobi(int xa, int xb, int xc, int xd, int xe, int xf, int xnobia,
 
     eco++;
     if (eco >= emax)
-	eco = 0;
+        eco = 0;
 
-}				//eyobi
+}  // eyobi
 
 //敵キャラ、アイテム作成
 void ayobi(GameConfig* conf, int xa, int xb, int xc, int xd, int xnotm, int xtype,
