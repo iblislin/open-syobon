@@ -128,7 +128,7 @@ int sgtype[smax];
 //プレイヤー
 int mainmsgtype;
 int mnobia, mnobib;
-int macttype, atkon, atktm, mactsok, msstar;
+int atkon, atktm, mactsok, msstar;
 
 int mtype, mxtype, mtm, mzz;
 int mrzimen, mkasok, mmukitm, mjumptm, mkeytm, mcleartm;
