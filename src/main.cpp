@@ -1436,7 +1436,7 @@ void enterStage(GameConfig* conf)
                     conf->player.acce.x = -xx[9] - 1;
                 }
             }
-            if (conf->player.acce.x < -xx[9] && atktm <= 0)
+            if (conf->player.acce.x < -xx[9])
                 conf->player.acce.x -= xx[0] / 10;
         }
         if (mrzimen != 1)
@@ -1463,7 +1463,7 @@ void enterStage(GameConfig* conf)
                     conf->player.acce.x = xx[9] + 1;
                 }
             }
-            if (conf->player.acce.x > xx[9] && atktm <= 0)
+            if (conf->player.acce.x > xx[9])
                 conf->player.acce.x += xx[0] / 10;
         }
         if (mrzimen != 1)
