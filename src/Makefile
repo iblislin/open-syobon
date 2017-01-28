@@ -35,6 +35,8 @@ DxLib.o: DxLib.cpp DxLib.h GameConfig.h
 
 Stage.o: Stage.cpp Stage.h
 
+Player.o: Player.cpp Player.h
+
 clean:
 	rm -fv *.o
 	rm -fv SyobonAction
